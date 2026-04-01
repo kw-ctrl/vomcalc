@@ -1,0 +1,1303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Velocity of Money Underwriting Tool — Score Any Hotel or STR Deal in 60 Seconds</title>
+    <meta name="description" content="The AI-powered underwriting tool for boutique hotels and short-term rentals, built on the Velocity of Money framework. Velocity Score, Buy Box, Return Attribution, and Deal Improvement Levers — in 60 seconds.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-body: #0a0a0a;
+            --bg-surface: #141414;
+            --bg-surface-light: #1c1c1c;
+            --border: #2a2a2a;
+            --border-light: #333;
+            --text-primary: #f5f5f5;
+            --text-secondary: #a1a1a1;
+            --text-muted: #666;
+            --accent: #21B4A6;
+            --accent-glow: rgba(33, 180, 166, 0.08);
+            --accent-border: rgba(33, 180, 166, 0.3);
+            --accent-light: #2DD4BF;
+            --accent-badge: rgba(33, 180, 166, 0.15);
+            --blue-accent: #3b82f6;
+            --yellow-warning: #f59e0b;
+            --red-danger: #ef4444;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-body);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ── Layout ── */
+        .container { max-width: 1080px; margin: 0 auto; padding: 0 1.5rem; }
+        .container-narrow { max-width: 760px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* ── Header ── */
+        .site-header {
+            background: var(--bg-surface);
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            padding: 0.75rem 0;
+        }
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header-brand {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .header-logo { height: 2rem; }
+        .header-divider {
+            width: 1px;
+            height: 2rem;
+            background: var(--border);
+        }
+        .header-title {
+            font-size: 1.125rem;
+            font-weight: 700;
+            color: white;
+            line-height: 1.2;
+        }
+        .header-subtitle {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+        .header-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.5rem 1.25rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+        .header-cta:hover {
+            background: var(--accent-light);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(33, 180, 166, 0.3);
+        }
+
+        /* ── Hero ── */
+        .hero {
+            padding: 5rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(33, 180, 166, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent-badge);
+            border: 1px solid var(--accent-border);
+            color: var(--accent-light);
+            font-size: 0.8125rem;
+            font-weight: 600;
+            padding: 0.35rem 1rem;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.25rem);
+            font-weight: 800;
+            line-height: 1.15;
+            color: white;
+            max-width: 800px;
+            margin: 0 auto 1.25rem;
+            letter-spacing: -0.02em;
+        }
+        .hero h1 .accent { color: var(--accent); }
+        .hero-sub {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.7;
+        }
+        .hero-cta-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: var(--accent);
+            color: white;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 1rem 2.5rem;
+            border-radius: 0.75rem;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border: none;
+            cursor: pointer;
+        }
+        .btn-primary:hover {
+            background: var(--accent-light);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(33, 180, 166, 0.3);
+        }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+        .btn-secondary:hover {
+            border-color: var(--border-light);
+            color: var(--text-primary);
+        }
+        .hero-note {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* ── Section shared ── */
+        section { padding: 5rem 0; }
+        .section-border { border-top: 1px solid var(--border); }
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+        }
+        .section-title {
+            font-size: clamp(1.5rem, 3vw, 2.25rem);
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            letter-spacing: -0.02em;
+        }
+        .section-desc {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            line-height: 1.7;
+        }
+
+        /* ── Problem Section ── */
+        .problem-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .problem-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+        .problem-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        .problem-card:hover {
+            border-color: var(--border-light);
+            transform: translateY(-2px);
+        }
+        .problem-card .number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: #f87171;
+            font-size: 0.8125rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .problem-card h3 {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+        .problem-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ── Story block ── */
+        .story-block {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--red-danger);
+            border-radius: 0.75rem;
+            padding: 1.5rem 1.5rem 1.5rem 1.75rem;
+            margin-top: 2.5rem;
+        }
+        .story-block p {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .story-block strong { color: white; }
+        .story-block .collapse-line {
+            color: #f87171;
+            font-weight: 600;
+        }
+
+        /* ── Features ── */
+        .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        .feature-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        @media (min-width: 768px) {
+            .feature-card { grid-template-columns: 1fr 1fr; align-items: start; }
+            .feature-card.reverse { direction: rtl; }
+            .feature-card.reverse > * { direction: ltr; }
+        }
+        .feature-card:hover {
+            border-color: var(--accent-border);
+        }
+        .feature-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 0.5rem;
+            background: var(--accent-badge);
+            color: var(--accent-light);
+            font-size: 0.8125rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .feature-card .desc {
+            font-size: 0.9375rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        .feature-card .highlight {
+            color: var(--accent-light);
+            font-weight: 600;
+        }
+        .feature-card .punchline {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        /* ── Score gauge mock ── */
+        .gauge-mock {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: var(--bg-surface-light);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+        }
+        .gauge-svg { width: 160px; height: 100px; }
+        .gauge-score {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-top: 0.25rem;
+        }
+        .gauge-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-top: 0.25rem;
+        }
+
+        /* ── Score breakdown table ── */
+        .score-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        .score-table td {
+            padding: 0.5rem 0;
+            font-size: 0.875rem;
+            border-bottom: 1px solid var(--border);
+        }
+        .score-table td:first-child { color: var(--text-secondary); }
+        .score-table td:last-child {
+            text-align: right;
+            font-weight: 600;
+            color: white;
+        }
+
+        /* ── Buy Box visual ── */
+        .buybox-mock {
+            background: var(--bg-surface-light);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+        .price-rung {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.625rem 0 0.625rem 1rem;
+            border-left: 3px solid var(--border);
+            position: relative;
+            font-size: 0.875rem;
+        }
+        .price-rung::before {
+            content: '';
+            position: absolute;
+            left: -7px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border);
+            border: 2px solid var(--bg-surface-light);
+        }
+        .price-rung .label { color: var(--text-muted); min-width: 5rem; }
+        .price-rung .value { font-weight: 600; color: var(--text-secondary); }
+
+        .price-rung.ideal {
+            border-left-color: var(--accent);
+            background: var(--accent-glow);
+            border-radius: 0 0.375rem 0.375rem 0;
+            padding: 0.75rem 1rem 0.75rem 1rem;
+        }
+        .price-rung.ideal::before { background: var(--accent); width: 12px; height: 12px; left: -8px; }
+        .price-rung.ideal .label { color: var(--accent-light); }
+        .price-rung.ideal .value { color: white; font-size: 1rem; }
+
+        .price-rung.max { border-left-color: var(--yellow-warning); }
+        .price-rung.max::before { background: var(--yellow-warning); }
+        .price-rung.max .label { color: #fbbf24; }
+
+        .price-rung.listed { border-left-color: var(--blue-accent); }
+        .price-rung.listed::before { background: var(--blue-accent); }
+        .price-rung.listed .label { color: #60a5fa; }
+
+        .price-rung.stretch { opacity: 0.5; }
+
+        /* ── Attribution bars ── */
+        .attr-bar-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .attr-bar {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+        .attr-bar-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8125rem;
+        }
+        .attr-bar-header .label { color: var(--text-secondary); }
+        .attr-bar-header .value { color: white; font-weight: 600; }
+        .attr-bar-track {
+            height: 0.5rem;
+            background: var(--border);
+            border-radius: 9999px;
+            overflow: hidden;
+        }
+        .attr-bar-fill {
+            height: 100%;
+            border-radius: 9999px;
+            transition: width 0.8s ease-out;
+        }
+        .attr-bar-fill.equity { background: var(--accent); }
+        .attr-bar-fill.cashflow { background: var(--blue-accent); }
+        .attr-bar-fill.tax { background: #8b5cf6; }
+
+        /* ── Lever cards ── */
+        .lever-card {
+            background: var(--bg-surface-light);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: start;
+            gap: 1rem;
+        }
+        .lever-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 2.25rem;
+            height: 2.25rem;
+            border-radius: 0.5rem;
+            background: var(--accent-badge);
+            color: var(--accent-light);
+            flex-shrink: 0;
+            font-size: 0.875rem;
+        }
+        .lever-card h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.25rem;
+        }
+        .lever-card p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .lever-impact {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 0.15rem 0.5rem;
+            border-radius: 9999px;
+            background: var(--accent-badge);
+            color: var(--accent-light);
+            margin-top: 0.5rem;
+        }
+
+        /* ── Pricing ── */
+        .pricing-section { padding: 5rem 0; }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .pricing-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .pricing-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+        .pricing-card.featured {
+            border-color: var(--accent-border);
+            background: linear-gradient(180deg, rgba(33, 180, 166, 0.04) 0%, var(--bg-surface) 50%);
+            position: relative;
+        }
+        .pricing-card.featured::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: -0.75rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: white;
+            font-size: 0.6875rem;
+            font-weight: 700;
+            padding: 0.2rem 0.75rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .pricing-card .tier-name {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+        .pricing-card .price {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1;
+        }
+        .pricing-card .price .period {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+        .pricing-card .price-desc {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+            margin-top: 0.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.5;
+        }
+        .pricing-card ul {
+            list-style: none;
+            margin: 0 0 1.5rem;
+            padding: 0;
+            flex-grow: 1;
+        }
+        .pricing-card li {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            padding: 0.4rem 0;
+            display: flex;
+            align-items: start;
+            gap: 0.5rem;
+        }
+        .pricing-card li::before {
+            content: '~';
+            color: var(--accent);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+        .pricing-card .btn-pricing {
+            width: 100%;
+            text-align: center;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            border: none;
+        }
+        .btn-pricing-primary {
+            background: var(--accent);
+            color: white;
+        }
+        .btn-pricing-primary:hover {
+            background: var(--accent-light);
+            box-shadow: 0 4px 12px rgba(33, 180, 166, 0.3);
+        }
+        .btn-pricing-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border) !important;
+        }
+        .btn-pricing-secondary:hover {
+            border-color: var(--border-light) !important;
+            color: var(--text-primary);
+        }
+
+        /* ── Social proof ── */
+        .proof-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .proof-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        .proof-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+        .proof-card .name {
+            font-weight: 700;
+            color: var(--accent-light);
+            font-size: 0.875rem;
+            margin-bottom: 0.5rem;
+        }
+        .proof-card p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .proof-card .result {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.375rem;
+            margin-top: 0.75rem;
+            font-size: 0.8125rem;
+            font-weight: 600;
+            color: var(--accent-light);
+        }
+
+        /* ── EV Section ── */
+        .ev-section {
+            background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-body) 100%);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+        .ev-features {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem;
+            margin: 2rem 0;
+        }
+        @media (min-width: 768px) {
+            .ev-features { grid-template-columns: repeat(2, 1fr); }
+        }
+        .ev-feature {
+            display: flex;
+            align-items: start;
+            gap: 0.75rem;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.02);
+        }
+        .ev-feature-icon {
+            color: var(--accent);
+            font-size: 1.125rem;
+            flex-shrink: 0;
+            margin-top: 0.125rem;
+        }
+        .ev-feature h4 {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0.125rem;
+        }
+        .ev-feature p {
+            font-size: 0.8125rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ── Objections ── */
+        .objection-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        .objection {
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+            padding: 1.5rem;
+        }
+        .objection h3 {
+            font-size: 0.9375rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+        .objection p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ── Final CTA ── */
+        .final-cta {
+            text-align: center;
+            padding: 5rem 0 6rem;
+        }
+        .final-cta h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 800;
+            color: white;
+            margin-bottom: 1rem;
+        }
+        .final-cta p {
+            font-size: 1.0625rem;
+            color: var(--text-secondary);
+            max-width: 540px;
+            margin: 0 auto 2rem;
+            line-height: 1.7;
+        }
+
+        /* ── Footer ── */
+        .site-footer {
+            border-top: 1px solid var(--border);
+            padding: 2rem 0;
+            text-align: center;
+        }
+        .site-footer p {
+            font-size: 0.8125rem;
+            color: var(--text-muted);
+        }
+        .site-footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+        }
+        .site-footer a:hover { color: var(--accent); }
+
+        /* ── Stat row ── */
+        .stat-row {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.25rem;
+            margin-top: 2.5rem;
+        }
+        @media (min-width: 768px) {
+            .stat-row { grid-template-columns: repeat(4, 1fr); }
+        }
+        .stat-item {
+            text-align: center;
+            padding: 1.25rem;
+            background: var(--bg-surface);
+            border: 1px solid var(--border);
+            border-radius: 0.75rem;
+        }
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1;
+            margin-bottom: 0.375rem;
+        }
+        .stat-label {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.4;
+        }
+
+        /* ── Sticky bar ── */
+        .sticky-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-surface);
+            border-top: 1px solid var(--border);
+            padding: 0.75rem 1.5rem;
+            z-index: 50;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        .sticky-bar.visible { transform: translateY(0); }
+        .sticky-bar p {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .sticky-bar p { display: block; }
+        }
+        .sticky-bar .btn-primary {
+            padding: 0.625rem 1.5rem;
+            font-size: 0.875rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 640px) {
+            .hero { padding: 3rem 0 2.5rem; }
+            section { padding: 3rem 0; }
+            .feature-card { padding: 1.5rem; }
+            .header-cta { display: none; }
+        }
+
+        /* ── Smooth scroll ── */
+        html { scroll-behavior: smooth; }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="header-brand">
+                    <img src="logo.png" alt="Kassidy Warren" class="header-logo">
+                    <div class="header-divider"></div>
+                    <div>
+                        <div class="header-title">Velocity of Money</div>
+                        <div class="header-subtitle">Underwriting Tool</div>
+                    </div>
+                </div>
+                <a href="/app" class="header-cta">Try It for Free &rarr;</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container-narrow">
+            <div class="hero-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                Built on a $13M+ Portfolio Framework
+            </div>
+            <h1>You Spent 4 Hours in a Spreadsheet. <span class="accent">The Deal Still Didn't Pencil.</span></h1>
+            <p class="hero-sub">The Velocity of Money Underwriting Tool scores your boutique hotel or short-term rental deal in 60 seconds &mdash; tells you exactly what to offer, where the returns actually come from, and the 3 moves that turn a &ldquo;maybe&rdquo; into a &ldquo;hell yes.&rdquo;</p>
+            <div class="hero-cta-group">
+                <a href="/app" class="btn-primary">
+                    Try It for Free
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <span class="hero-note">7-day free trial. No credit card required.</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section-border" id="features">
+        <div class="container">
+            <div class="section-label">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2v20M2 12h20"/></svg>
+                What You Get
+            </div>
+            <h2 class="section-title">5 Outputs. 60 Seconds. The Truth About Your Deal.</h2>
+            <p class="section-desc">Paste in a deal. The tool delivers five things no spreadsheet gives you &mdash; built on the same framework behind a $13M+ portfolio.</p>
+
+            <div class="features-list">
+                <!-- Feature 1: Velocity Score -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-number">1</div>
+                        <h3>Velocity Score (0&ndash;100)</h3>
+                        <p class="desc">A single number that tells you if this deal has velocity &mdash; or if your capital is going to sit there and do nothing. Weighted toward the things that actually build wealth.</p>
+                        <table class="score-table">
+                            <tr><td>Equity Creation (MOIC)</td><td>40 pts</td></tr>
+                            <tr><td>Speed of Capital (IRR)</td><td>25 pts</td></tr>
+                            <tr><td>Tax Efficiency</td><td>15 pts</td></tr>
+                            <tr><td>Stability &amp; Optionality</td><td>20 pts</td></tr>
+                        </table>
+                        <p class="punchline">85+ means serious velocity. Below 50, you're parking capital.</p>
+                    </div>
+                    <div class="gauge-mock">
+                        <svg class="gauge-svg" viewBox="0 0 160 100">
+                            <path d="M 20 90 A 60 60 0 0 1 140 90" fill="none" stroke="#2a2a2a" stroke-width="8" stroke-linecap="round"/>
+                            <path d="M 20 90 A 60 60 0 0 1 140 90" fill="none" stroke="#21B4A6" stroke-width="8" stroke-linecap="round" stroke-dasharray="188" stroke-dashoffset="25" style="transition: stroke-dashoffset 1s ease-out"/>
+                        </svg>
+                        <div class="gauge-score">87</div>
+                        <div class="gauge-label">Velocity Score</div>
+                    </div>
+                </div>
+
+                <!-- Feature 2: Buy Box -->
+                <div class="feature-card reverse">
+                    <div>
+                        <div class="feature-number">2</div>
+                        <h3>Velocity Buy Box</h3>
+                        <p class="desc">Stop evaluating at the asking price. The tool reverse-engineers the maximum purchase price that hits your target returns &mdash; then gives you four numbers: Listed, Ideal, Max, and Stretch.</p>
+                        <p class="punchline">A 78-unit hotel near Yosemite at $6.5M only worked at $4M. That's a 38% gap. Clear pass. 60 seconds.</p>
+                    </div>
+                    <div class="buybox-mock">
+                        <div class="price-rung stretch">
+                            <span class="label">Stretch</span>
+                            <span class="value">$4,800,000</span>
+                        </div>
+                        <div class="price-rung max">
+                            <span class="label">Max</span>
+                            <span class="value">$4,200,000</span>
+                        </div>
+                        <div class="price-rung ideal">
+                            <span class="label">Ideal</span>
+                            <span class="value">$3,650,000</span>
+                        </div>
+                        <div class="price-rung listed">
+                            <span class="label">Listed</span>
+                            <span class="value">$5,200,000</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3: Conservative vs Optimized -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-number">3</div>
+                        <h3>Conservative vs. Optimized</h3>
+                        <p class="desc">Every deal has two versions: the version where everything goes right, and the version where it doesn't. The tool shows both for the only four metrics that matter: <span class="highlight">MOIC, IRR, Annual Cash Flow, and Stabilized Value.</span></p>
+                        <p class="punchline">Underwrite conservatively, execute aggressively. This tool enforces it.</p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div style="background: var(--accent-glow); border: 1px solid var(--accent-border); border-radius: 0.75rem; padding: 1.25rem;">
+                            <div style="font-size: 0.75rem; font-weight: 600; color: var(--accent-light); margin-bottom: 0.75rem;">CONSERVATIVE</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">MOIC</div><div style="font-size: 1.25rem; font-weight: 700; color: white;">2.4x</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">IRR</div><div style="font-size: 1.25rem; font-weight: 700; color: white;">18.2%</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">Cash Flow</div><div style="font-size: 1.25rem; font-weight: 700; color: white;">$185K</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">Value</div><div style="font-size: 1.25rem; font-weight: 700; color: white;">$4.8M</div></div>
+                            </div>
+                        </div>
+                        <div style="background: var(--bg-surface-light); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem;">
+                            <div style="font-size: 0.75rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.75rem;">OPTIMIZED</div>
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem;">
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">MOIC</div><div style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">3.4x</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">IRR</div><div style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">24.1%</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">Cash Flow</div><div style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">$285K</div></div>
+                                <div><div style="font-size: 0.75rem; color: var(--text-muted);">Value</div><div style="font-size: 1.25rem; font-weight: 700; color: var(--text-secondary);">$6.2M</div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 4: Return Attribution -->
+                <div class="feature-card reverse">
+                    <div>
+                        <div class="feature-number">4</div>
+                        <h3>Return Attribution (5-Year)</h3>
+                        <p class="desc">Most investors obsess over cash flow. Cash flow is ~30% of your total return. Equity creation is ~60%. The Return Attribution shows you the dollar amount and percentage of each &mdash; so you stop optimizing for the wrong thing.</p>
+                        <p class="punchline">Did you see cash flow on the accelerators for the velocity of money? No.</p>
+                    </div>
+                    <div style="background: var(--bg-surface-light); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.5rem;">
+                        <div class="attr-bar-group">
+                            <div class="attr-bar">
+                                <div class="attr-bar-header"><span class="label">Equity Creation</span><span class="value">$720K &mdash; 60%</span></div>
+                                <div class="attr-bar-track"><div class="attr-bar-fill equity" style="width: 60%"></div></div>
+                            </div>
+                            <div class="attr-bar">
+                                <div class="attr-bar-header"><span class="label">Cash Flow</span><span class="value">$360K &mdash; 30%</span></div>
+                                <div class="attr-bar-track"><div class="attr-bar-fill cashflow" style="width: 30%"></div></div>
+                            </div>
+                            <div class="attr-bar">
+                                <div class="attr-bar-header"><span class="label">Tax Benefits</span><span class="value">$120K &mdash; 10%</span></div>
+                                <div class="attr-bar-track"><div class="attr-bar-fill tax" style="width: 10%"></div></div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 1.25rem; padding-top: 1rem; border-top: 1px solid var(--border); font-size: 0.8125rem; color: var(--text-muted); display: flex; justify-content: space-between;">
+                            <span>Total MOIC</span>
+                            <span style="color: white; font-weight: 700;">3.4x on $350K invested</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 5: Top 3 Levers -->
+                <div class="feature-card">
+                    <div>
+                        <div class="feature-number">5</div>
+                        <h3>Top 3 Deal Improvement Levers</h3>
+                        <p class="desc">Every deal can get better. The question is where. The tool identifies the three highest-impact changes ranked by effect on MOIC or IRR. One sentence, one quantified impact, one recommendation. No theory.</p>
+                        <p class="punchline">This is what turns &ldquo;interesting&rdquo; into &ldquo;submit the LOI.&rdquo;</p>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+                        <div class="lever-card">
+                            <div class="lever-icon">$</div>
+                            <div>
+                                <h4>Negotiate purchase price down $200K</h4>
+                                <p>MOIC improves from 2.1x to 2.8x. Stabilized value exceeds all-in cost by 35%.</p>
+                                <span class="lever-impact">+0.7x MOIC</span>
+                            </div>
+                        </div>
+                        <div class="lever-card">
+                            <div class="lever-icon">&uarr;</div>
+                            <div>
+                                <h4>Improve ADR by $15/night</h4>
+                                <p>Adds $380K in stabilized value through NOI improvement at current cap rate.</p>
+                                <span class="lever-impact">+$380K value</span>
+                            </div>
+                        </div>
+                        <div class="lever-card">
+                            <div class="lever-icon">&harr;</div>
+                            <div>
+                                <h4>Shift from bridge to SBA 504</h4>
+                                <p>Lower blended rate and longer amortization improve annual cash flow and recycle speed.</p>
+                                <span class="lever-impact">IRR 14% &rarr; 19%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof -->
+    <section class="section-border">
+        <div class="container">
+            <div class="section-label">Real Deals, Real Numbers</div>
+            <h2 class="section-title">Built for People Who Are Actually Doing Deals</h2>
+
+            <div class="proof-grid">
+                <div class="proof-card">
+                    <div class="name">Gideon, Anthony &amp; Alex</div>
+                    <p>Spent 6 months underwriting deals weekly during the worst market conditions. Created their own accountability pod, stayed persistent, kept submitting LOIs.</p>
+                    <div class="result">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                        Landed the Solvang hotel deal
+                    </div>
+                </div>
+                <div class="proof-card">
+                    <div class="name">Cherish</div>
+                    <p>Ran a $1.7M resort deal through the tool. The Velocity Score flagged the ancillary revenue dependency. Restructured her offer with realistic projections.</p>
+                    <div class="result">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                        Avoided a fragile deal
+                    </div>
+                </div>
+                <div class="proof-card">
+                    <div class="name">Owen</div>
+                    <p>Analyzing a 21-unit lodge near the Smoky Mountains with sellers under pressure. The Buy Box told him exactly where to start his offer.</p>
+                    <div class="result">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                        Conservative snapshot confirmed the deal
+                    </div>
+                </div>
+                <div class="proof-card">
+                    <div class="name">Bryce</div>
+                    <p>Ran a 78-unit hotel near Yosemite at $6.5M asking. Tool showed it only works at $4M &mdash; a 38% discount. Clear pass, zero time wasted.</p>
+                    <div class="result">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6L9 17l-5-5"/></svg>
+                        Moved on to the next deal that afternoon
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="pricing-section section-border" id="pricing">
+        <div class="container">
+            <div style="text-align: center;">
+                <div class="section-label" style="justify-content: center;">Pricing</div>
+                <h2 class="section-title" style="max-width: 600px; margin-left: auto; margin-right: auto;">Simple, Transparent Pricing</h2>
+                <p class="section-desc" style="margin: 0 auto;">Start with a free 7-day trial. No credit card required. Unlimited reports from day one.</p>
+            </div>
+
+            <div class="pricing-grid" style="max-width: 720px; margin-left: auto; margin-right: auto;">
+                <div class="pricing-card">
+                    <div class="tier-name">Monthly</div>
+                    <div class="price">$29 <span class="period">/ month</span></div>
+                    <div class="price-desc">Full access, cancel anytime.</div>
+                    <ul>
+                        <li>Unlimited deal analyses</li>
+                        <li>Listing auto-import (Zillow, Redfin, Crexi, LoopNet)</li>
+                        <li>Velocity Score (0&ndash;100)</li>
+                        <li>Buy Box with 4 price points</li>
+                        <li>Scenario comparison &amp; sensitivity</li>
+                        <li>Return Attribution &amp; Deal Levers</li>
+                    </ul>
+                    <a href="/app" class="btn-pricing btn-pricing-secondary">Try It for Free</a>
+                </div>
+
+                <div class="pricing-card featured">
+                    <div class="tier-name">Annual</div>
+                    <div class="price">$199 <span class="period">/ year</span></div>
+                    <div class="price-desc">Save 43% &mdash; just $16.58/month.</div>
+                    <ul>
+                        <li>Everything in Monthly</li>
+                        <li>Best value for active deal makers</li>
+                        <li>Lock in the lowest price</li>
+                        <li>Unlimited scenarios per deal</li>
+                        <li>Pro forma &amp; cash flow projections</li>
+                        <li>Priority support</li>
+                    </ul>
+                    <a href="/app" class="btn-pricing btn-pricing-primary">Try It for Free</a>
+                </div>
+            </div>
+
+            <p style="text-align: center; font-size: 0.8125rem; color: var(--text-muted); margin-top: 1.5rem;">Both plans start with a free 7-day trial. Cancel anytime &mdash; no questions asked.</p>
+        </div>
+    </section>
+
+    <!-- Escape Velocity upsell -->
+    <section class="ev-section" id="escape-velocity">
+        <div class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
+            <div class="section-label">For Active Deal Makers</div>
+            <h2 class="section-title">Want the Room That Closes Deals?</h2>
+            <p class="section-desc">Escape Velocity is unlimited tool access plus live deal reviews, a private investor community, and direct access to Kassidy.</p>
+
+            <div class="ev-features">
+                <div class="ev-feature">
+                    <div class="ev-feature-icon">&infin;</div>
+                    <div>
+                        <h4>Unlimited Analyses</h4>
+                        <p>Every price point, every structure, every stress test. No per-use cost.</p>
+                    </div>
+                </div>
+                <div class="ev-feature">
+                    <div class="ev-feature-icon">&phone;</div>
+                    <div>
+                        <h4>2x Weekly Live Calls</h4>
+                        <p>I pull up your deal, plug in the numbers, change variables, give you a verdict.</p>
+                    </div>
+                </div>
+                <div class="ev-feature">
+                    <div class="ev-feature-icon">&loz;</div>
+                    <div>
+                        <h4>Private Community</h4>
+                        <p>WhatsApp group of investors actively underwriting, submitting LOIs, and closing deals.</p>
+                    </div>
+                </div>
+                <div class="ev-feature">
+                    <div class="ev-feature-icon">&raquo;</div>
+                    <div>
+                        <h4>Deal Flow Network</h4>
+                        <p>72% of sub-$10M boutique hotel and STR deals originate from personal networks. This is yours.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+                <a href="mailto:kassidy@kassidywarren.com?subject=Escape%20Velocity" class="btn-primary">Inquire About Escape Velocity &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Objections -->
+    <section class="section-border">
+        <div class="container-narrow">
+            <div class="section-label">Common Questions</div>
+            <h2 class="section-title">Straight Answers</h2>
+
+            <div class="objection-list">
+                <div class="objection">
+                    <h3>&ldquo;I can figure this out with my own spreadsheet.&rdquo;</h3>
+                    <p>You can. I did for years. But my spreadsheet never gave me a Velocity Score, a reverse-engineered buy box, or the three highest-impact levers. It never flagged when my expense ratio was too optimistic or my DSCR went red on the refi. The tool catches what you miss &mdash; in 60 seconds instead of 4 hours. And your first analysis is free.</p>
+                </div>
+                <div class="objection">
+                    <h3>&ldquo;Is it really free to start?&rdquo;</h3>
+                    <p>Yes. 7 days, full access, no credit card. You'll run real deals and see real numbers. If it changes how you evaluate &mdash; and it will &mdash; plans start at $29/month or $199/year.</p>
+                </div>
+                <div class="objection">
+                    <h3>&ldquo;I'm not ready for hotels or STRs yet.&rdquo;</h3>
+                    <p>If you're thinking about real estate at all, the tool shows you what great deals look like. It teaches you to evaluate like someone who's done this hundreds of times. Run a deal for free. When you are ready, you won't be starting from zero.</p>
+                </div>
+                <div class="objection">
+                    <h3>&ldquo;What makes this different from other tools?&rdquo;</h3>
+                    <p>No existing AI tool is specifically built for boutique hotel and short-term rental deal analysis. These properties have complex P&Ls, revenue management layers, and seasonality that generic tools can't handle. This is built on the Velocity of Money framework &mdash; the same methodology behind $13M+ in acquisitions. It doesn't just say &ldquo;good deal.&rdquo; It tells you if it has velocity.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA -->
+    <section class="final-cta section-border">
+        <div class="container-narrow">
+            <h2>You're Already Doing the Work.<br>The Tool Makes the Work Count.</h2>
+            <p>Start your free trial. See the score. See the buy box. See where the returns actually come from. Then decide.</p>
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
+                <a href="/app" class="btn-primary">
+                    Try It for Free
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#escape-velocity" class="btn-secondary">Already all in? Join Escape Velocity &rarr;</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Founder / Method -->
+    <section class="section-border">
+        <div class="container">
+            <div style="display:flex;flex-direction:column;gap:2rem;align-items:center;text-align:center;max-width:720px;margin:0 auto">
+                <div style="width:80px;height:80px;border-radius:50%;overflow:hidden;border:2px solid rgba(255,255,255,0.12);flex-shrink:0">
+                    <img src="https://kassidywarren.com/wp-content/uploads/2024/01/kassidy-headshot.jpg" alt="Kassidy Warren" style="width:100%;height:100%;object-fit:cover" onerror="this.parentElement.style.background='#1e1e2e';this.style.display='none'">
+                </div>
+                <div>
+                    <div class="section-label" style="justify-content:center;margin-bottom:0.75rem">The Method Behind the Tool</div>
+                    <h2 style="font-size:clamp(1.4rem,3vw,2rem);font-weight:700;color:#fff;line-height:1.3;margin-bottom:1rem">
+                        Built by Kassidy Warren — Boutique Hotel &amp; STR Investor
+                    </h2>
+                    <p style="color:#9ca3af;font-size:1rem;line-height:1.7;margin-bottom:1.25rem">
+                        The <strong style="color:#fff">Velocity of Money</strong> is the framework I developed across a $13M+ portfolio of boutique hotels and short-term rentals. The idea is simple: your capital should move fast, compound efficiently, and create wealth on multiple axes — cash flow, equity, and tax savings — simultaneously.
+                        <br><br>
+                        I built this tool because the spreadsheet I was using couldn't tell me <em>where</em> the return was coming from, what price the deal actually worked at, or which three things would move the needle most. Now it can.
+                    </p>
+                    <!-- Social / trust signals -->
+                    <div style="display:flex;flex-wrap:wrap;gap:0.75rem;justify-content:center;margin-bottom:1.5rem">
+                        <a href="https://www.instagram.com/kassidywarren" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;color:#d1d5db;font-size:13px;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                            @kassidywarren
+                        </a>
+                        <a href="https://www.youtube.com/@kassidywarren" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;color:#d1d5db;font-size:13px;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                            YouTube
+                        </a>
+                        <a href="https://open.spotify.com/show/for-your-own-good" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;color:#d1d5db;font-size:13px;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+                            Podcast — Top 2% Spotify
+                        </a>
+                        <a href="https://kassidywarren.com" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:6px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:6px 14px;color:#d1d5db;font-size:13px;text-decoration:none;transition:border-color 0.2s" onmouseover="this.style.borderColor='rgba(255,255,255,0.3)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.1)'">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                            kassidywarren.com
+                        </a>
+                    </div>
+                    <a href="/app" class="btn-primary" style="display:inline-flex">
+                        Try the Tool Free
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; 2025 Kassidy Warren &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a> &middot; <a href="https://instagram.com/kassidy.warren">@kassidy.warren</a></p>
+        </div>
+    </footer>
+
+    <!-- Sticky bar -->
+    <div class="sticky-bar" id="stickyBar">
+        <p>Try the full underwriting tool free for 7 days. See the Velocity Score in 60 seconds.</p>
+        <a href="/app" class="btn-primary">Try It for Free &rarr;</a>
+    </div>
+
+    <script>
+        // Show sticky bar after scrolling past hero
+        const stickyBar = document.getElementById('stickyBar');
+        const observer = new IntersectionObserver(([entry]) => {
+            stickyBar.classList.toggle('visible', !entry.isIntersecting);
+        }, { threshold: 0 });
+        observer.observe(document.querySelector('.hero'));
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(a => {
+            a.addEventListener('click', e => {
+                const target = document.querySelector(a.getAttribute('href'));
+                if (target) {
+                    e.preventDefault();
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
