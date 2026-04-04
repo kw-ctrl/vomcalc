@@ -59,6 +59,14 @@ export async function initGating() {
             }
 
             console.log('[Gating] Auth state changed:', event, session ? 'has session' : 'no session');
+
+            // Close auth modal immediately on sign-in — don't wait for async refresh
+            if (event === 'SIGNED_IN') {
+                closeModal('authModal');
+                hideSaveNudge();
+                if (hasAuthParams()) history.replaceState(null, '', window.location.pathname);
+            }
+
             const myVersion = ++refreshVersion;
             try {
                 if (session) {
@@ -70,15 +78,6 @@ export async function initGating() {
                 await refreshAccess();
                 if (myVersion !== refreshVersion) return; // superseded
                 if (event === 'SIGNED_IN') {
-                    // Clean auth params from URL so refresh doesn't re-process
-                    // the stale token (PKCE ?code= or implicit #access_token=)
-                    if (hasAuthParams()) {
-                        history.replaceState(null, '', window.location.pathname);
-                    }
-                    // Always close auth modal on confirmed sign-in — don't rely on
-                    // handleMagicLink getting a clean error:null (network race condition)
-                    closeModal('authModal');
-                    hideSaveNudge();
                     restoreAndReanalyze();
                 }
             } catch (err) {
@@ -1054,12 +1053,14 @@ async function handleMagicLink() {
                 return;
             }
         } else {
-            ({ error } = await signInWithEmail(email, password));
+            const signInTimeout = new Promise((_, reject) =>
+                setTimeout(() => reject(new Error('Sign-in timed out. Please try again.')), 10000)
+            );
+            ({ error } = await Promise.race([signInWithEmail(email, password), signInTimeout]));
             if (!error) {
                 status.textContent = 'Signed in!';
                 status.className = 'text-sm mt-3 text-emerald-400';
                 btn.textContent = 'Done';
-                // onAuthStateChange SIGNED_IN will also close the modal — belt and suspenders
                 setTimeout(() => closeModal('authModal'), 800);
                 return;
             }
