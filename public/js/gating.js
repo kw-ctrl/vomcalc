@@ -903,6 +903,7 @@ let _authMode = 'signin'; // 'signin' | 'signup' | 'forgot' | 'reset'
 export function setAuthMode(mode) {
     _authMode = mode;
     const btn = document.getElementById('authSubmit');
+    const title = document.getElementById('authTitle');
     const switchLink = document.getElementById('authSwitchToSignUp');
     const forgotLink = document.getElementById('authForgotLink');
     const subtitle = document.querySelector('#authModal p.text-sm.text-gray-400');
@@ -924,14 +925,17 @@ export function setAuthMode(mode) {
     }
 
     if (mode === 'signup') {
+        if (title) title.textContent = 'Create your account';
         if (btn) btn.textContent = 'Create Free Account';
         if (switchLink) { switchLink.textContent = 'Already have an account? Sign in'; switchLink.onclick = () => setAuthMode('signin'); }
         if (subtitle) subtitle.textContent = 'Free. No credit card required.';
     } else if (mode === 'forgot') {
+        if (title) title.textContent = 'Reset your password';
         if (btn) btn.textContent = 'Send Reset Link';
         if (switchLink) { switchLink.textContent = 'Back to sign in'; switchLink.onclick = () => setAuthMode('signin'); }
         if (subtitle) subtitle.textContent = 'Enter your email and we\'ll send a reset link.';
     } else if (mode === 'reset') {
+        if (title) title.textContent = 'Set new password';
         if (btn) btn.textContent = 'Set New Password';
         if (switchLink) switchLink.style.display = 'none';
         if (subtitle) subtitle.textContent = 'Enter your new password.';
@@ -939,6 +943,7 @@ export function setAuthMode(mode) {
         if (emailField) emailField.style.display = 'none';
     } else {
         // signin
+        if (title) title.textContent = 'Welcome back';
         if (btn) btn.textContent = 'Sign In';
         if (switchLink) { switchLink.textContent = 'New here? Create a free account'; switchLink.onclick = () => setAuthMode('signup'); switchLink.style.display = ''; }
         if (subtitle) subtitle.textContent = 'Sign in to access your analyses.';
