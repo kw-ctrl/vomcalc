@@ -1,30 +1,43 @@
-/* Velocity of Money Underwriting Tool v2.0 — Dark Theme */
+/* Velocity of Money Underwriting Tool — DealOS Theme */
 
 :root {
-    --bg-body: #0a0a0a;
-    --bg-surface: #141414;
-    --bg-surface-light: #1c1c1c;
-    --border: #2a2a2a;
-    --border-light: #333;
-    --text-primary: #f5f5f5;
-    --text-secondary: #a1a1a1;
-    --text-muted: #666;
-    --green-success: #10b981;
-    --blue-accent: #3b82f6;
-    --yellow-warning: #f59e0b;
-    --red-danger: #ef4444;
-    --emerald-glow: rgba(16, 185, 129, 0.08);
-    --red-glow: rgba(239, 68, 68, 0.08);
-    --amber-glow: rgba(245, 158, 11, 0.08);
+    --bg-body: #08090b;
+    --bg-surface: #0f1115;
+    --bg-surface-light: #14171d;
+    --bg-surface-2: #1a1e27;
+    --border: #1e2433;
+    --border-light: #252c3a;
+    --text-primary: #e2e5f0;
+    --text-secondary: #8892a4;
+    --text-muted: #5a6275;
+    --accent: #00e5a0;
+    --accent-dim: rgba(0, 229, 160, 0.12);
+    --accent-border: rgba(0, 229, 160, 0.2);
+    --green-success: #00e5a0;
+    --blue-accent: #0057ff;
+    --purple: #7c6fff;
+    --yellow-warning: #f5a623;
+    --red-danger: #ff4b4b;
+    --emerald-glow: rgba(0, 229, 160, 0.07);
+    --red-glow: rgba(255, 75, 75, 0.08);
+    --amber-glow: rgba(245, 166, 35, 0.08);
+    --mono: 'DM Mono', monospace;
 }
 
 * { box-sizing: border-box; }
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background: var(--bg-body);
+}
+
+/* Numbers, scores, financial values — monospace */
+.mono, .score-num, .price-rung-value, .kpi-val,
+#summaryMOIC, #summaryCOC, #summaryIRR, #summaryCapital,
+#velocityScore, #simMOIC {
+    font-family: var(--mono);
 }
 
 /* ──────────────────────────────────────────────
@@ -51,8 +64,8 @@ body {
 
 .field-input:focus {
     outline: none;
-    border-color: var(--border-light);
-    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-dim);
 }
 
 .field-input::placeholder {
@@ -253,7 +266,7 @@ input[type="number"] { -moz-appearance: textfield; }
 }
 
 .toggle-switch input:checked + .toggle-track {
-    background: var(--green-success);
+    background: var(--accent);
 }
 
 .toggle-switch input:checked + .toggle-track::after {
@@ -338,9 +351,10 @@ button:active {
    ────────────────────────────────────────────── */
 .section-title {
     font-size: 1rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-primary);
     margin-bottom: 0.375rem;
+    letter-spacing: -0.01em;
 }
 
 /* ──────────────────────────────────────────────
@@ -493,7 +507,7 @@ button:active {
 
 .lever-card:hover {
     transform: translateY(-3px);
-    border-color: var(--border-light);
+    border-color: var(--accent);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
@@ -517,14 +531,16 @@ button:active {
     font-weight: 700;
     padding: 0.3rem 0.625rem;
     border-radius: 9999px;
-    background: rgba(16, 185, 129, 0.18);
-    color: #34d399;
+    background: var(--accent-dim);
+    color: var(--accent);
+    font-family: var(--mono);
 }
 
 .lever-card-direction {
     font-size: 0.8125rem;
-    color: var(--blue-accent);
+    color: var(--accent);
     margin-top: 0.5rem;
+    font-family: var(--mono);
 }
 
 /* ──────────────────────────────────────────────
@@ -668,7 +684,7 @@ button:active {
 }
 
 #sensitivityTable td.sens-current {
-    outline: 2px solid var(--blue-accent);
+    outline: 2px solid var(--accent);
     outline-offset: -2px;
 }
 
@@ -802,7 +818,7 @@ button:active {
 }
 
 .report-list-item:hover {
-    border-color: rgba(59, 130, 246, 0.4);
+    border-color: var(--accent-border);
     transform: translateY(-1px);
 }
 
@@ -861,8 +877,8 @@ button:active {
 }
 
 .pricing-card-featured {
-    border-color: var(--blue-accent);
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
+    border-color: var(--accent-border);
+    box-shadow: 0 0 24px var(--accent-dim);
 }
 
 .menu-action-button {

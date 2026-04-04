@@ -478,7 +478,7 @@ function renderBuyBoxSection(r, gatherInputs) {
         const belowListed = !isListedRow && rung.primary < primary.listed;
         const aboveListed = !isListedRow && rung.primary > primary.listed;
         const priceDisplay = belowListed
-            ? `${formatCurrency(rung.primary)} <span style="color:#10b981;font-size:0.7em">✓ below asking</span>`
+            ? `${formatCurrency(rung.primary)} <span style="color:#00e5a0;font-size:0.7em">✓ below asking</span>`
             : aboveListed
             ? `${formatCurrency(rung.primary)} <span style="color:#f59e0b;font-size:0.7em">↑ above asking</span>`
             : formatCurrency(rung.primary);
