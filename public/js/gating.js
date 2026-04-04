@@ -1046,7 +1046,6 @@ async function handleMagicLink() {
         if (_authMode === 'signup') {
             ({ error } = await signUpWithEmail(email, password));
             if (!error) {
-                // Capture email to CRM
                 captureEmailToCRM(email);
                 status.textContent = 'Account created! You now have full access.';
                 status.className = 'text-sm mt-3 text-emerald-400';
@@ -1056,11 +1055,21 @@ async function handleMagicLink() {
             }
         } else {
             ({ error } = await signInWithEmail(email, password));
-            if (!error) {
+            // Always check if a session exists — error can be set even when sign-in succeeds
+            const activeSession = await getBrowserSession();
+            if (activeSession) {
+                // Confirmed signed in — close and proceed regardless of error field
                 status.textContent = 'Signed in!';
                 status.className = 'text-sm mt-3 text-emerald-400';
                 btn.textContent = 'Done';
-                setTimeout(() => closeModal('authModal'), 1000);
+                closeModal('authModal');
+                hideSaveNudge();
+                restoreAndReanalyze();
+                return;
+            }
+            if (!error) {
+                // No session but no error — shouldn't happen, treat as success
+                closeModal('authModal');
                 return;
             }
         }
@@ -1069,6 +1078,11 @@ async function handleMagicLink() {
         btn.disabled = false;
         btn.textContent = _authMode === 'signup' ? 'Create Free Account' : 'Sign In';
     } catch (err) {
+        // Even on exception, check if they're actually signed in
+        try {
+            const activeSession = await getBrowserSession();
+            if (activeSession) { closeModal('authModal'); return; }
+        } catch {}
         status.textContent = 'Connection error. Please try again.';
         status.className = 'text-sm mt-3 text-red-400';
         btn.disabled = false;
