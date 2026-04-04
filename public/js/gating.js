@@ -914,7 +914,7 @@ export function setAuthMode(mode) {
 
     if (mode === 'signup') {
         if (btn) btn.textContent = 'Create Free Account';
-        if (switchLink) { switchLink.textContent = 'Sign in instead'; switchLink.onclick = () => setAuthMode('signin'); }
+        if (switchLink) { switchLink.textContent = 'Already have an account? Sign in'; switchLink.onclick = () => setAuthMode('signin'); }
         if (subtitle) subtitle.textContent = 'Free. No credit card required.';
     } else if (mode === 'forgot') {
         if (btn) btn.textContent = 'Send Reset Link';
@@ -929,7 +929,7 @@ export function setAuthMode(mode) {
     } else {
         // signin
         if (btn) btn.textContent = 'Sign In';
-        if (switchLink) { switchLink.textContent = 'Create free account'; switchLink.onclick = () => setAuthMode('signup'); switchLink.style.display = ''; }
+        if (switchLink) { switchLink.textContent = 'New here? Create a free account'; switchLink.onclick = () => setAuthMode('signup'); switchLink.style.display = ''; }
         if (subtitle) subtitle.textContent = 'Sign in to access your analyses.';
         const emailField = document.getElementById('authEmail');
         if (emailField) emailField.style.display = '';
