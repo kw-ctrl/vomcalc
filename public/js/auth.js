@@ -163,20 +163,23 @@ export async function getAuthState(sessionOverride = null) {
     if (!session?.access_token) {
         return { user: null, subscription: { status: 'anonymous' } };
     }
+    // Free tier — all authenticated users get full access
+    return {
+        user: session.user || null,
+        subscription: { status: 'active' },
+    };
+}
 
-    try {
-        const response = await fetch(buildApiUrl('/me'), {
-            headers: { Authorization: `Bearer ${session.access_token}` },
-        });
-        // If backend is unavailable (no serverless functions deployed), treat as anonymous
-        if (!response.ok) {
-            return { user: null, subscription: { status: 'anonymous' } };
-        }
-        return normalizeAuthState(await parseJsonResponse(response, 'Unable to load auth state'));
-    } catch {
-        // Backend unreachable — return anonymous, don't break the UI
-        return { user: null, subscription: { status: 'anonymous' } };
-    }
+export async function resetPasswordForEmail(email) {
+    const { error } = await getClient().auth.resetPasswordForEmail(email, {
+        redirectTo: window.location.origin + window.location.pathname,
+    });
+    return { error };
+}
+
+export async function updateUserPassword(password) {
+    const { error } = await getClient().auth.updateUser({ password });
+    return { error };
 }
 
 export async function signOut() {

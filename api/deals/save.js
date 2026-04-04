@@ -6,7 +6,7 @@
 export const config = { maxDuration: 15 };
 
 const SUPABASE_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
 async function getUserId(token) {
   if (!token) return null;

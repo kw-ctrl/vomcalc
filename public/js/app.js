@@ -19,7 +19,7 @@ import {
 import { solveBuyBoxPrices, buildScenarios, calculateDealLevers } from './scenarios.js';
 import { renderResults } from './rendering.js';
 import { calculateRemainingBalance } from './utils.js';
-import { initGating, checkAccess, persistLatestReport, applyAnonBlur } from './gating.js';
+import { initGating, checkAccess, persistLatestReport, applyAnonBlur, openModal, setAuthMode } from './gating.js';
 import { API_BASE_URL } from './config.js';
 import { getBrowserSession } from './auth.js';
 
@@ -2224,6 +2224,8 @@ function populateFromDoc(data) {
 // ── Expose functions needed by inline HTML onclick handlers ──────────────────
 // app.js loads as type="module" so functions aren't global by default.
 Object.assign(window, {
+  openModal,
+  setAuthMode,
   setImportTab,
   extractFromPastedText,
   updateCombinedZone,

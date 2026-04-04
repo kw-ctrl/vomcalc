@@ -5,7 +5,7 @@
 export const config = { maxDuration: 10 };
 
 const SUPABASE_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
-const SERVICE_KEY = process.env.SUPABASE_SERVICE_KEY;
+const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');

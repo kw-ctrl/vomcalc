@@ -6,7 +6,7 @@
 const SB_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
 const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4a2VlaWR5dGFmam9naW9odmdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MDkxNjYsImV4cCI6MjA4ODQ4NTE2Nn0.QdZCFdzuCOTcxPYnWP_gM-1rC1sjgmRc92xg8tkxmAc';
 
-function sbKey(svc) { return svc ? process.env.SUPABASE_SERVICE_KEY : SB_ANON; }
+function sbKey(svc) { return svc ? process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY : SB_ANON; }
 
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -37,7 +37,7 @@ export default async function handler(req, res) {
   // SAVE deal
   if (req.method === 'POST') {
     const body = req.body || {};
-    const key = process.env.SUPABASE_SERVICE_KEY;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
     if (!key) return res.status(500).json({ error: 'Server misconfigured' });
 
     const report = {
@@ -97,7 +97,7 @@ export default async function handler(req, res) {
   if (req.method === 'PATCH') {
     const { id, status, notes, name } = req.body || {};
     if (!id) return res.status(400).json({ error: 'Missing id' });
-    const key = process.env.SUPABASE_SERVICE_KEY;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
     // Get current snapshot, merge update
     const curr = await fetch(`${SB_URL}/rest/v1/reports?id=eq.${id}&select=result_snapshot,title`, {
@@ -117,7 +117,7 @@ export default async function handler(req, res) {
   if (req.method === 'DELETE') {
     const id = req.query.id || req.body?.id;
     if (!id) return res.status(400).json({ error: 'Missing id' });
-    const key = process.env.SUPABASE_SERVICE_KEY;
+    const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
     const r = await fetch(`${SB_URL}/rest/v1/reports?id=eq.${id}`, {
       method: 'DELETE',
       headers: { apikey: key, Authorization: `Bearer ${key}` },

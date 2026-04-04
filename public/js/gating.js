@@ -17,7 +17,9 @@ import {
     signUpWithEmail,
     signOut,
     syncServerSession,
-    onAuthStateChange
+    onAuthStateChange,
+    resetPasswordForEmail,
+    updateUserPassword,
 } from './auth.js';
 import { API_BASE_URL } from './config.js';
 
@@ -48,6 +50,13 @@ export async function initGating() {
     try {
         onAuthStateChange(async (event, session) => {
             if (event === 'INITIAL_SESSION') return;
+
+            // Password recovery — user clicked reset link in email
+            if (event === 'PASSWORD_RECOVERY') {
+                openModal('authModal');
+                setAuthMode('reset');
+                return;
+            }
 
             console.log('[Gating] Auth state changed:', event, session ? 'has session' : 'no session');
             const myVersion = ++refreshVersion;
@@ -256,11 +265,11 @@ function renderOverlay(sub) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
             </div>
-            <h3 class="text-xl font-bold text-white mt-3">Unlock the full analysis</h3>
-            <p class="text-sm text-gray-400 mt-1 max-w-md">Sign up for a free 7-day trial to access buy box pricing, scenario comparisons, pro forma, sensitivity analysis, and deal improvement levers.</p>
-            <p class="text-xs text-gray-500 mt-1">No credit card required.</p>
+            <h3 class="text-xl font-bold text-white mt-3">Create a free account to see results</h3>
+            <p class="text-sm text-gray-400 mt-1 max-w-md">Free access to the full analysis — buy box pricing, scenario comparisons, pro forma, sensitivity analysis, and deal improvement levers.</p>
+            <p class="text-xs text-gray-500 mt-1">No credit card. No trial. Just free.</p>
             <div class="flex gap-3 mt-5">
-                <button id="gateSignUp" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">Start Free Trial</button>
+                <button id="gateSignUp" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">Create Free Account</button>
                 <button id="gateSignIn" class="px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white transition">Sign In</button>
             </div>
         `;
@@ -288,10 +297,13 @@ async function updateHeaderAuth(authState) {
         }
         container.innerHTML = `
             <button id="headerSignIn" class="px-4 py-2 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white hover:border-gray-500 transition">
-                Sign In
+                Sign Up Free
             </button>
         `;
-        container.querySelector('#headerSignIn')?.addEventListener('click', () => openModal('authModal'));
+        container.querySelector('#headerSignIn')?.addEventListener('click', () => {
+            setAuthMode('signup');
+            openModal('authModal');
+        });
         return;
     }
 
@@ -382,7 +394,7 @@ function closeHeaderMenu() {
 //  MODALS
 // ════════════════════════════════════════════════
 
-function openModal(id) {
+export function openModal(id) {
     closeHeaderMenu();
     document.getElementById(id)?.classList.remove('hidden');
 
@@ -875,27 +887,124 @@ async function handleOpenBillingPortal() {
     }
 }
 
-let _authMode = 'signin'; // 'signin' | 'signup'
+let _authMode = 'signin'; // 'signin' | 'signup' | 'forgot' | 'reset'
 
-function setAuthMode(mode) {
+export function setAuthMode(mode) {
     _authMode = mode;
     const btn = document.getElementById('authSubmit');
     const switchLink = document.getElementById('authSwitchToSignUp');
+    const forgotLink = document.getElementById('authForgotLink');
     const subtitle = document.querySelector('#authModal p.text-sm.text-gray-400');
-    if (mode === 'signup') {
-        if (btn) btn.textContent = 'Create Account';
-        if (switchLink) { switchLink.textContent = 'Sign in instead'; switchLink.onclick = () => setAuthMode('signin'); }
-        if (subtitle) subtitle.textContent = 'Create your account to save reports.';
-    } else {
-        if (btn) btn.textContent = 'Sign In';
-        if (switchLink) { switchLink.textContent = 'Create account'; switchLink.onclick = () => setAuthMode('signup'); }
-        if (subtitle) subtitle.textContent = 'Save and revisit your underwriting reports.';
-    }
+    const passwordField = document.getElementById('authPassword');
+    const confirmPasswordWrap = document.getElementById('authConfirmPasswordWrap');
     const status = document.getElementById('authStatus');
     if (status) status.textContent = '';
+
+    // Toggle field visibility
+    if (passwordField) {
+        passwordField.style.display = (mode === 'forgot') ? 'none' : '';
+        passwordField.value = '';
+    }
+    if (confirmPasswordWrap) {
+        confirmPasswordWrap.style.display = (mode === 'reset') ? '' : 'none';
+    }
+    if (forgotLink) {
+        forgotLink.style.display = (mode === 'signin') ? '' : 'none';
+    }
+
+    if (mode === 'signup') {
+        if (btn) btn.textContent = 'Create Free Account';
+        if (switchLink) { switchLink.textContent = 'Sign in instead'; switchLink.onclick = () => setAuthMode('signin'); }
+        if (subtitle) subtitle.textContent = 'Free. No credit card required.';
+    } else if (mode === 'forgot') {
+        if (btn) btn.textContent = 'Send Reset Link';
+        if (switchLink) { switchLink.textContent = 'Back to sign in'; switchLink.onclick = () => setAuthMode('signin'); }
+        if (subtitle) subtitle.textContent = 'Enter your email and we\'ll send a reset link.';
+    } else if (mode === 'reset') {
+        if (btn) btn.textContent = 'Set New Password';
+        if (switchLink) switchLink.style.display = 'none';
+        if (subtitle) subtitle.textContent = 'Enter your new password.';
+        const emailField = document.getElementById('authEmail');
+        if (emailField) emailField.style.display = 'none';
+    } else {
+        // signin
+        if (btn) btn.textContent = 'Sign In';
+        if (switchLink) { switchLink.textContent = 'Create free account'; switchLink.onclick = () => setAuthMode('signup'); switchLink.style.display = ''; }
+        if (subtitle) subtitle.textContent = 'Sign in to access your analyses.';
+        const emailField = document.getElementById('authEmail');
+        if (emailField) emailField.style.display = '';
+    }
+}
+
+async function handleForgotPassword() {
+    const email = document.getElementById('authEmail')?.value?.trim();
+    const btn = document.getElementById('authSubmit');
+    const status = document.getElementById('authStatus');
+
+    if (!email) {
+        status.textContent = 'Please enter your email.';
+        status.className = 'text-sm mt-3 text-red-400';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending...';
+    status.textContent = '';
+
+    const { error } = await resetPasswordForEmail(email);
+    btn.disabled = false;
+    btn.textContent = 'Send Reset Link';
+
+    if (error) {
+        status.textContent = error.message || 'Unable to send reset email.';
+        status.className = 'text-sm mt-3 text-red-400';
+    } else {
+        status.textContent = 'Check your email for a reset link.';
+        status.className = 'text-sm mt-3 text-emerald-400';
+    }
+}
+
+async function handlePasswordReset() {
+    const password = document.getElementById('authPassword')?.value || '';
+    const confirm = document.getElementById('authConfirmPassword')?.value || '';
+    const btn = document.getElementById('authSubmit');
+    const status = document.getElementById('authStatus');
+
+    if (!password || password.length < 6) {
+        status.textContent = 'Password must be at least 6 characters.';
+        status.className = 'text-sm mt-3 text-red-400';
+        return;
+    }
+    if (password !== confirm) {
+        status.textContent = 'Passwords do not match.';
+        status.className = 'text-sm mt-3 text-red-400';
+        return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Setting password...';
+    status.textContent = '';
+
+    const { error } = await updateUserPassword(password);
+    btn.disabled = false;
+
+    if (error) {
+        btn.textContent = 'Set New Password';
+        status.textContent = error.message || 'Unable to update password.';
+        status.className = 'text-sm mt-3 text-red-400';
+    } else {
+        status.textContent = 'Password updated! Signing you in…';
+        status.className = 'text-sm mt-3 text-emerald-400';
+        btn.textContent = 'Done';
+        setTimeout(() => closeModal('authModal'), 1500);
+    }
 }
 
 async function handleMagicLink() {
+    // Dispatch to specific handlers for non-credential modes
+    if (_authMode === 'forgot') return handleForgotPassword();
+    if (_authMode === 'reset') return handlePasswordReset();
+
     const email = document.getElementById('authEmail')?.value?.trim();
     const password = document.getElementById('authPassword')?.value || '';
     const btn = document.getElementById('authSubmit');
@@ -921,7 +1030,9 @@ async function handleMagicLink() {
         if (_authMode === 'signup') {
             ({ error } = await signUpWithEmail(email, password));
             if (!error) {
-                status.textContent = 'Account created! You are now signed in.';
+                // Capture email to CRM
+                captureEmailToCRM(email);
+                status.textContent = 'Account created! You now have full access.';
                 status.className = 'text-sm mt-3 text-emerald-400';
                 btn.textContent = 'Done';
                 setTimeout(() => closeModal('authModal'), 1500);
@@ -940,13 +1051,29 @@ async function handleMagicLink() {
         status.textContent = error?.message || 'Something went wrong. Try again.';
         status.className = 'text-sm mt-3 text-red-400';
         btn.disabled = false;
-        btn.textContent = _authMode === 'signup' ? 'Create Account' : 'Sign In';
+        btn.textContent = _authMode === 'signup' ? 'Create Free Account' : 'Sign In';
     } catch (err) {
         status.textContent = 'Connection error. Please try again.';
         status.className = 'text-sm mt-3 text-red-400';
         btn.disabled = false;
-        btn.textContent = _authMode === 'signup' ? 'Create Account' : 'Sign In';
+        btn.textContent = _authMode === 'signup' ? 'Create Free Account' : 'Sign In';
     }
+}
+
+function captureEmailToCRM(email) {
+    try {
+        fetch('https://vault.kassidywarren.com/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                email: email.trim().toLowerCase(),
+                source: 'vom_calculator',
+                utm_source: 'vom-calculator',
+                utm_medium: 'tool',
+                utm_campaign: 'vom-calc-signup',
+            }),
+        }).catch(() => {}); // silent fail — never block UX
+    } catch { /* ignore */ }
 }
 
 async function handleSignOut() {
@@ -1151,16 +1278,42 @@ function escapeHtml(value) {
 
 function wireEvents() {
     console.log('[Gating] wireEvents called');
+
+    // Gate "Analyze Deal" for anonymous users — intercept before app.js handler
+    const analyzeBtn = document.getElementById('analyzeBtn');
+    if (analyzeBtn) {
+        analyzeBtn.addEventListener('click', (e) => {
+            if (isAnonymous()) {
+                e.stopImmediatePropagation();
+                saveFormState();
+                setAuthMode('signup');
+                openModal('authModal');
+                const status = document.getElementById('authStatus');
+                if (status) {
+                    status.textContent = 'Create your free account to run the analysis.';
+                    status.className = 'text-sm mt-3 text-blue-400';
+                }
+            }
+        }, true); // capture phase — fires before app.js listener
+    }
+
     // Auth modal
     document.getElementById('authSubmit')?.addEventListener('click', handleMagicLink);
     document.getElementById('authSwitchToSignUp')?.addEventListener('click', () => setAuthMode('signup'));
+    document.getElementById('authForgotLink')?.addEventListener('click', () => setAuthMode('forgot'));
     document.getElementById('authPassword')?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleMagicLink();
     });
     document.getElementById('authEmail')?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleMagicLink();
     });
-    document.getElementById('authClose')?.addEventListener('click', () => closeModal('authModal'));
+    document.getElementById('authConfirmPassword')?.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') handleMagicLink();
+    });
+    document.getElementById('authClose')?.addEventListener('click', () => {
+        closeModal('authModal');
+        setAuthMode('signin'); // reset to default on close
+    });
 
     // Pricing modal
     document.getElementById('pricingClose')?.addEventListener('click', () => closeModal('pricingModal'));
