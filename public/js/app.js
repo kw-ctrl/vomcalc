@@ -47,7 +47,7 @@ function formatNumberWithCommas(value) {
 function setCurrencyVal(id, value) {
     const el = document.getElementById(id);
     if (!el) return;
-    el.value = value === '' || value === 0 || value === undefined ? '' : formatNumberWithCommas(String(value));
+    el.value = (value === '' || value === undefined) ? '' : formatNumberWithCommas(String(value));
 }
 
 function setupCurrencyInput(el) {
@@ -1975,11 +1975,9 @@ function estimateOpex() {
 
 function openOpexDetail() {
     const total = estimateOpex();
-    // Auto-apply estimate into the field immediately
-    if (total > 0) {
-        setCurrencyVal('operatingExpenses', total);
-        recalc();
-    }
+    // Always apply immediately — no extra click required
+    setCurrencyVal('operatingExpenses', total || 0);
+    recalc();
     const el = document.getElementById('opexDetailModal');
     if (el) el.style.display = 'flex';
 }
@@ -1988,8 +1986,9 @@ function closeOpexDetail() {
     if (el) el.style.display = 'none';
 }
 function applyOpexEstimate() {
+    // Re-calculate and apply (used when user adjusts values inside the modal)
     const total = estimateOpex();
-    setCurrencyVal('operatingExpenses', total);
+    setCurrencyVal('operatingExpenses', total || 0);
     recalc();
 }
 function onAddressChange() {
