@@ -8,15 +8,38 @@ export const config = { maxDuration: 15 };
 const SUPABASE_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
-async function getUserId(token) {
+async function getUser(token) {
   if (!token) return null;
   try {
     const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${token}` }
     });
     const d = await r.json();
-    return d?.id || null;
+    if (!d?.id) return null;
+    return { id: d.id, email: d.email };
   } catch { return null; }
+}
+
+async function ensurePublicUser(user) {
+  if (!user?.id) return;
+  try {
+    const now = new Date().toISOString();
+    await fetch(`${SUPABASE_URL}/rest/v1/users`, {
+      method: 'POST',
+      headers: {
+        'apikey': SERVICE_KEY,
+        'Authorization': `Bearer ${SERVICE_KEY}`,
+        'Content-Type': 'application/json',
+        'Prefer': 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify({
+        id: user.id,
+        email: user.email,
+        updated_at: now,
+        last_login_at: now,
+      }),
+    });
+  } catch { /* non-fatal */ }
 }
 
 export default async function handler(req, res) {
@@ -27,7 +50,9 @@ export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const token = (req.headers.authorization || '').replace('Bearer ', '');
-  const userId = await getUserId(token);
+  const authUser = await getUser(token);
+  const userId = authUser?.id || null;
+  await ensurePublicUser(authUser);
 
   const {
     reportId,     // update existing report

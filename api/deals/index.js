@@ -8,6 +8,35 @@ const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsIn
 
 function sbKey(svc) { return svc ? process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY : SB_ANON; }
 
+async function ensurePublicUser(userId, email) {
+  if (!userId) return;
+  try {
+    const svcKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+    const now = new Date().toISOString();
+    await fetch(`${SB_URL}/rest/v1/users`, {
+      method: 'POST',
+      headers: {
+        apikey: svcKey, Authorization: `Bearer ${svcKey}`,
+        'Content-Type': 'application/json',
+        Prefer: 'resolution=merge-duplicates',
+      },
+      body: JSON.stringify({ id: userId, email: email || null, updated_at: now, last_login_at: now }),
+    });
+  } catch { /* non-fatal */ }
+}
+
+async function getUserFromToken(token) {
+  if (!token) return null;
+  try {
+    const svcKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
+    const r = await fetch(`${SB_URL}/auth/v1/user`, {
+      headers: { apikey: svcKey, Authorization: `Bearer ${token}` }
+    });
+    const d = await r.json();
+    return d?.id ? { id: d.id, email: d.email } : null;
+  } catch { return null; }
+}
+
 export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
@@ -40,8 +69,14 @@ export default async function handler(req, res) {
     const key = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
     if (!key) return res.status(500).json({ error: 'Server misconfigured' });
 
+    // Ensure user exists in public.users to satisfy FK constraint
+    const token = (req.headers.authorization || '').replace('Bearer ', '');
+    const authUser = await getUserFromToken(token);
+    const resolvedUserId = authUser?.id || body.user_id || null;
+    await ensurePublicUser(resolvedUserId, authUser?.email);
+
     const report = {
-      user_id: body.user_id,
+      user_id: resolvedUserId,
       title: body.name || body.address || 'Untitled Deal',
       property_address: body.address || '',
       property_type: body.property_type || 'str',
