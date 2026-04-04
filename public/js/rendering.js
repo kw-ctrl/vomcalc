@@ -11,7 +11,7 @@ export function renderResults(r, gatherInputs) {
     document.querySelectorAll('.result-section.is-empty').forEach(s => s.classList.remove('is-empty'));
 
     renderScoreSection(r);
-    renderDealVerdict(r);
+    // renderDealVerdict(r); // removed
     renderRevenueCashFlowSummary(r);
     renderDealFlags(r);
     renderCapitalRaiseSummary(r);
