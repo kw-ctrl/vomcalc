@@ -159,55 +159,60 @@
 
 <!-- Fixed Expenses Detail Modal -->
 <div id="opexDetailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center" onclick="if(event.target===this)closeOpexDetail()">
-  <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:24px 28px;width:360px;max-width:95vw">
+  <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:24px 28px;width:380px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <span style="font-weight:700;font-size:15px;color:#fff">Monthly Fixed Expenses</span>
-      <button onclick="closeOpexDetail()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;line-height:1">&times;</button>
+      <button onclick="closeOpexDetail()" style="background:none;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1;padding:0 4px">&times;</button>
     </div>
-    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Property Management (20%)</span>
-        <span style="color:#fff;font-weight:600" id="opex_mgmt">$0</span>
+    <div style="display:flex;flex-direction:column;gap:6px;font-size:13px">
+
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Property Management (20%)</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_mgmt" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Insurance</span>
-        <span style="color:#fff;font-weight:600" id="opex_insurance">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Insurance</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_insurance" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Internet</span>
-        <span style="color:#fff;font-weight:600" id="opex_internet">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Internet</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_internet" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Utilities</span>
-        <span style="color:#fff;font-weight:600" id="opex_utilities">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Utilities</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_utilities" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Landscaping</span>
-        <span style="color:#fff;font-weight:600" id="opex_landscaping">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Landscaping</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_landscaping" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Pest Control</span>
-        <span style="color:#fff;font-weight:600" id="opex_pest">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Pest Control</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_pest" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div id="opex_snow_row" style="display:none;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Snow Removal</span>
-        <span style="color:#fff;font-weight:600" id="opex_snow">$0</span>
+      <div id="opex_snow_row" style="display:none;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Snow Removal</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_snow" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Maintenance Reserve</span>
-        <span style="color:#fff;font-weight:600" id="opex_maint">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Maintenance Reserve</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_maint" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#d1d5db">Property Taxes</span>
-        <span style="color:#fff;font-weight:600" id="opex_tax">$0</span>
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px">
+        <span style="color:#9ca3af;flex:1">Property Taxes</span>
+        <div style="display:flex;align-items:center;gap:4px"><span style="color:#6b7280;font-size:12px">$</span><input type="number" id="opex_tax" value="0" min="0" oninput="recalcOpexTotal()" style="width:72px;background:#0f0f1a;border:1px solid #2a2a3a;border-radius:6px;padding:4px 7px;color:#fff;font-size:13px;font-weight:600;text-align:right;font-family:'DM Mono',monospace"></div>
       </div>
-      <div style="border-top:1px solid #2a2a3a;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#fff;font-weight:700">Total Estimated</span>
-        <span style="color:#6c63ff;font-weight:700;font-size:15px" id="opex_total_display">$0/mo</span>
+
+      <div style="border-top:1px solid #2a2a3a;margin-top:8px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#fff;font-weight:700">Total / Month</span>
+        <span style="color:#6c63ff;font-weight:700;font-size:16px;font-family:'DM Mono',monospace" id="opex_total_display">$0/mo</span>
       </div>
     </div>
-    <p style="font-size:11px;color:#6b7280;margin-top:12px">These are estimates. Override the total in the field above.</p>
-    <button onclick="applyOpexEstimate();closeOpexDetail()" style="margin-top:14px;width:100%;background:#6c63ff;color:#fff;border:none;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
+    <p style="font-size:11px;color:#6b7280;margin-top:10px">Edit any line to customize. Total applies to your analysis.</p>
+    <div style="display:flex;gap:8px;margin-top:14px">
+      <button onclick="closeOpexDetail()" style="flex:1;padding:9px;background:#1e1e2e;color:#9ca3af;border:1px solid #2a2a3a;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer">Cancel</button>
+      <button onclick="applyOpexEstimate();closeOpexDetail()" style="flex:2;padding:9px;background:#6c63ff;color:#fff;border:none;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer">Apply Expenses</button>
+    </div>
   </div>
 </div>
 

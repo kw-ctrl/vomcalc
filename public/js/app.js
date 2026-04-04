@@ -2006,31 +2006,41 @@ function estimateOpex() {
     const maint       = Math.round(Math.max(100, price * 0.005 / 12));
     const propTax     = price > 0 ? Math.round(price * 0.011 / 12) : 0; // ~1.1% annually
 
-    // Update detail modal
-    const fmt = v => v > 0 ? `$${v.toLocaleString()}/mo` : '—';
-    document.getElementById('opex_mgmt').textContent = fmt(mgmt);
-    document.getElementById('opex_insurance').textContent = fmt(insurance);
-    document.getElementById('opex_internet').textContent = fmt(internet);
-    document.getElementById('opex_utilities').textContent = fmt(utilities);
-    document.getElementById('opex_landscaping').textContent = fmt(landscaping);
-    document.getElementById('opex_pest').textContent = fmt(pest);
+    // Populate editable input fields in the modal
+    const setField = (id, val) => { const el = document.getElementById(id); if (el) el.value = val; };
+    setField('opex_mgmt', mgmt);
+    setField('opex_insurance', insurance);
+    setField('opex_internet', internet);
+    setField('opex_utilities', utilities);
+    setField('opex_landscaping', landscaping);
+    setField('opex_pest', pest);
     const snowRow = document.getElementById('opex_snow_row');
     if (snowRow) snowRow.style.display = snow > 0 ? 'flex' : 'none';
-    document.getElementById('opex_snow').textContent = fmt(snow);
-    document.getElementById('opex_maint').textContent = fmt(maint);
-    const taxEl = document.getElementById('opex_tax');
-    if (taxEl) taxEl.textContent = fmt(propTax);
+    setField('opex_snow', snow);
+    setField('opex_maint', maint);
+    setField('opex_tax', propTax);
 
     const total = mgmt + insurance + internet + utilities + landscaping + pest + snow + maint + propTax;
-    document.getElementById('opex_total_display').textContent = `$${total.toLocaleString()}/mo`;
+    const displayEl = document.getElementById('opex_total_display');
+    if (displayEl) displayEl.textContent = `$${total.toLocaleString()}/mo`;
     return total;
 }
 
+// Recalculate total when user edits any line item in the modal
+function recalcOpexTotal() {
+    const ids = ['opex_mgmt','opex_insurance','opex_internet','opex_utilities',
+                 'opex_landscaping','opex_pest','opex_snow','opex_maint','opex_tax'];
+    const total = ids.reduce((sum, id) => {
+        const el = document.getElementById(id);
+        return sum + (el ? (parseFloat(el.value) || 0) : 0);
+    }, 0);
+    const displayEl = document.getElementById('opex_total_display');
+    if (displayEl) displayEl.textContent = `$${Math.round(total).toLocaleString()}/mo`;
+}
+
 function openOpexDetail() {
-    const total = estimateOpex();
-    // Always apply immediately — no extra click required
-    setCurrencyVal('operatingExpenses', total || 0);
-    recalc();
+    // Populate fields with fresh estimates (won't overwrite if user already opened and edited)
+    estimateOpex();
     const el = document.getElementById('opexDetailModal');
     if (el) el.style.display = 'flex';
 }
@@ -2039,9 +2049,14 @@ function closeOpexDetail() {
     if (el) el.style.display = 'none';
 }
 function applyOpexEstimate() {
-    // Re-calculate and apply (used when user adjusts values inside the modal)
-    const total = estimateOpex();
-    setCurrencyVal('operatingExpenses', total || 0);
+    // Sum whatever is currently in the editable line items
+    const ids = ['opex_mgmt','opex_insurance','opex_internet','opex_utilities',
+                 'opex_landscaping','opex_pest','opex_snow','opex_maint','opex_tax'];
+    const total = ids.reduce((sum, id) => {
+        const el = document.getElementById(id);
+        return sum + (el ? (parseFloat(el.value) || 0) : 0);
+    }, 0);
+    setCurrencyVal('operatingExpenses', Math.round(total) || 0);
     recalc();
 }
 function onAddressChange() {
@@ -2295,6 +2310,7 @@ Object.assign(window, {
   openOpexDetail,
   closeOpexDetail,
   applyOpexEstimate,
+  recalcOpexTotal,
   openSaveDeal,
   closeSaveDeal,
   saveDeal,
