@@ -1818,12 +1818,24 @@ function filterDeals() {
 }
 
 async function loadDeal(id) {
-    const deal = _allDeals.find(d => d.id === id);
-    if (!deal || !deal.input_snapshot) return alert('Could not load deal — no inputs saved.');
     closeMyDeals();
+    const session = await _getSession();
+
+    // Try cache first, then fetch full deal from load endpoint
+    let inputs = _allDeals.find(d => d.id === id)?.input_snapshot || null;
+    if (!inputs) {
+        try {
+            const r = await fetch(`/api/deals/load?id=${id}`, {
+                headers: session ? { Authorization: `Bearer ${session.access_token}` } : {}
+            });
+            const deal = await r.json();
+            inputs = deal?.inputs || null;
+        } catch { inputs = null; }
+    }
+
+    if (!inputs) return alert('Could not load deal — no inputs saved.');
 
     // Restore inputs from snapshot
-    const inputs = deal.input_snapshot;
     if (typeof inputs === 'object') {
         Object.entries(inputs).forEach(([key, val]) => {
             const el = document.getElementById(key);

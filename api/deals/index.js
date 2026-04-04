@@ -48,19 +48,21 @@ export default async function handler(req, res) {
 
   // LIST deals
   if (req.method === 'GET') {
-    const key = sbKey(false);
+    const key = sbKey(true); // always use service key for server-side queries
+    const authUser = await getUserFromToken(userJwt);
+    if (!authUser) return res.status(200).json([]);
     const r = await fetch(
-      `${SB_URL}/rest/v1/reports?order=created_at.desc&select=id,title,property_address,property_type,listed_price,velocity_score,moic,irr,result_snapshot,created_at,updated_at`,
-      { headers: { apikey: key, Authorization: `Bearer ${userJwt}`, 'Content-Type': 'application/json' } }
+      `${SB_URL}/rest/v1/reports?user_id=eq.${authUser.id}&order=created_at.desc&select=id,title,property_address,property_type,listed_price,velocity_score,moic,irr,result_snapshot,input_snapshot,created_at,updated_at`,
+      { headers: { apikey: key, Authorization: `Bearer ${key}` } }
     );
     const data = await r.json();
-    // Flatten result_snapshot extras into each record
+    if (!r.ok) return res.status(r.status).json([]);
     const deals = Array.isArray(data) ? data.map(d => ({
       ...d,
       ...(d.result_snapshot || {}),
       name: d.title || d.property_address,
-    })) : data;
-    return res.status(r.status).json(deals);
+    })) : [];
+    return res.status(200).json(deals);
   }
 
   // SAVE deal
