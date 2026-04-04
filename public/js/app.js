@@ -1379,7 +1379,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Annual revenue input → update ADR hint
+    // Annual revenue input → update ADR hint + auto-estimate opex (mgmt fee is % of revenue)
     document.getElementById('annualRevenueInput').addEventListener('input', () => {
         const rev = getVal('annualRevenueInput');
         const occ = getVal('occupancyRate', 65) / 100;
@@ -1393,6 +1393,11 @@ document.addEventListener('DOMContentLoaded', () => {
             hint.textContent = 'ADR will be calculated from revenue, occupancy, and keys';
         }
         updateRequiredFieldHighlights();
+        // Auto-populate opex (management fee is driven by revenue)
+        if (document.getElementById('propertyType').value === 'str') {
+            const t = estimateOpex();
+            setCurrencyVal('operatingExpenses', t || 0);
+        }
     });
 
     // Expense ratio slider (hotel)
@@ -1439,10 +1444,14 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById(id)?.addEventListener('input', updateRequiredFieldHighlights);
     });
 
-    // Square footage — auto-update reno/furnish estimates when entered
+    // Square footage — auto-update reno/furnish estimates + opex (utilities driven by sqft)
     document.getElementById('squareFeet')?.addEventListener('input', () => {
         updateRenoEstimate();
         updateFurnishEstimate();
+        if (document.getElementById('propertyType').value === 'str') {
+            const t = estimateOpex();
+            setCurrencyVal('operatingExpenses', t || 0);
+        }
     });
 
     // Bedrooms/bathrooms — affects reno amenity totals
@@ -1992,9 +2001,11 @@ function applyOpexEstimate() {
     recalc();
 }
 function onAddressChange() {
-    // Re-estimate opex if modal is open
-    const modal = document.getElementById('opexDetailModal');
-    if (modal && modal.style.display === 'flex') estimateOpex();
+    // Auto-estimate opex any time address changes (snow zone detection)
+    if (document.getElementById('propertyType').value === 'str') {
+        const t = estimateOpex();
+        setCurrencyVal('operatingExpenses', t || 0);
+    }
 }
 
 // ── Revenue Sync (Annual Revenue ↔ ADR ↔ Occupancy) ──────────────────────────
