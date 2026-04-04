@@ -17,9 +17,9 @@
                         mono: ['"DM Mono"', 'monospace'],
                     },
                     colors: {
-                        surface: { DEFAULT: '#0f1115', light: '#14171d', border: '#1e2433', hover: '#1a1e27' },
-                        body: '#08090b',
-                        accent: '#00e5a0',
+                        surface: { DEFAULT: '#090d1a', light: '#0e1220', '2': '#131827', border: '#1a2235', hover: '#131827' },
+                        body: '#04060f',
+                        accent: { DEFAULT: '#00e5a0', dim: 'rgba(0,229,160,0.10)' },
                     }
                 }
             }
@@ -35,10 +35,10 @@
 </head>
 <body class="bg-body min-h-screen text-gray-100">
     <!-- Header -->
-    <header style="background:#0f1115;border-bottom:1px solid #1e2433;position:sticky;top:0;z-index:50">
+    <header style="background:#090d1a;border-bottom:1px solid #1a2235;position:sticky;top:0;z-index:50">
         <div class="max-w-[1440px] mx-auto px-4" style="height:56px;display:flex;align-items:center;justify-content:space-between">
             <div style="display:flex;align-items:center;gap:0">
-                <div style="display:flex;align-items:center;gap:10px;padding-right:20px;border-right:1px solid #1e2433">
+                <div style="display:flex;align-items:center;gap:10px;padding-right:20px;border-right:1px solid #1a2235">
                     <img src="logo.png" alt="Kassidy Warren" style="height:28px">
                 </div>
                 <div style="padding-left:20px">
@@ -101,7 +101,7 @@
 
             <!-- Reno Amenity Checklist Modal -->
 <div id="renoChecklistModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center" onclick="if(event.target===this)closeRenoChecklist()">
-  <div style="background:#0f1115;border:1px solid #1e2433;border-radius:14px;padding:24px 28px;width:340px;max-width:95vw">
+  <div style="background:#090d1a;border:1px solid #1a2235;border-radius:14px;padding:24px 28px;width:340px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <span style="font-weight:700;font-size:15px;color:#fff">Amenities & Updates</span>
       <button onclick="closeRenoChecklist()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;line-height:1">&times;</button>
@@ -111,50 +111,50 @@
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_kitchen" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Kitchen remodel</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_kitchen_amt" value="25000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_kitchen_amt" value="25000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_bath" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Bathrooms (per bath)</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_bath_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_bath_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_hottub" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Hot tub</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_hottub_amt" value="6000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_hottub_amt" value="6000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_pool" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Pool</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_pool_amt" value="35000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_pool_amt" value="35000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_plunge" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Plunge pool / cold plunge</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_plunge_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_plunge_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_sauna" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Sauna</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_sauna_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_sauna_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_deck" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Deck / outdoor space</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_deck_amt" value="12000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_deck_amt" value="12000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_roof" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">New roof</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_roof_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_roof_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
         <input type="checkbox" id="rc_luxury" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#00e5a0;flex-shrink:0">
         <span style="flex:1">Luxury finishes / fixtures</span>
-        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_luxury_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#14171d;border:1px solid #1e2433;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_luxury_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#0e1220;border:1px solid #1a2235;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
     </div>
-    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1e2433;display:flex;align-items:center;justify-content:space-between">
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #1a2235;display:flex;align-items:center;justify-content:space-between">
       <span style="font-size:13px;color:#9ca3af">Amenity add-ons: <span id="renoAmenityTotal" style="color:#fff;font-weight:600">$0</span></span>
       <button onclick="closeRenoChecklist()" style="background:#00e5a0;color:#000;border:none;border-radius:7px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
     </div>
@@ -163,7 +163,7 @@
 
 <!-- Fixed Expenses Detail Modal -->
 <div id="opexDetailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center" onclick="if(event.target===this)closeOpexDetail()">
-  <div style="background:#0f1115;border:1px solid #1e2433;border-radius:14px;padding:24px 28px;width:360px;max-width:95vw">
+  <div style="background:#090d1a;border:1px solid #1a2235;border-radius:14px;padding:24px 28px;width:360px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
       <span style="font-weight:700;font-size:15px;color:#fff">Monthly Fixed Expenses</span>
       <button onclick="closeOpexDetail()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;line-height:1">&times;</button>
@@ -201,7 +201,7 @@
         <span style="color:#d1d5db">Maintenance Reserve</span>
         <span style="color:#fff;font-weight:600" id="opex_maint">$0</span>
       </div>
-      <div style="border-top:1px solid #1e2433;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
+      <div style="border-top:1px solid #1a2235;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
         <span style="color:#fff;font-weight:700">Total Estimated</span>
         <span style="color:#00e5a0;font-weight:700;font-size:15px" id="opex_total_display">$0/mo</span>
       </div>
@@ -269,10 +269,10 @@
                         <!-- Level buttons -->
                         <!-- None/Low/Mid/High level buttons -->
                         <div style="display:flex;gap:5px;margin-bottom:8px">
-                            <button type="button" class="reno-lvl-btn" data-level="none" onclick="setRenoLevel('none')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">None</button>
-                            <button type="button" class="reno-lvl-btn" data-level="low" onclick="setRenoLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
+                            <button type="button" class="reno-lvl-btn" data-level="none" onclick="setRenoLevel('none')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">None</button>
+                            <button type="button" class="reno-lvl-btn" data-level="low" onclick="setRenoLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
                             <button type="button" class="reno-lvl-btn active" data-level="mid" onclick="setRenoLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #00e5a0;background:rgba(0,229,160,0.15);color:#00e5a0;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
-                            <button type="button" class="reno-lvl-btn" data-level="high" onclick="setRenoLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
+                            <button type="button" class="reno-lvl-btn" data-level="high" onclick="setRenoLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
                         </div>
                         <!-- Editable dollar amount — syncs with level, can be overridden -->
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -290,9 +290,9 @@
                     <div id="furnishingBudgetGroup">
                         <label class="field-label">Furnishing Budget<span class="info-tip" data-tip="Furniture, linens, and decor. Based on square footage: Low=$15/sqft, Mid=$25/sqft, High=$35/sqft.">i</span></label>
                         <div style="display:flex;gap:5px;margin-bottom:8px">
-                            <button type="button" class="furnish-lvl-btn" data-level="low" onclick="setFurnishLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
+                            <button type="button" class="furnish-lvl-btn" data-level="low" onclick="setFurnishLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
                             <button type="button" class="furnish-lvl-btn active" data-level="mid" onclick="setFurnishLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #00e5a0;background:rgba(0,229,160,0.15);color:#00e5a0;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
-                            <button type="button" class="furnish-lvl-btn" data-level="high" onclick="setFurnishLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
+                            <button type="button" class="furnish-lvl-btn" data-level="high" onclick="setFurnishLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
                             <div class="relative" style="flex:1">
@@ -482,7 +482,7 @@
                             <input type="checkbox" id="additionalUnitToggle" onchange="toggleAdditionalUnit()" style="accent-color:#00e5a0;width:14px;height:14px">
                             <span class="field-label" style="margin:0">Additional Unit (casita, studio, guest house)</span>
                         </label>
-                        <div id="additionalUnitInputs" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid #1e2433;border-radius:8px">
+                        <div id="additionalUnitInputs" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid #1a2235;border-radius:8px">
                             <div style="display:flex;gap:10px">
                                 <div style="flex:1">
                                     <label class="field-label" style="font-size:12px">Monthly Revenue</label>
@@ -605,7 +605,7 @@
                 <button id="saveDealBtn" onclick="openSaveDeal()" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(0,229,160,0.5);background:rgba(0,229,160,0.1);color:#00e5a0;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s" title="Save this deal">
                     💾 Save Deal
                 </button>
-                <button onclick="openMyDeals()" style="flex:1;padding:10px;border-radius:10px;border:1px solid #1e2433;background:#14171d;color:#9ca3af;font-size:13px;font-weight:600;cursor:pointer" title="View all saved deals">
+                <button onclick="openMyDeals()" style="flex:1;padding:10px;border-radius:10px;border:1px solid #1a2235;background:#0e1220;color:#9ca3af;font-size:13px;font-weight:600;cursor:pointer" title="View all saved deals">
                     📁 My Deals
                 </button>
             </div>
@@ -614,7 +614,7 @@
 
         <!-- Save Deal Modal -->
         <div id="saveDealModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeSaveDeal()">
-          <div style="background:#0f1115;border:1px solid #1e2433;border-radius:14px;padding:28px;width:420px;max-width:95vw">
+          <div style="background:#090d1a;border:1px solid #1a2235;border-radius:14px;padding:28px;width:420px;max-width:95vw">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
               <span style="font-weight:700;font-size:16px;color:#fff" id="saveDealTitle">Save Deal</span>
               <button onclick="closeSaveDeal()" style="background:none;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1">&times;</button>
@@ -622,11 +622,11 @@
             <div style="display:flex;flex-direction:column;gap:12px">
               <div>
                 <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Deal Name</label>
-                <input type="text" id="saveDealName" placeholder="e.g. 2265 Arizona Ave - High Reno" style="width:100%;padding:10px 12px;background:#14171d;border:1px solid #1e2433;border-radius:8px;color:#fff;font-size:14px;outline:none">
+                <input type="text" id="saveDealName" placeholder="e.g. 2265 Arizona Ave - High Reno" style="width:100%;padding:10px 12px;background:#0e1220;border:1px solid #1a2235;border-radius:8px;color:#fff;font-size:14px;outline:none">
               </div>
               <div>
                 <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Status</label>
-                <select id="saveDealStatus" style="width:100%;padding:10px 12px;background:#14171d;border:1px solid #1e2433;border-radius:8px;color:#fff;font-size:14px">
+                <select id="saveDealStatus" style="width:100%;padding:10px 12px;background:#0e1220;border:1px solid #1a2235;border-radius:8px;color:#fff;font-size:14px">
                   <option value="analyzing">🔍 Analyzing</option>
                   <option value="active">✅ Active Pursuit</option>
                   <option value="under_contract">🤝 Under Contract</option>
@@ -636,22 +636,22 @@
               </div>
               <div>
                 <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Notes <span style="color:#6b7280">(optional)</span></label>
-                <textarea id="saveDealNotes" rows="2" placeholder="Deal notes, red flags, next steps..." style="width:100%;padding:10px 12px;background:#14171d;border:1px solid #1e2433;border-radius:8px;color:#fff;font-size:14px;resize:vertical;outline:none"></textarea>
+                <textarea id="saveDealNotes" rows="2" placeholder="Deal notes, red flags, next steps..." style="width:100%;padding:10px 12px;background:#0e1220;border:1px solid #1a2235;border-radius:8px;color:#fff;font-size:14px;resize:vertical;outline:none"></textarea>
               </div>
               <div id="saveVariantRow" style="border-top:1px solid #12151d;padding-top:12px">
                 <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#9ca3af">
                   <input type="checkbox" id="saveAsVariant" style="accent-color:#00e5a0"> Save as a variant of an existing deal
                 </label>
                 <div id="variantParentRow" style="display:none;margin-top:8px">
-                  <select id="variantParentId" style="width:100%;padding:9px 12px;background:#14171d;border:1px solid #1e2433;border-radius:7px;color:#fff;font-size:13px">
+                  <select id="variantParentId" style="width:100%;padding:9px 12px;background:#0e1220;border:1px solid #1a2235;border-radius:7px;color:#fff;font-size:13px">
                     <option value="">Loading deals...</option>
                   </select>
-                  <input type="text" id="variantName" placeholder="Variant name (e.g. High Reno, Conservative)" style="width:100%;padding:9px 12px;background:#14171d;border:1px solid #1e2433;border-radius:7px;color:#fff;font-size:13px;margin-top:6px;outline:none">
+                  <input type="text" id="variantName" placeholder="Variant name (e.g. High Reno, Conservative)" style="width:100%;padding:9px 12px;background:#0e1220;border:1px solid #1a2235;border-radius:7px;color:#fff;font-size:13px;margin-top:6px;outline:none">
                 </div>
               </div>
             </div>
             <div style="display:flex;gap:8px;margin-top:20px">
-              <button onclick="closeSaveDeal()" style="flex:1;padding:11px;background:#14171d;border:1px solid #1e2433;border-radius:8px;color:#9ca3af;font-size:14px;font-weight:600;cursor:pointer">Cancel</button>
+              <button onclick="closeSaveDeal()" style="flex:1;padding:11px;background:#0e1220;border:1px solid #1a2235;border-radius:8px;color:#9ca3af;font-size:14px;font-weight:600;cursor:pointer">Cancel</button>
               <button onclick="saveDeal()" id="saveDealConfirmBtn" style="flex:2;padding:11px;background:#00e5a0;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">Save Deal</button>
             </div>
             <p id="saveDealMsg" style="font-size:12px;text-align:center;margin-top:10px;color:#6b7280"></p>
@@ -660,11 +660,11 @@
 
         <!-- My Deals Modal -->
         <div id="myDealsModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeMyDeals()">
-          <div style="background:#0f1115;border:1px solid #1e2433;border-radius:14px;padding:28px;width:780px;max-width:96vw;max-height:85vh;display:flex;flex-direction:column">
+          <div style="background:#090d1a;border:1px solid #1a2235;border-radius:14px;padding:28px;width:780px;max-width:96vw;max-height:85vh;display:flex;flex-direction:column">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
               <span style="font-weight:700;font-size:16px;color:#fff">My Deals</span>
               <div style="display:flex;gap:8px;align-items:center">
-                <select id="dealsFilterStatus" onchange="filterDeals()" style="padding:6px 10px;background:#14171d;border:1px solid #1e2433;border-radius:7px;color:#9ca3af;font-size:12px">
+                <select id="dealsFilterStatus" onchange="filterDeals()" style="padding:6px 10px;background:#0e1220;border:1px solid #1a2235;border-radius:7px;color:#9ca3af;font-size:12px">
                   <option value="">All Statuses</option>
                   <option value="analyzing">Analyzing</option>
                   <option value="active">Active Pursuit</option>
