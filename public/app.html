@@ -892,9 +892,34 @@
                         </div>
                     </div>
                 </div>
-                <!-- Top 3 Deal Levers (prioritized under score) -->
-                <div class="gated-section mt-4">
-                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-2">How to Improve This Deal</h3>
+            </section>
+
+            <!-- Section 2b: Purchase Price Recommendations (moved above levers) -->
+            <section id="section-buybox" class="gated-section result-section is-empty">
+                <div class="bg-surface rounded-xl border border-surface-border p-5">
+                    <h2 class="section-title">Purchase Price Recommendations<span class="info-tip" data-tip="Price targets based on your target MOIC. Ideal = strong returns, Max = minimum acceptable, Stretch = marginal deal.">i</span></h2>
+                    <p class="text-sm text-gray-500 mb-1" id="buyboxContext">Target MOIC: --x | Current MOIC at listed price: --x</p>
+                    <p class="text-xs text-gray-600 mb-4" id="buyboxRefiContext"></p>
+                    <div id="priceLadder" class="price-ladder">
+                        <div class="price-rung rung-stretch"><span class="price-rung-label">Stretch Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
+                        <div class="price-rung rung-max"><span class="price-rung-label">Max Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
+                        <div class="price-rung rung-ideal"><span class="price-rung-label">Ideal Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
+                        <div class="price-rung rung-listed"><span class="price-rung-label">Listed Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
+                    </div>
+                    <div id="buyboxExplainer" class="mt-4 p-3 rounded-lg bg-surface-light border border-surface-border text-xs text-gray-500 space-y-1" style="display:none">
+                        <p><strong class="text-gray-400">How to read this:</strong> Each price shows what you'd pay and the resulting MOIC (return multiple) and annual cash flow at that price.</p>
+                        <p><span class="text-emerald-400 font-semibold">Ideal Price</span> — maximum price that still hits your target return. Negotiate at or below this.</p>
+                        <p><span class="text-amber-400 font-semibold">Max Price</span> — returns are thin here. Only pay this if you have a clear plan to boost revenue or cut costs.</p>
+                        <p><span class="text-red-400 font-semibold">Stretch Price</span> — marginal deal. You'll need significant operational improvements to make this work.</p>
+                        <p>If Listed Price is below Ideal, the property is priced attractively at asking. If above Max, negotiate hard or walk away.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Top 3 Deal Levers -->
+            <section class="gated-section result-section is-empty">
+                <div class="bg-surface rounded-xl border border-surface-border p-5">
+                    <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">How to Improve This Deal</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="leverCards">
                         <div class="lever-card"><div class="lever-card-name">#1 --</div><div class="lever-card-insight">Analyze a deal to see your top improvement levers</div><span class="lever-card-impact">+--x MOIC</span></div>
                         <div class="lever-card"><div class="lever-card-name">#2 --</div><div class="lever-card-insight">Each lever shows quantified impact on your returns</div><span class="lever-card-impact">+--x MOIC</span></div>
@@ -919,27 +944,7 @@
                 </div>
             </section>
 
-            <!-- Section 2: Velocity Buy Box -->
-            <section id="section-buybox" class="gated-section result-section is-empty">
-                <div class="bg-surface rounded-xl border border-surface-border p-5">
-                    <h2 class="section-title">Purchase Price Recommendations<span class="info-tip" data-tip="Price targets based on your target MOIC. Ideal = strong returns, Max = minimum acceptable, Stretch = marginal deal.">i</span></h2>
-                    <p class="text-sm text-gray-500 mb-1" id="buyboxContext">Target MOIC: --x | Current MOIC at listed price: --x</p>
-                    <p class="text-xs text-gray-600 mb-4" id="buyboxRefiContext"></p>
-                    <div id="priceLadder" class="price-ladder">
-                        <div class="price-rung rung-stretch"><span class="price-rung-label">Stretch Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-max"><span class="price-rung-label">Max Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-ideal"><span class="price-rung-label">Ideal Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-listed"><span class="price-rung-label">Listed Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                    </div>
-                    <div id="buyboxExplainer" class="mt-4 p-3 rounded-lg bg-surface-light border border-surface-border text-xs text-gray-500 space-y-1" style="display:none">
-                        <p><strong class="text-gray-400">How to read this:</strong> Each price shows what you'd pay and the resulting MOIC (return multiple) and annual cash flow at that price.</p>
-                        <p><span class="text-emerald-400 font-semibold">Ideal Price</span> — maximum price that still hits your target return. Negotiate at or below this.</p>
-                        <p><span class="text-amber-400 font-semibold">Max Price</span> — returns are thin here. Only pay this if you have a clear plan to boost revenue or cut costs.</p>
-                        <p><span class="text-red-400 font-semibold">Stretch Price</span> — marginal deal. You'll need significant operational improvements to make this work.</p>
-                        <p>If Listed Price is below Ideal, the property is priced attractively at asking. If above Max, negotiate hard or walk away.</p>
-                    </div>
-                </div>
-            </section>
+            <!-- section-buybox rendered above levers -->
 
 
 

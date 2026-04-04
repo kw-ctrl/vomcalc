@@ -312,22 +312,40 @@ export function calculateDealLevers(inputs, baseMOIC, baseIRR, flags) {
         });
     }
 
-    // ── Reno/furnish lever: skip expensive reno if it doesn't move MOIC ──────
-    const renoImpact = inputs.renovationBudget > 0
-        ? formatCurrency(inputs.renovationBudget)
-        : null;
-    if (renoImpact) {
+    // ── Reno lever: only suggest skipping if reno is NOT creating ARV value ──
+    const renoAmt = inputs.renovationBudget || 0;
+    const arvGain = (inputs.arv || 0) - (inputs.listedPrice || 0);
+    const renoIsValueCreating = renoAmt > 0 && arvGain > renoAmt * 0.8; // ARV gain covers 80%+ of reno cost
+    if (renoAmt > 0 && !renoIsValueCreating) {
+        // Reno cost isn't justified by ARV uplift — suggest phasing it
         levers.push({
-            name: 'Skip or Reduce Renovation',
+            name: 'Phase Renovation Strategically',
             key: 'reno',
             mutate: (inp) => {
-                const m = { ...inp, renovationBudget: 0, totalRenoBudget: 0 };
-                m.totalEquity = m.downPayment + m.closingCosts + m.furnishingBudget;
+                const reduced = Math.round(inp.renovationBudget * 0.5);
+                const m = { ...inp, renovationBudget: reduced, totalRenoBudget: reduced };
+                m.totalEquity = m.downPayment + m.closingCosts + reduced + inp.furnishingBudget;
                 m.annualCashFlow = m.noi - m.annualDebtService;
                 return m;
             },
-            insight: `Removing ${renoImpact} reno reduces total capital needed and improves cash-on-cash. Run only must-have work before launch.`,
-            direction: 'Phase renovations — launch with cosmetics, add amenities from cash flow'
+            insight: `${formatCurrency(renoAmt)} reno isn't fully offset by ARV gain (${formatCurrency(arvGain)}). Phase it — do 50% upfront to launch, fund the rest from operating cash flow.`,
+            direction: 'Launch with must-haves. Add premium amenities after first 90 days of revenue'
+        });
+    } else if (renoAmt > 0 && renoIsValueCreating) {
+        // Reno IS value-creating — suggest optimizing spend for max ADR impact
+        levers.push({
+            name: 'Optimize Reno for ADR Impact',
+            key: 'reno',
+            mutate: (inp) => {
+                const m = { ...inp, adr: inp.adr * 1.12 };
+                m.annualRevenue = m.adr * inp.occupancyRate * 365 * inp.numKeys;
+                m.totalRevenue = m.annualRevenue + (inp.ancillaryRevenue || 0);
+                m.noi = m.totalRevenue - inp.annualOpex;
+                m.annualCashFlow = m.noi - inp.annualDebtService;
+                return m;
+            },
+            insight: `Your ${formatCurrency(renoAmt)} reno creates ${formatCurrency(arvGain)} in value — strong ROI. Focus remaining scope on ADR drivers: hot tub, outdoor spaces, premium kitchen. Target 10-12% ADR lift.`,
+            direction: 'Prioritize amenities that appear in top-performing comp listings in your market'
         });
     }
 

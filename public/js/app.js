@@ -1232,12 +1232,16 @@ function populateFromListing(data) {
     if (data.estimatedValue) setCurrencyVal('arv', data.estimatedValue);
     if (data.numUnits)   { const el = document.getElementById('numKeys'); if (el) el.value = data.numUnits; }
 
-    // Trigger reno + furnish estimates now that sqft is set
+    // Trigger reno + furnish + opex estimates now that fields are set
     updateRenoEstimate();
     updateFurnishEstimate();
     updateRefiCashOut();
     updateDownPaymentHint();
     updateRequiredFieldHighlights();
+    if (document.getElementById('propertyType').value === 'str') {
+        const t = estimateOpex();
+        if (t > 0) setCurrencyVal('operatingExpenses', t);
+    }
 
     // Show warnings if any
     if (data.warnings && data.warnings.length > 0) {
@@ -2036,6 +2040,11 @@ function onAnnualRevenueChange() {
     _revenueSource = 'revenue';
     _syncADRFromRevenue();
     updateRequiredFieldHighlights();
+    // Auto-update opex estimate (management fee is % of revenue)
+    if (document.getElementById('propertyType').value === 'str') {
+        const t = estimateOpex();
+        setCurrencyVal('operatingExpenses', t || 0);
+    }
     recalc();
 }
 

@@ -8,8 +8,19 @@ export const config = { maxDuration: 15 };
 const SUPABASE_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
+function decodeJWT(token) {
+  try {
+    const payload = token.split('.')[1];
+    return JSON.parse(Buffer.from(payload, 'base64url').toString());
+  } catch { return null; }
+}
+
 async function getUser(token) {
   if (!token) return null;
+  // Decode locally — no network round-trip, always works while token is valid
+  const claims = decodeJWT(token);
+  if (claims?.sub) return { id: claims.sub, email: claims.email };
+  // Fallback: API call
   try {
     const r = await fetch(`${SUPABASE_URL}/auth/v1/user`, {
       headers: { 'apikey': SERVICE_KEY, 'Authorization': `Bearer ${token}` }
@@ -34,7 +45,7 @@ async function ensurePublicUser(user) {
       },
       body: JSON.stringify({
         id: user.id,
-        email: user.email,
+        ...(user.email ? { email: user.email } : {}),
         updated_at: now,
         last_login_at: now,
       }),

@@ -20,13 +20,24 @@ async function ensurePublicUser(userId, email) {
         'Content-Type': 'application/json',
         Prefer: 'resolution=merge-duplicates',
       },
-      body: JSON.stringify({ id: userId, email: email || null, updated_at: now, last_login_at: now }),
+      body: JSON.stringify({ id: userId, ...(email ? { email } : {}), updated_at: now, last_login_at: now }),
     });
   } catch { /* non-fatal */ }
 }
 
+function decodeJWT(token) {
+  try {
+    const payload = token.split('.')[1];
+    return JSON.parse(Buffer.from(payload, 'base64url').toString());
+  } catch { return null; }
+}
+
 async function getUserFromToken(token) {
   if (!token) return null;
+  // Decode locally first — fast, no network round-trip
+  const claims = decodeJWT(token);
+  if (claims?.sub) return { id: claims.sub, email: claims.email };
+  // Fallback: API call
   try {
     const svcKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
     const r = await fetch(`${SB_URL}/auth/v1/user`, {
