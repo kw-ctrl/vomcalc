@@ -1,42 +1,39 @@
 /* Velocity of Money Underwriting Tool — DealOS Theme */
 
 :root {
-    --bg-body: #04060f;
-    --bg-surface: #090d1a;
-    --bg-surface-light: #0e1220;
-    --bg-surface-2: #131827;
-    --border: #1a2235;
-    --border-light: #22304a;
-    --text-primary: #dde3f0;
-    --text-secondary: #7d8ba6;
-    --text-muted: #4a566e;
-    --accent: #00e5a0;
-    --accent-dim: rgba(0, 229, 160, 0.10);
-    --accent-border: rgba(0, 229, 160, 0.22);
-    --green-success: #00e5a0;
-    --blue-accent: #3b82f6;
-    --purple: #7c6fff;
-    --yellow-warning: #f5a623;
-    --red-danger: #ff4b4b;
-    --emerald-glow: rgba(0, 229, 160, 0.07);
-    --red-glow: rgba(255, 75, 75, 0.08);
-    --amber-glow: rgba(245, 166, 35, 0.08);
+    /* DealOS cream/paper palette */
+    --bg-body: #f8f5f0;
+    --bg-surface: #efe9e0;
+    --bg-surface-light: #e8e0d5;
+    --bg-surface-2: #e4dbd0;
+    --border: rgba(15, 15, 20, 0.10);
+    --border-light: rgba(15, 15, 20, 0.16);
+    --text-primary: #0f0f14;
+    --text-secondary: #7a7268;
+    --text-muted: #b8b0a4;
+    --accent: #1e5c3a;
+    --accent-dim: rgba(30, 92, 58, 0.08);
+    --accent-border: rgba(30, 92, 58, 0.2);
+    --gold: #b8863a;
+    --gold2: #d4a054;
+    --green-success: #1e5c3a;
+    --blue-accent: #1d4ed8;
+    --yellow-warning: #c07820;
+    --red-danger: #b83232;
+    --emerald-glow: rgba(30, 92, 58, 0.06);
+    --red-glow: rgba(184, 50, 50, 0.06);
+    --amber-glow: rgba(192, 120, 32, 0.07);
+    --shadow: 0 1px 3px rgba(15,15,20,0.06), 0 8px 24px rgba(15,15,20,0.08);
     --mono: 'DM Mono', monospace;
 }
 
 * { box-sizing: border-box; }
 
 body {
-    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background: var(--bg-body);
-    background-image: radial-gradient(ellipse 80% 40% at 50% 0%, rgba(0, 87, 255, 0.05) 0%, transparent 70%);
-    background-attachment: fixed;
-}
-
-h1, h2, h3 {
-    font-family: 'Plus Jakarta Sans', sans-serif;
 }
 
 /* Numbers, scores, financial values — monospace */
@@ -634,7 +631,7 @@ button:active {
     bottom: calc(100% + 6px);
     left: 50%;
     transform: translateX(-50%);
-    background: #1c1c1c;
+    background: #0f0f14;
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
     font-size: 0.6875rem;
@@ -675,7 +672,7 @@ button:active {
 
 #sensitivityTable td.sens-good {
     background: rgba(16, 185, 129, 0.12);
-    color: #34d399;
+    color: #1e5c3a;
     font-weight: 600;
 }
 
@@ -771,7 +768,7 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(15, 15, 20, 0.5);
     backdrop-filter: blur(4px);
 }
 
@@ -818,7 +815,7 @@ button:active {
     border-radius: 1rem;
     padding: 1rem 1.1rem;
     background:
-        linear-gradient(135deg, rgba(59, 130, 246, 0.08), transparent 45%),
+        linear-gradient(135deg, rgba(30, 92, 58, 0.06), transparent 45%),
         var(--bg-surface-light);
     transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
@@ -834,8 +831,8 @@ button:active {
 }
 
 .report-list-item-active {
-    border-color: rgba(59, 130, 246, 0.5);
-    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.18);
+    border-color: rgba(30, 92, 58, 0.3);
+    box-shadow: inset 0 0 0 1px rgba(30, 92, 58, 0.12);
 }
 
 .report-score-pill {
@@ -920,7 +917,7 @@ button:active {
     border-radius: 1.2rem;
     padding: 1.35rem;
     background:
-        radial-gradient(circle at top right, rgba(59, 130, 246, 0.14), transparent 38%),
+        radial-gradient(circle at top right, rgba(184, 134, 58, 0.08), transparent 38%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
         var(--bg-surface-light);
 }
@@ -937,7 +934,7 @@ button:active {
 }
 
 .subscription-plan-row-active {
-    border-color: rgba(59, 130, 246, 0.45);
+    border-color: rgba(30, 92, 58, 0.25);
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.02));
 }
 
