@@ -1,46 +1,30 @@
-/* Velocity of Money Underwriting Tool — DealOS Theme */
+/* Velocity of Money Underwriting Tool v2.0 — Dark Theme */
 
 :root {
-    /* DealOS cream/paper palette */
-    --bg-body: #f8f5f0;
-    --bg-surface: #efe9e0;
-    --bg-surface-light: #e8e0d5;
-    --bg-surface-2: #e4dbd0;
-    --border: rgba(15, 15, 20, 0.10);
-    --border-light: rgba(15, 15, 20, 0.16);
-    --text-primary: #0f0f14;
-    --text-secondary: #7a7268;
-    --text-muted: #b8b0a4;
-    --accent: #1e5c3a;
-    --accent-dim: rgba(30, 92, 58, 0.08);
-    --accent-border: rgba(30, 92, 58, 0.2);
-    --gold: #b8863a;
-    --gold2: #d4a054;
-    --green-success: #1e5c3a;
-    --blue-accent: #1d4ed8;
-    --yellow-warning: #c07820;
-    --red-danger: #b83232;
-    --emerald-glow: rgba(30, 92, 58, 0.06);
-    --red-glow: rgba(184, 50, 50, 0.06);
-    --amber-glow: rgba(192, 120, 32, 0.07);
-    --shadow: 0 1px 3px rgba(15,15,20,0.06), 0 8px 24px rgba(15,15,20,0.08);
-    --mono: 'DM Mono', monospace;
+    --bg-body: #0a0a0a;
+    --bg-surface: #141414;
+    --bg-surface-light: #1c1c1c;
+    --border: #2a2a2a;
+    --border-light: #333;
+    --text-primary: #f5f5f5;
+    --text-secondary: #a1a1a1;
+    --text-muted: #666;
+    --green-success: #10b981;
+    --blue-accent: #3b82f6;
+    --yellow-warning: #f59e0b;
+    --red-danger: #ef4444;
+    --emerald-glow: rgba(16, 185, 129, 0.08);
+    --red-glow: rgba(239, 68, 68, 0.08);
+    --amber-glow: rgba(245, 158, 11, 0.08);
 }
 
 * { box-sizing: border-box; }
 
 body {
-    font-family: 'Syne', 'Plus Jakarta Sans', sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
     background: var(--bg-body);
-}
-
-/* Numbers, scores, financial values — monospace */
-.mono, .score-num, .price-rung-value, .kpi-val,
-#summaryMOIC, #summaryCOC, #summaryIRR, #summaryCapital,
-#velocityScore, #simMOIC {
-    font-family: var(--mono);
 }
 
 /* ──────────────────────────────────────────────
@@ -61,14 +45,14 @@ body {
     border-radius: 0.5rem;
     font-size: 0.875rem;
     color: var(--text-primary);
-    background: var(--bg-surface-2);
+    background: var(--bg-surface-light);
     transition: border-color 0.15s, box-shadow 0.15s;
 }
 
 .field-input:focus {
     outline: none;
-    border-color: var(--accent);
-    box-shadow: 0 0 0 3px var(--accent-dim);
+    border-color: var(--border-light);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
 }
 
 .field-input::placeholder {
@@ -269,7 +253,7 @@ input[type="number"] { -moz-appearance: textfield; }
 }
 
 .toggle-switch input:checked + .toggle-track {
-    background: var(--accent);
+    background: var(--green-success);
 }
 
 .toggle-switch input:checked + .toggle-track::after {
@@ -354,10 +338,9 @@ button:active {
    ────────────────────────────────────────────── */
 .section-title {
     font-size: 1rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 0.375rem;
-    letter-spacing: -0.01em;
 }
 
 /* ──────────────────────────────────────────────
@@ -510,8 +493,8 @@ button:active {
 
 .lever-card:hover {
     transform: translateY(-3px);
-    border-color: var(--accent);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 229, 160, 0.08);
+    border-color: var(--border-light);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .lever-card-name {
@@ -534,16 +517,14 @@ button:active {
     font-weight: 700;
     padding: 0.3rem 0.625rem;
     border-radius: 9999px;
-    background: var(--accent-dim);
-    color: var(--accent);
-    font-family: var(--mono);
+    background: rgba(16, 185, 129, 0.18);
+    color: #34d399;
 }
 
 .lever-card-direction {
     font-size: 0.8125rem;
-    color: var(--accent);
+    color: var(--blue-accent);
     margin-top: 0.5rem;
-    font-family: var(--mono);
 }
 
 /* ──────────────────────────────────────────────
@@ -631,7 +612,7 @@ button:active {
     bottom: calc(100% + 6px);
     left: 50%;
     transform: translateX(-50%);
-    background: #0f0f14;
+    background: #1c1c1c;
     border: 1px solid var(--border-light);
     color: var(--text-secondary);
     font-size: 0.6875rem;
@@ -672,7 +653,7 @@ button:active {
 
 #sensitivityTable td.sens-good {
     background: rgba(16, 185, 129, 0.12);
-    color: #1e5c3a;
+    color: #34d399;
     font-weight: 600;
 }
 
@@ -687,7 +668,7 @@ button:active {
 }
 
 #sensitivityTable td.sens-current {
-    outline: 2px solid var(--accent);
+    outline: 2px solid var(--blue-accent);
     outline-offset: -2px;
 }
 
@@ -768,7 +749,7 @@ button:active {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(15, 15, 20, 0.5);
+    background: rgba(0, 0, 0, 0.7);
     backdrop-filter: blur(4px);
 }
 
@@ -815,13 +796,13 @@ button:active {
     border-radius: 1rem;
     padding: 1rem 1.1rem;
     background:
-        linear-gradient(135deg, rgba(30, 92, 58, 0.06), transparent 45%),
+        linear-gradient(135deg, rgba(59, 130, 246, 0.08), transparent 45%),
         var(--bg-surface-light);
     transition: border-color 0.18s ease, transform 0.18s ease, background 0.18s ease;
 }
 
 .report-list-item:hover {
-    border-color: var(--accent-border);
+    border-color: rgba(59, 130, 246, 0.4);
     transform: translateY(-1px);
 }
 
@@ -831,8 +812,8 @@ button:active {
 }
 
 .report-list-item-active {
-    border-color: rgba(30, 92, 58, 0.3);
-    box-shadow: inset 0 0 0 1px rgba(30, 92, 58, 0.12);
+    border-color: rgba(59, 130, 246, 0.5);
+    box-shadow: inset 0 0 0 1px rgba(59, 130, 246, 0.18);
 }
 
 .report-score-pill {
@@ -880,8 +861,8 @@ button:active {
 }
 
 .pricing-card-featured {
-    border-color: var(--accent-border);
-    box-shadow: 0 0 24px var(--accent-dim);
+    border-color: var(--blue-accent);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.1);
 }
 
 .menu-action-button {
@@ -917,7 +898,7 @@ button:active {
     border-radius: 1.2rem;
     padding: 1.35rem;
     background:
-        radial-gradient(circle at top right, rgba(184, 134, 58, 0.08), transparent 38%),
+        radial-gradient(circle at top right, rgba(59, 130, 246, 0.14), transparent 38%),
         linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(255, 255, 255, 0.01)),
         var(--bg-surface-light);
 }
@@ -934,7 +915,7 @@ button:active {
 }
 
 .subscription-plan-row-active {
-    border-color: rgba(30, 92, 58, 0.25);
+    border-color: rgba(59, 130, 246, 0.45);
     background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.02));
 }
 

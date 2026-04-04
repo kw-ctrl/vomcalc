@@ -6,24 +6,18 @@
     <title>Velocity of Money - Property Underwriting Tool</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     fontFamily: {
-                        sans: ['Syne', '"Plus Jakarta Sans"', 'sans-serif'],
-                        mono: ['"DM Mono"', 'monospace'],
-                        serif: ['"Libre Baskerville"', 'serif'],
+                        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
                     },
                     colors: {
-                        surface: { DEFAULT: '#efe9e0', light: '#e8e0d5', '2': '#e4dbd0', border: 'rgba(15,15,20,0.10)', hover: '#e0d8cc' },
-                        body: '#f8f5f0',
-                        ink: '#0f0f14',
-                        muted: '#7a7268',
-                        accent: { DEFAULT: '#1e5c3a', light: '#2d7a52' },
-                        gold: { DEFAULT: '#b8863a', light: '#d4a054' },
+                        surface: { DEFAULT: '#141414', light: '#1c1c1c', border: '#2a2a2a', hover: '#222' },
+                        body: '#0a0a0a',
                     }
                 }
             }
@@ -37,21 +31,19 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>if(window.pdfjsLib) pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script>
 </head>
-<body class="bg-body min-h-screen text-ink">
+<body class="bg-body min-h-screen text-gray-100">
     <!-- Header -->
-    <header style="background:#f8f5f0;border-bottom:1px solid rgba(15,15,20,0.10);position:sticky;top:0;z-index:50">
-        <div class="max-w-[1440px] mx-auto px-4" style="height:56px;display:flex;align-items:center;justify-content:space-between">
-            <div style="display:flex;align-items:center;gap:0">
-                <div style="display:flex;align-items:center;gap:10px;padding-right:20px;border-right:1px solid rgba(15,15,20,0.10)">
-                    <img src="logo.png" alt="Kassidy Warren" style="height:28px">
-                </div>
-                <div style="padding-left:20px">
-                    <h1 style="font-size:15px;font-weight:800;color:#0f0f14;letter-spacing:-0.02em;line-height:1.2;font-family:inherit">Velocity of Money</h1>
-                    <p style="font-size:10px;color:#b8b0a4;font-family:'DM Mono',monospace;letter-spacing:0.05em;text-transform:uppercase">Property Underwriting Tool</p>
+    <header class="bg-surface border-b border-surface-border sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <img src="logo.png" alt="Kassidy Warren" class="h-8">
+                <div class="border-l border-surface-border pl-4">
+                    <h1 class="text-lg font-bold text-white leading-tight">Velocity of Money</h1>
+                    <p class="text-xs text-gray-500">Property Underwriting Tool</p>
                 </div>
             </div>
-            <div id="headerAuth" style="display:flex;align-items:center;gap:10px">
-                <span style="font-size:13px;color:#b8b0a4;font-family:'DM Mono',monospace">Checking session...</span>
+            <div id="headerAuth">
+                <span class="text-sm text-gray-500 animate-pulse">Checking session...</span>
             </div>
         </div>
     </header>
@@ -66,7 +58,7 @@
             <div style="max-width:560px;margin:0 auto 12px">
                 <div class="flex gap-3">
                     <input type="text" id="listingUrl" placeholder="Zillow, Redfin (redf.in), Crexi, LoopNet…" class="field-input flex-1 text-base py-2.5">
-                    <button type="button" id="fetchListingBtn" style="padding:10px 24px;background:#1e5c3a;color:#f8f5f0;font-weight:700;font-size:13px;border:none;border-radius:8px;cursor:pointer;white-space:nowrap;transition:background 0.15s;font-family:inherit" onmouseover="this.style.background='#2d7a52'" onmouseout="this.style.background='#1e5c3a'">
+                    <button type="button" id="fetchListingBtn" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-500 transition whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed">
                         Fetch Listing
                     </button>
                 </div>
@@ -74,20 +66,20 @@
 
             <!-- Combined paste + drop zone -->
             <div style="max-width:560px;margin:0 auto;position:relative"
-                ondragover="event.preventDefault();document.getElementById('combinedDropZone').style.borderColor='#1e5c3a';document.getElementById('combinedDropZone').style.background='rgba(30,92,58,0.06)'"
-                ondragleave="document.getElementById('combinedDropZone').style.borderColor='rgba(30,92,58,0.20)';document.getElementById('combinedDropZone').style.background='rgba(30,92,58,0.02)'"
-                ondrop="event.preventDefault();document.getElementById('combinedDropZone').style.borderColor='rgba(30,92,58,0.20)';document.getElementById('combinedDropZone').style.background='rgba(30,92,58,0.02)';handleDocDrop(event.dataTransfer.files[0])">
-                <div id="combinedDropZone" style="border:1.5px dashed rgba(30,92,58,0.20);border-radius:10px;background:rgba(30,92,58,0.02);transition:all .2s;overflow:hidden">
+                ondragover="event.preventDefault();document.getElementById('combinedDropZone').style.borderColor='#6c63ff';document.getElementById('combinedDropZone').style.background='rgba(108,99,255,0.08)'"
+                ondragleave="document.getElementById('combinedDropZone').style.borderColor='rgba(108,99,255,0.25)';document.getElementById('combinedDropZone').style.background='rgba(108,99,255,0.02)'"
+                ondrop="event.preventDefault();document.getElementById('combinedDropZone').style.borderColor='rgba(108,99,255,0.25)';document.getElementById('combinedDropZone').style.background='rgba(108,99,255,0.02)';handleDocDrop(event.dataTransfer.files[0])">
+                <div id="combinedDropZone" style="border:1.5px dashed rgba(108,99,255,0.25);border-radius:10px;background:rgba(108,99,255,0.02);transition:all .2s;overflow:hidden">
                     <textarea id="listingPasteText"
                         placeholder="Paste listing text (Cmd+A → Cmd+C from any listing page) or drop a PDF/document here…"
-                        style="width:100%;height:88px;background:transparent;border:none;color:#0f0f14;font-size:13px;padding:14px 16px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;display:block"
+                        style="width:100%;height:88px;background:transparent;border:none;color:#d1d5db;font-size:13px;padding:14px 16px;resize:none;outline:none;font-family:inherit;box-sizing:border-box;display:block"
                         oninput="updateCombinedZone(this)"></textarea>
-                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:1px solid rgba(30,92,58,0.08);background:rgba(30,92,58,0.03)">
-                        <button type="button" onclick="document.getElementById('docFileInput').click()" style="background:none;border:none;color:#7a7268;font-size:12px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .15s" onmouseover="this.style.color='#1e5c3a'" onmouseout="this.style.color='#6b7280'">
+                    <div style="display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-top:1px solid rgba(108,99,255,0.12);background:rgba(108,99,255,0.03)">
+                        <button type="button" onclick="document.getElementById('docFileInput').click()" style="background:none;border:none;color:#6b7280;font-size:12px;cursor:pointer;padding:4px 8px;border-radius:6px;transition:color .15s" onmouseover="this.style.color='#a89fff'" onmouseout="this.style.color='#6b7280'">
                             📎 Attach file
                         </button>
                         <button type="button" id="extractPasteBtn" onclick="extractFromPastedText()"
-                            style="background:#1e5c3a;color:#f8f5f0;border:none;border-radius:7px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;opacity:0.4;pointer-events:none;transition:opacity .15s">
+                            style="background:#6c63ff;color:#fff;border:none;border-radius:7px;padding:6px 16px;font-size:12px;font-weight:600;cursor:pointer;opacity:0.4;pointer-events:none;transition:opacity .15s">
                             Extract →
                         </button>
                     </div>
@@ -105,120 +97,120 @@
 
             <!-- Reno Amenity Checklist Modal -->
 <div id="renoChecklistModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center" onclick="if(event.target===this)closeRenoChecklist()">
-  <div style="background:#efe9e0;border:1px solid rgba(15,15,20,0.10);border-radius:14px;padding:24px 28px;width:340px;max-width:95vw">
+  <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:24px 28px;width:340px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <span style="font-weight:700;font-size:15px;color:#0f0f14">Amenities & Updates</span>
+      <span style="font-weight:700;font-size:15px;color:#fff">Amenities & Updates</span>
       <button onclick="closeRenoChecklist()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;line-height:1">&times;</button>
     </div>
-    <p style="font-size:11px;color:#7a7268;margin-bottom:8px">Check items to add. Edit the amount if your quote differs.</p>
-    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#0f0f14">
+    <p style="font-size:11px;color:#6b7280;margin-bottom:8px">Check items to add. Edit the amount if your quote differs.</p>
+    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;color:#d1d5db">
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_kitchen" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_kitchen" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Kitchen remodel</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_kitchen_amt" value="25000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_kitchen_amt" value="25000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_bath" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_bath" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Bathrooms (per bath)</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_bath_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_bath_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_hottub" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_hottub" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Hot tub</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_hottub_amt" value="6000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_hottub_amt" value="6000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_pool" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_pool" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Pool</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_pool_amt" value="35000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_pool_amt" value="35000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_plunge" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_plunge" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Plunge pool / cold plunge</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_plunge_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_plunge_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_sauna" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_sauna" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Sauna</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_sauna_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_sauna_amt" value="8000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_deck" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_deck" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Deck / outdoor space</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_deck_amt" value="12000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_deck_amt" value="12000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_roof" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_roof" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">New roof</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_roof_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_roof_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-        <input type="checkbox" id="rc_luxury" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#1e5c3a;flex-shrink:0">
+        <input type="checkbox" id="rc_luxury" onchange="updateRenoEstimate()" style="width:15px;height:15px;accent-color:#6c63ff;flex-shrink:0">
         <span style="flex:1">Luxury finishes / fixtures</span>
-        <span style="color:#7a7268;margin-right:4px">$</span><input type="number" id="rc_luxury_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:5px;color:#0f0f14;font-size:12px;padding:2px 6px;text-align:right">
+        <span style="color:#6b7280;margin-right:4px">$</span><input type="number" id="rc_luxury_amt" value="15000" oninput="updateRenoEstimate()" style="width:72px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:12px;padding:2px 6px;text-align:right">
       </label>
     </div>
-    <div style="margin-top:16px;padding-top:14px;border-top:1px solid rgba(15,15,20,0.10);display:flex;align-items:center;justify-content:space-between">
-      <span style="font-size:13px;color:#7a7268">Amenity add-ons: <span id="renoAmenityTotal" style="color:#0f0f14;font-weight:600">$0</span></span>
-      <button onclick="closeRenoChecklist()" style="background:#1e5c3a;color:#f8f5f0;border:none;border-radius:7px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
+    <div style="margin-top:16px;padding-top:14px;border-top:1px solid #2a2a3a;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:13px;color:#9ca3af">Amenity add-ons: <span id="renoAmenityTotal" style="color:#fff;font-weight:600">$0</span></span>
+      <button onclick="closeRenoChecklist()" style="background:#6c63ff;color:#fff;border:none;border-radius:7px;padding:7px 16px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
     </div>
   </div>
 </div>
 
 <!-- Fixed Expenses Detail Modal -->
 <div id="opexDetailModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);align-items:center;justify-content:center" onclick="if(event.target===this)closeOpexDetail()">
-  <div style="background:#efe9e0;border:1px solid rgba(15,15,20,0.10);border-radius:14px;padding:24px 28px;width:360px;max-width:95vw">
+  <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:24px 28px;width:360px;max-width:95vw">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-      <span style="font-weight:700;font-size:15px;color:#0f0f14">Monthly Fixed Expenses</span>
+      <span style="font-weight:700;font-size:15px;color:#fff">Monthly Fixed Expenses</span>
       <button onclick="closeOpexDetail()" style="background:none;border:none;color:#888;font-size:20px;cursor:pointer;line-height:1">&times;</button>
     </div>
     <div style="display:flex;flex-direction:column;gap:8px;font-size:13px">
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Property Management (20%)</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_mgmt">$0</span>
+        <span style="color:#d1d5db">Property Management (20%)</span>
+        <span style="color:#fff;font-weight:600" id="opex_mgmt">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Insurance</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_insurance">$0</span>
+        <span style="color:#d1d5db">Insurance</span>
+        <span style="color:#fff;font-weight:600" id="opex_insurance">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Internet</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_internet">$0</span>
+        <span style="color:#d1d5db">Internet</span>
+        <span style="color:#fff;font-weight:600" id="opex_internet">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Utilities</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_utilities">$0</span>
+        <span style="color:#d1d5db">Utilities</span>
+        <span style="color:#fff;font-weight:600" id="opex_utilities">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Landscaping</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_landscaping">$0</span>
+        <span style="color:#d1d5db">Landscaping</span>
+        <span style="color:#fff;font-weight:600" id="opex_landscaping">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Pest Control</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_pest">$0</span>
+        <span style="color:#d1d5db">Pest Control</span>
+        <span style="color:#fff;font-weight:600" id="opex_pest">$0</span>
       </div>
       <div id="opex_snow_row" style="display:none;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Snow Removal</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_snow">$0</span>
+        <span style="color:#d1d5db">Snow Removal</span>
+        <span style="color:#fff;font-weight:600" id="opex_snow">$0</span>
       </div>
       <div style="display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14">Maintenance Reserve</span>
-        <span style="color:#0f0f14;font-weight:600" id="opex_maint">$0</span>
+        <span style="color:#d1d5db">Maintenance Reserve</span>
+        <span style="color:#fff;font-weight:600" id="opex_maint">$0</span>
       </div>
-      <div style="border-top:1px solid rgba(15,15,20,0.10);margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
-        <span style="color:#0f0f14;font-weight:700">Total Estimated</span>
-        <span style="color:#1e5c3a;font-weight:700;font-size:15px" id="opex_total_display">$0/mo</span>
+      <div style="border-top:1px solid #2a2a3a;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#fff;font-weight:700">Total Estimated</span>
+        <span style="color:#6c63ff;font-weight:700;font-size:15px" id="opex_total_display">$0/mo</span>
       </div>
     </div>
-    <p style="font-size:11px;color:#7a7268;margin-top:12px">These are estimates. Override the total in the field above.</p>
-    <button onclick="applyOpexEstimate();closeOpexDetail()" style="margin-top:14px;width:100%;background:#1e5c3a;color:#f8f5f0;border:none;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
+    <p style="font-size:11px;color:#6b7280;margin-top:12px">These are estimates. Override the total in the field above.</p>
+    <button onclick="applyOpexEstimate();closeOpexDetail()" style="margin-top:14px;width:100%;background:#6c63ff;color:#fff;border:none;border-radius:7px;padding:9px;font-size:13px;font-weight:600;cursor:pointer">Done</button>
   </div>
 </div>
 
 <!-- Panel 1: The Deal -->
             <div class="panel bg-surface rounded-xl border border-surface-border">
                 <button type="button" class="panel-toggle w-full flex items-center justify-between px-5 py-3.5" data-action="toggle-panel" aria-expanded="true">
-                    <span class="font-semibold text-ink">The Deal</span>
+                    <span class="font-semibold text-white">The Deal</span>
                     <svg class="panel-chevron w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="panel-body px-5 pb-5 space-y-3">
@@ -265,7 +257,7 @@
                                 <input type="text" id="hotelRenoOverrideInput" placeholder="0" class="field-input pl-7" data-currency inputmode="numeric" style="font-size:14px">
                             </div>
                         </div>
-                        <p style="font-size:11px;color:#7a7268;margin-top:4px">Edit total to override · slider updates automatically</p>
+                        <p style="font-size:11px;color:#6b7280;margin-top:4px">Edit total to override · slider updates automatically</p>
                     </div>
 
                     <div id="renovationBudgetGroup">
@@ -273,10 +265,10 @@
                         <!-- Level buttons -->
                         <!-- None/Low/Mid/High level buttons -->
                         <div style="display:flex;gap:5px;margin-bottom:8px">
-                            <button type="button" class="reno-lvl-btn" data-level="none" onclick="setRenoLevel('none')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:12px;font-weight:500;cursor:pointer">None</button>
-                            <button type="button" class="reno-lvl-btn" data-level="low" onclick="setRenoLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:12px;font-weight:500;cursor:pointer">Low</button>
-                            <button type="button" class="reno-lvl-btn active" data-level="mid" onclick="setRenoLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e5c3a;background:rgba(30,92,58,0.10);color:#1e5c3a;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
-                            <button type="button" class="reno-lvl-btn" data-level="high" onclick="setRenoLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:12px;font-weight:500;cursor:pointer">High</button>
+                            <button type="button" class="reno-lvl-btn" data-level="none" onclick="setRenoLevel('none')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">None</button>
+                            <button type="button" class="reno-lvl-btn" data-level="low" onclick="setRenoLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
+                            <button type="button" class="reno-lvl-btn active" data-level="mid" onclick="setRenoLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #6c63ff;background:rgba(108,99,255,0.15);color:#a89fff;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
+                            <button type="button" class="reno-lvl-btn" data-level="high" onclick="setRenoLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
                         </div>
                         <!-- Editable dollar amount — syncs with level, can be overridden -->
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
@@ -284,9 +276,9 @@
                                 <span class="field-prefix">$</span>
                                 <input type="text" id="renoOverrideInput" placeholder="0" class="field-input pl-7" data-currency inputmode="numeric" style="font-size:14px">
                             </div>
-                            <button type="button" onclick="openRenoChecklist()" style="font-size:11px;color:#1e5c3a;background:none;border:1px solid rgba(0,229,160,0.4);border-radius:5px;padding:5px 10px;cursor:pointer;white-space:nowrap">+ Amenities</button>
+                            <button type="button" onclick="openRenoChecklist()" style="font-size:11px;color:#6c63ff;background:none;border:1px solid rgba(108,99,255,0.4);border-radius:5px;padding:5px 10px;cursor:pointer;white-space:nowrap">+ Amenities</button>
                         </div>
-                        <p style="font-size:11px;color:#7a7268;margin-bottom:2px">Level sets $/sqft · edit to customize · <span id="renoEstimateLabel" style="color:#fbbf24"></span></p>
+                        <p style="font-size:11px;color:#6b7280;margin-bottom:2px">Level sets $/sqft · edit to customize · <span id="renoEstimateLabel" style="color:#fbbf24"></span></p>
                         <input type="hidden" id="renovationBudget" value="0">
                         <input type="hidden" id="renovationBudgetComputed" value="0">
                     </div>
@@ -294,9 +286,9 @@
                     <div id="furnishingBudgetGroup">
                         <label class="field-label">Furnishing Budget<span class="info-tip" data-tip="Furniture, linens, and decor. Based on square footage: Low=$15/sqft, Mid=$25/sqft, High=$35/sqft.">i</span></label>
                         <div style="display:flex;gap:5px;margin-bottom:8px">
-                            <button type="button" class="furnish-lvl-btn" data-level="low" onclick="setFurnishLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:12px;font-weight:500;cursor:pointer">Low</button>
-                            <button type="button" class="furnish-lvl-btn active" data-level="mid" onclick="setFurnishLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #1e5c3a;background:rgba(30,92,58,0.10);color:#1e5c3a;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
-                            <button type="button" class="furnish-lvl-btn" data-level="high" onclick="setFurnishLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:12px;font-weight:500;cursor:pointer">High</button>
+                            <button type="button" class="furnish-lvl-btn" data-level="low" onclick="setFurnishLevel('low')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">Low</button>
+                            <button type="button" class="furnish-lvl-btn active" data-level="mid" onclick="setFurnishLevel('mid')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #6c63ff;background:rgba(108,99,255,0.15);color:#a89fff;font-size:12px;font-weight:600;cursor:pointer">Mid</button>
+                            <button type="button" class="furnish-lvl-btn" data-level="high" onclick="setFurnishLevel('high')" style="flex:1;padding:5px 0;border-radius:6px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:12px;font-weight:500;cursor:pointer">High</button>
                         </div>
                         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px">
                             <div class="relative" style="flex:1">
@@ -304,7 +296,7 @@
                                 <input type="text" id="furnishOverrideInput" placeholder="0" class="field-input pl-7" data-currency inputmode="numeric" style="font-size:14px">
                             </div>
                         </div>
-                        <p style="font-size:11px;color:#7a7268;margin-bottom:2px">Level sets $/sqft · edit to customize · <span id="furnishEstimateLabel" style="color:#fbbf24"></span></p>
+                        <p style="font-size:11px;color:#6b7280;margin-bottom:2px">Level sets $/sqft · edit to customize · <span id="furnishEstimateLabel" style="color:#fbbf24"></span></p>
                         <input type="hidden" id="furnishingBudget" value="0">
                         <input type="hidden" id="furnishingBudgetComputed" value="0">
                     </div>
@@ -320,8 +312,8 @@
                     </div>
 
                     <!-- Lending & Debt -->
-                    <div style="padding-top:4px;border-top:1px solid #12151d;margin-top:4px">
-                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#7a7268;margin-bottom:10px">Lending & Debt</p>
+                    <div style="padding-top:4px;border-top:1px solid #1e1e2e;margin-top:4px">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:10px">Lending & Debt</p>
                     </div>
                     <div>
                         <label class="field-label">Down Payment %<span class="info-tip" data-tip="Percentage of the listed price you'll pay in cash.">i</span></label>
@@ -383,16 +375,16 @@
                             <input type="number" id="refiCapRate" value="8" style="display:none">
                             <p class="field-hint">Value at refi = NOI ÷ this rate</p>
                         </div>
-                        <div style="background:rgba(30,92,58,0.06);border:1px solid rgba(0,229,160,0.2);border-radius:8px;padding:10px 12px">
-                            <p style="font-size:11px;color:#7a7268;margin-bottom:2px">Estimated Cash Out</p>
-                            <p style="font-size:16px;font-weight:700;color:#1e5c3a" id="refiCashOutDisplay">--</p>
-                            <p style="font-size:10px;color:#7a7268;margin-top:2px">(ARV × LTV) − original loan balance</p>
+                        <div style="background:rgba(108,99,255,0.08);border:1px solid rgba(108,99,255,0.2);border-radius:8px;padding:10px 12px">
+                            <p style="font-size:11px;color:#9ca3af;margin-bottom:2px">Estimated Cash Out</p>
+                            <p style="font-size:16px;font-weight:700;color:#a89fff" id="refiCashOutDisplay">--</p>
+                            <p style="font-size:10px;color:#6b7280;margin-top:2px">(ARV × LTV) − original loan balance</p>
                         </div>
                     </div>
 
                     <!-- Tax section (moved down) -->
-                    <div style="padding-top:4px;border-top:1px solid #12151d;margin-top:4px">
-                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#7a7268;margin-bottom:10px">Tax Benefits</p>
+                    <div style="padding-top:4px;border-top:1px solid #1e1e2e;margin-top:4px">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:10px">Tax Benefits</p>
                     </div>
                     <div>
                         <label class="field-label">Household Income <span class="text-gray-600 text-xs">(for tax benefit calc)</span></label>
@@ -418,7 +410,7 @@
             <!-- Panel 2: Revenue & Costs -->
             <div class="panel bg-surface rounded-xl border border-surface-border">
                 <button type="button" class="panel-toggle w-full flex items-center justify-between px-5 py-3.5" data-action="toggle-panel" aria-expanded="true">
-                    <span class="font-semibold text-ink">Revenue & Costs</span>
+                    <span class="font-semibold text-white">Revenue & Costs</span>
                     <svg class="panel-chevron w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="panel-body px-5 pb-5 space-y-3">
@@ -466,7 +458,7 @@
                     <!-- Hotel calculated revenue -->
                     <div id="hotelRevenueDisplayGroup" style="display:none">
                         <label class="field-label">Calculated Annual Revenue</label>
-                        <p class="text-ink font-bold text-lg" id="hotelRevenueValue">--</p>
+                        <p class="text-white font-bold text-lg" id="hotelRevenueValue">--</p>
                         <p class="field-hint">ADR × Occupancy × Keys × 365</p>
                     </div>
 
@@ -483,10 +475,10 @@
                     <!-- Additional Unit (STR only) -->
                     <div id="additionalUnitGroup">
                         <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
-                            <input type="checkbox" id="additionalUnitToggle" onchange="toggleAdditionalUnit()" style="accent-color:#1e5c3a;width:14px;height:14px">
+                            <input type="checkbox" id="additionalUnitToggle" onchange="toggleAdditionalUnit()" style="accent-color:#6c63ff;width:14px;height:14px">
                             <span class="field-label" style="margin:0">Additional Unit (casita, studio, guest house)</span>
                         </label>
-                        <div id="additionalUnitInputs" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(15,15,20,0.10);border-radius:8px">
+                        <div id="additionalUnitInputs" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.03);border:1px solid #2a2a3a;border-radius:8px">
                             <div style="display:flex;gap:10px">
                                 <div style="flex:1">
                                     <label class="field-label" style="font-size:12px">Monthly Revenue</label>
@@ -512,7 +504,7 @@
                         <label class="field-label">
                             Monthly Fixed Expenses
                             <span class="info-tip" data-tip="Ongoing monthly costs: management, insurance, utilities, landscaping, maintenance. Excludes mortgage.">i</span>
-                            <button type="button" onclick="openOpexDetail()" style="margin-left:6px;font-size:10px;color:#7a7268;background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px">breakdown</button>
+                            <button type="button" onclick="openOpexDetail()" style="margin-left:6px;font-size:10px;color:#6b7280;background:none;border:none;padding:0;cursor:pointer;text-decoration:underline;text-underline-offset:2px">breakdown</button>
                         </label>
                         <div class="relative">
                             <span class="field-prefix">$</span>
@@ -529,7 +521,7 @@
                             <input type="text" id="perStayCost" placeholder="150" class="field-input pl-7" data-currency inputmode="numeric">
                         </div>
                         <p class="field-hint" id="perStayCostHint">Per booking: cleaning, laundry, supplies</p>
-                        <p class="field-hint text-ink" id="perStayCostAnnual" style="display:none"></p>
+                        <p class="field-hint text-white" id="perStayCostAnnual" style="display:none"></p>
                     </div>
 
                     <!-- Additional monthly income -->
@@ -547,7 +539,7 @@
             <!-- Panel 3: Assumptions (collapsed by default) -->
             <div class="panel bg-surface rounded-xl border border-surface-border">
                 <button type="button" class="panel-toggle w-full flex items-center justify-between px-5 py-3.5" data-action="toggle-panel" aria-expanded="true">
-                    <span class="font-semibold text-ink">Assumptions</span>
+                    <span class="font-semibold text-white">Assumptions</span>
                     <svg class="panel-chevron w-5 h-5 text-gray-500 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
                 </button>
                 <div class="panel-body px-5 pb-5 space-y-3">
@@ -601,15 +593,15 @@
             </div>
 
             <!-- Analyze Button -->
-            <button id="analyzeBtn" class="w-full font-bold py-3.5 px-4 rounded-xl transition text-lg" style="background:#1e5c3a;color:#f8f5f0;letter-spacing:-0.01em" onmouseover="this.style.background='#2d7a52'" onmouseout="this.style.background='#1e5c3a'">
+            <button id="analyzeBtn" class="w-full bg-white text-black font-bold py-3.5 px-4 rounded-xl hover:bg-gray-200 transition text-lg">
                 Analyze Deal
             </button>
             <!-- Save + My Deals row -->
             <div style="display:flex;gap:8px;margin-top:8px" id="dealActionRow">
-                <button id="saveDealBtn" onclick="openSaveDeal()" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(0,229,160,0.5);background:rgba(0,229,160,0.1);color:#1e5c3a;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s" title="Save this deal">
+                <button id="saveDealBtn" onclick="openSaveDeal()" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(108,99,255,0.5);background:rgba(108,99,255,0.1);color:#a89fff;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s" title="Save this deal">
                     💾 Save Deal
                 </button>
-                <button onclick="openMyDeals()" style="flex:1;padding:10px;border-radius:10px;border:1px solid rgba(15,15,20,0.10);background:#e8e0d5;color:#7a7268;font-size:13px;font-weight:600;cursor:pointer" title="View all saved deals">
+                <button onclick="openMyDeals()" style="flex:1;padding:10px;border-radius:10px;border:1px solid #2a2a3a;background:#1a1a26;color:#9ca3af;font-size:13px;font-weight:600;cursor:pointer" title="View all saved deals">
                     📁 My Deals
                 </button>
             </div>
@@ -618,19 +610,19 @@
 
         <!-- Save Deal Modal -->
         <div id="saveDealModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeSaveDeal()">
-          <div style="background:#efe9e0;border:1px solid rgba(15,15,20,0.10);border-radius:14px;padding:28px;width:420px;max-width:95vw">
+          <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:28px;width:420px;max-width:95vw">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px">
-              <span style="font-weight:700;font-size:16px;color:#0f0f14" id="saveDealTitle">Save Deal</span>
+              <span style="font-weight:700;font-size:16px;color:#fff" id="saveDealTitle">Save Deal</span>
               <button onclick="closeSaveDeal()" style="background:none;border:none;color:#888;font-size:22px;cursor:pointer;line-height:1">&times;</button>
             </div>
             <div style="display:flex;flex-direction:column;gap:12px">
               <div>
-                <label style="font-size:12px;color:#7a7268;font-weight:500;display:block;margin-bottom:4px">Deal Name</label>
-                <input type="text" id="saveDealName" placeholder="e.g. 2265 Arizona Ave - High Reno" style="width:100%;padding:10px 12px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:8px;color:#0f0f14;font-size:14px;outline:none">
+                <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Deal Name</label>
+                <input type="text" id="saveDealName" placeholder="e.g. 2265 Arizona Ave - High Reno" style="width:100%;padding:10px 12px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;color:#fff;font-size:14px;outline:none">
               </div>
               <div>
-                <label style="font-size:12px;color:#7a7268;font-weight:500;display:block;margin-bottom:4px">Status</label>
-                <select id="saveDealStatus" style="width:100%;padding:10px 12px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:8px;color:#0f0f14;font-size:14px">
+                <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Status</label>
+                <select id="saveDealStatus" style="width:100%;padding:10px 12px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;color:#fff;font-size:14px">
                   <option value="analyzing">🔍 Analyzing</option>
                   <option value="active">✅ Active Pursuit</option>
                   <option value="under_contract">🤝 Under Contract</option>
@@ -639,36 +631,36 @@
                 </select>
               </div>
               <div>
-                <label style="font-size:12px;color:#7a7268;font-weight:500;display:block;margin-bottom:4px">Notes <span style="color:#7a7268">(optional)</span></label>
-                <textarea id="saveDealNotes" rows="2" placeholder="Deal notes, red flags, next steps..." style="width:100%;padding:10px 12px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:8px;color:#0f0f14;font-size:14px;resize:vertical;outline:none"></textarea>
+                <label style="font-size:12px;color:#9ca3af;font-weight:500;display:block;margin-bottom:4px">Notes <span style="color:#6b7280">(optional)</span></label>
+                <textarea id="saveDealNotes" rows="2" placeholder="Deal notes, red flags, next steps..." style="width:100%;padding:10px 12px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;color:#fff;font-size:14px;resize:vertical;outline:none"></textarea>
               </div>
-              <div id="saveVariantRow" style="border-top:1px solid #12151d;padding-top:12px">
-                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#7a7268">
-                  <input type="checkbox" id="saveAsVariant" style="accent-color:#1e5c3a"> Save as a variant of an existing deal
+              <div id="saveVariantRow" style="border-top:1px solid #1e1e2e;padding-top:12px">
+                <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:#9ca3af">
+                  <input type="checkbox" id="saveAsVariant" style="accent-color:#6c63ff"> Save as a variant of an existing deal
                 </label>
                 <div id="variantParentRow" style="display:none;margin-top:8px">
-                  <select id="variantParentId" style="width:100%;padding:9px 12px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:7px;color:#0f0f14;font-size:13px">
+                  <select id="variantParentId" style="width:100%;padding:9px 12px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:7px;color:#fff;font-size:13px">
                     <option value="">Loading deals...</option>
                   </select>
-                  <input type="text" id="variantName" placeholder="Variant name (e.g. High Reno, Conservative)" style="width:100%;padding:9px 12px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:7px;color:#0f0f14;font-size:13px;margin-top:6px;outline:none">
+                  <input type="text" id="variantName" placeholder="Variant name (e.g. High Reno, Conservative)" style="width:100%;padding:9px 12px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:7px;color:#fff;font-size:13px;margin-top:6px;outline:none">
                 </div>
               </div>
             </div>
             <div style="display:flex;gap:8px;margin-top:20px">
-              <button onclick="closeSaveDeal()" style="flex:1;padding:11px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:8px;color:#7a7268;font-size:14px;font-weight:600;cursor:pointer">Cancel</button>
-              <button onclick="saveDeal()" id="saveDealConfirmBtn" style="flex:2;padding:11px;background:#1e5c3a;border:none;border-radius:8px;color:#f8f5f0;font-size:14px;font-weight:700;cursor:pointer">Save Deal</button>
+              <button onclick="closeSaveDeal()" style="flex:1;padding:11px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:8px;color:#9ca3af;font-size:14px;font-weight:600;cursor:pointer">Cancel</button>
+              <button onclick="saveDeal()" id="saveDealConfirmBtn" style="flex:2;padding:11px;background:#6c63ff;border:none;border-radius:8px;color:#fff;font-size:14px;font-weight:700;cursor:pointer">Save Deal</button>
             </div>
-            <p id="saveDealMsg" style="font-size:12px;text-align:center;margin-top:10px;color:#7a7268"></p>
+            <p id="saveDealMsg" style="font-size:12px;text-align:center;margin-top:10px;color:#6b7280"></p>
           </div>
         </div>
 
         <!-- My Deals Modal -->
         <div id="myDealsModal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.75);align-items:center;justify-content:center" onclick="if(event.target===this)closeMyDeals()">
-          <div style="background:#efe9e0;border:1px solid rgba(15,15,20,0.10);border-radius:14px;padding:28px;width:780px;max-width:96vw;max-height:85vh;display:flex;flex-direction:column">
+          <div style="background:#16161f;border:1px solid #2a2a3a;border-radius:14px;padding:28px;width:780px;max-width:96vw;max-height:85vh;display:flex;flex-direction:column">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
-              <span style="font-weight:700;font-size:16px;color:#0f0f14">My Deals</span>
+              <span style="font-weight:700;font-size:16px;color:#fff">My Deals</span>
               <div style="display:flex;gap:8px;align-items:center">
-                <select id="dealsFilterStatus" onchange="filterDeals()" style="padding:6px 10px;background:#e8e0d5;border:1px solid rgba(15,15,20,0.10);border-radius:7px;color:#7a7268;font-size:12px">
+                <select id="dealsFilterStatus" onchange="filterDeals()" style="padding:6px 10px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:7px;color:#9ca3af;font-size:12px">
                   <option value="">All Statuses</option>
                   <option value="analyzing">Analyzing</option>
                   <option value="active">Active Pursuit</option>
@@ -680,7 +672,7 @@
               </div>
             </div>
             <div id="dealsListContainer" style="overflow-y:auto;flex:1">
-              <p style="color:#7a7268;font-size:13px;text-align:center;padding:20px">Loading deals...</p>
+              <p style="color:#6b7280;font-size:13px;text-align:center;padding:20px">Loading deals...</p>
             </div>
           </div>
         </div>
@@ -692,7 +684,7 @@
             <div id="saveNudge" class="hidden rounded-xl border border-accent/30 bg-accent/5 px-5 py-4 flex items-center justify-between gap-4">
                 <div class="flex items-center gap-3">
                     <svg class="w-5 h-5 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.75" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
-                    <p class="text-sm text-gray-300"><span class="font-semibold text-ink">Create a free account to save this report.</span> Access past underwriting from any device.</p>
+                    <p class="text-sm text-gray-300"><span class="font-semibold text-white">Create a free account to save this report.</span> Access past underwriting from any device.</p>
                 </div>
                 <button id="saveNudgeBtn" class="flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-lg bg-accent text-black hover:bg-accent-light transition">Create Account</button>
             </div>
@@ -715,8 +707,8 @@
                                     <text x="50" y="64" text-anchor="middle" class="text-[8px]" fill="#6b7280">VELOCITY</text>
                                 </svg>
                                 <div id="anonScoreOverlay" style="display:none">
-                                    <p style="font-size:11px;color:#0f0f14;font-weight:700;margin-bottom:6px;line-height:1.3">Free account<br>to see your score</p>
-                                    <button onclick="setAuthMode('signup');openModal('authModal')" style="font-size:11px;background:#1e5c3a;color:#f8f5f0;border:none;border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600">Sign Up Free</button>
+                                    <p style="font-size:11px;color:#fff;font-weight:700;margin-bottom:6px;line-height:1.3">Free account<br>to see your score</p>
+                                    <button onclick="setAuthMode('signup');openModal('authModal')" style="font-size:11px;background:#6c63ff;color:#fff;border:none;border-radius:6px;padding:5px 12px;cursor:pointer;font-weight:600">Sign Up Free</button>
                                 </div>
                             </div>
                             <p id="scoreRating" class="text-center text-sm font-semibold text-gray-500 mt-1"></p>
@@ -725,42 +717,42 @@
                         <div class="flex-1 w-full space-y-3">
                             <div class="score-bar-row">
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-muted">Equity Creation<span class="info-tip" data-tip="Exit Equity Multiple — (ARV after appreciation − remaining loan balance) ÷ equity invested. Measures only the property's wealth creation: forced appreciation + natural appreciation + debt paydown. Separate from operating cash flows (scored under Cash Flow) and tax savings (scored under Tax). Total Equity Multiple in the summary below includes everything. Scale: 3x = 40pts · 2x = 32pts · 1.5x = 24pts · 1x = 14pts">i</span></span>
+                                    <span class="text-gray-400">Equity Creation<span class="info-tip" data-tip="Exit Equity Multiple — (ARV after appreciation − remaining loan balance) ÷ equity invested. Measures only the property's wealth creation: forced appreciation + natural appreciation + debt paydown. Separate from operating cash flows (scored under Cash Flow) and tax savings (scored under Tax). Total Equity Multiple in the summary below includes everything. Scale: 3x = 40pts · 2x = 32pts · 1.5x = 24pts · 1x = 14pts">i</span></span>
                                     <div class="flex items-center gap-2">
-                                        <span id="catEquityMoicDisplay" class="text-xs text-muted"></span>
-                                        <span class="font-semibold text-ink" id="catEquityLabel">0 / 40</span>
+                                        <span id="catEquityMoicDisplay" class="text-xs text-gray-500"></span>
+                                        <span class="font-semibold text-white" id="catEquityLabel">0 / 40</span>
                                     </div>
                                 </div>
                                 <div class="score-bar-track"><div class="score-bar-fill bg-emerald-500" id="catEquityBar" style="width:0%"></div></div>
                             </div>
                             <div class="score-bar-row">
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-muted">Speed of Capital (IRR)<span class="info-tip" data-tip="IRR — Internal Rate of Return. Annualized, time-weighted return on invested capital including all cash flows and exit proceeds. Does NOT include tax benefits. Scale: 20%+ = 25pts · 15% = 21pts · 10% = 14pts · 5% = 7pts">i</span></span>
+                                    <span class="text-gray-400">Speed of Capital (IRR)<span class="info-tip" data-tip="IRR — Internal Rate of Return. Annualized, time-weighted return on invested capital including all cash flows and exit proceeds. Does NOT include tax benefits. Scale: 20%+ = 25pts · 15% = 21pts · 10% = 14pts · 5% = 7pts">i</span></span>
                                     <div class="flex items-center gap-2">
-                                        <span id="catSpeedIrrDisplay" class="text-xs text-muted"></span>
+                                        <span id="catSpeedIrrDisplay" class="text-xs text-gray-500"></span>
                                         <span id="ltvDisplay" class="dscr-display" style="display:none"></span>
-                                        <span class="font-semibold text-ink" id="catSpeedLabel">0 / 25</span>
+                                        <span class="font-semibold text-white" id="catSpeedLabel">0 / 25</span>
                                     </div>
                                 </div>
                                 <div class="score-bar-track"><div class="score-bar-fill bg-blue-500" id="catSpeedBar" style="width:0%"></div></div>
                             </div>
                             <div class="score-bar-row">
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-muted">Tax Efficiency<span class="info-tip" data-tip="Depreciation: Land = 20% of purchase price (not dep). Depreciable basis = 80%. Of that: 50% = structure on straight-line (÷27.5yr), 50% = personal property at 100% bonus dep yr1. Plus 100% of reno budget in yr1. Carryforward: only takes what brings effective tax rate to 10% — remainder carries to yr2, yr3, etc. Applied at 30% rate. Scored as best of (total savings ÷ equity) or (yr1 savings ÷ household income).">i</span></span>
+                                    <span class="text-gray-400">Tax Efficiency<span class="info-tip" data-tip="Depreciation: Land = 20% of purchase price (not dep). Depreciable basis = 80%. Of that: 50% = structure on straight-line (÷27.5yr), 50% = personal property at 100% bonus dep yr1. Plus 100% of reno budget in yr1. Carryforward: only takes what brings effective tax rate to 10% — remainder carries to yr2, yr3, etc. Applied at 30% rate. Scored as best of (total savings ÷ equity) or (yr1 savings ÷ household income).">i</span></span>
                                     <div class="flex items-center gap-2">
-                                        <span id="catTaxDisplay" class="text-xs text-muted"></span>
-                                        <span class="font-semibold text-ink" id="catTaxLabel">0 / 15</span>
+                                        <span id="catTaxDisplay" class="text-xs text-gray-500"></span>
+                                        <span class="font-semibold text-white" id="catTaxLabel">0 / 15</span>
                                     </div>
                                 </div>
                                 <div class="score-bar-track"><div class="score-bar-fill bg-violet-500" id="catTaxBar" style="width:0%"></div></div>
                             </div>
                             <div class="score-bar-row">
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-muted">Cash Flow (CoC)<span class="info-tip" data-tip="Cash-on-Cash Return = Annual cash flow (NOI − debt service) ÷ total equity invested. Scale: 30%+ = 20pts · 15% = 15pts · 10% = 10pts · 5% = 5pts. DSCR shown for reference but does NOT drive this score. Penalty: −0.5pt per point CoC below 15%.">i</span></span>
+                                    <span class="text-gray-400">Cash Flow (CoC)<span class="info-tip" data-tip="Cash-on-Cash Return = Annual cash flow (NOI − debt service) ÷ total equity invested. Scale: 30%+ = 20pts · 15% = 15pts · 10% = 10pts · 5% = 5pts. DSCR shown for reference but does NOT drive this score. Penalty: −0.5pt per point CoC below 15%.">i</span></span>
                                     <div class="flex items-center gap-2">
-                                        <span id="catCocDisplay" class="text-xs text-muted"></span>
+                                        <span id="catCocDisplay" class="text-xs text-gray-500"></span>
                                         <span id="dscrDisplay" class="dscr-display" style="display:none"></span>
-                                        <span class="font-semibold text-ink" id="catStabilityLabel">0 / 20</span>
+                                        <span class="font-semibold text-white" id="catStabilityLabel">0 / 20</span>
                                     </div>
                                 </div>
                                 <div class="score-bar-track"><div class="score-bar-fill bg-orange-500" id="catStabilityBar" style="width:0%"></div></div>
@@ -769,12 +761,12 @@
                     </div>
                     <!-- Deal Verdict Card — removed per Kassidy 2026-04-04 -->
                     <div id="dealVerdictCard" class="gated-section mt-5 pt-4 border-t border-surface-border" style="display:none !important">
-                        <div id="dealVerdictInner" style="background:linear-gradient(135deg,rgba(30,92,58,0.06),rgba(16,16,31,0));border:1px solid rgba(0,229,160,0.18);border-radius:12px;padding:18px 20px;position:relative">
-                            <div id="dealVerdictOneLiner" style="font-size:17px;font-weight:700;color:#0f0f14;margin-bottom:8px;line-height:1.3"></div>
+                        <div id="dealVerdictInner" style="background:linear-gradient(135deg,rgba(108,99,255,0.08),rgba(16,16,31,0));border:1px solid rgba(108,99,255,0.18);border-radius:12px;padding:18px 20px;position:relative">
+                            <div id="dealVerdictOneLiner" style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3"></div>
                             <div id="dealVerdictBody" style="font-size:13px;color:#b4b4cc;line-height:1.6"></div>
                             <div id="anonVerdictOverlay" style="display:none;position:absolute;inset:0;background:rgba(10,10,20,0.7);border-radius:12px;display:none;align-items:center;justify-content:center;flex-direction:column;gap:8px;text-align:center;padding:16px">
-                                <p style="color:#0f0f14;font-weight:700;font-size:14px">Sign up free to read the full deal analysis</p>
-                                <button onclick="openModal('authModal')" style="background:#1e5c3a;color:#f8f5f0;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-weight:600;font-size:13px">Create Free Account</button>
+                                <p style="color:#fff;font-weight:700;font-size:14px">Sign up free to read the full deal analysis</p>
+                                <button onclick="openModal('authModal')" style="background:#6c63ff;color:#fff;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-weight:600;font-size:13px">Create Free Account</button>
                             </div>
                         </div>
                     </div>
@@ -784,20 +776,20 @@
                         <!-- Row 1: Revenue, Expenses, NOI, Cash Flow -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center mb-4">
                             <div>
-                                <p class="text-xs text-muted">Annual Revenue</p>
+                                <p class="text-xs text-gray-500">Annual Revenue</p>
                                 <p class="font-bold text-white text-lg" id="summaryAnnualRev">--</p>
                                 <p class="text-xs text-gray-600" id="summaryRevPerKey"></p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">Annual Expenses</p>
+                                <p class="text-xs text-gray-500">Annual Expenses</p>
                                 <p class="font-bold text-white text-lg" id="summaryAnnualExp">--</p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">NOI<span class="info-tip" data-tip="Net Operating Income = Revenue − Operating Expenses. Excludes debt service and tax benefits.">i</span></p>
+                                <p class="text-xs text-gray-500">NOI<span class="info-tip" data-tip="Net Operating Income = Revenue − Operating Expenses. Excludes debt service and tax benefits.">i</span></p>
                                 <p class="font-bold text-white text-lg" id="summaryNOI">--</p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">Annual Cash Flow</p>
+                                <p class="text-xs text-gray-500">Annual Cash Flow</p>
                                 <p class="font-bold text-white text-lg" id="summaryAnnualCF">--</p>
                                 <p class="text-xs text-gray-600" id="summaryMonthlyCFSub"></p>
                             </div>
@@ -805,31 +797,31 @@
                         <!-- Row 2: CoC, Equity Multiple, IRR, Total Capital -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center pt-3 border-t border-surface-border">
                             <div>
-                                <p class="text-xs text-muted">Cash-on-Cash<span class="info-tip" data-tip="Annual cash flow ÷ total equity invested. Primary cash yield metric. Drives the Cash Flow score.">i</span></p>
-                                <p class="font-bold text-lg font-mono" id="summaryCOC" style="color:#f59e0b">--</p>
+                                <p class="text-xs text-gray-500">Cash-on-Cash<span class="info-tip" data-tip="Annual cash flow ÷ total equity invested. Primary cash yield metric. Drives the Cash Flow score.">i</span></p>
+                                <p class="font-bold text-lg" id="summaryCOC" style="color:#f59e0b">--</p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">Equity Multiple<span class="info-tip" data-tip="Multiple on Invested Capital — every dollar returned: all annual cash flows + net sale proceeds (exit value minus remaining loan), divided by total equity invested. This is the real total return number. Tax benefits are separate.">i</span></p>
-                                <p class="font-bold text-lg font-mono" id="summaryMOIC" style="color:#1e5c3a">--</p>
-                                <p class="text-xs" id="summaryEquityExitMultiple" style="color:#7a7268;margin-top:2px"></p>
+                                <p class="text-xs text-gray-500">Equity Multiple<span class="info-tip" data-tip="Multiple on Invested Capital — every dollar returned: all annual cash flows + net sale proceeds (exit value minus remaining loan), divided by total equity invested. This is the real total return number. Tax benefits are separate.">i</span></p>
+                                <p class="font-bold text-lg" id="summaryMOIC" style="color:#10b981">--</p>
+                                <p class="text-xs" id="summaryEquityExitMultiple" style="color:#6b7280;margin-top:2px"></p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">IRR<span class="info-tip" data-tip="Internal Rate of Return — annualized, time-weighted return. Drives the Speed of Capital score. Does not include tax benefits.">i</span></p>
-                                <p class="font-bold text-lg font-mono" id="summaryIRR" style="color:#3b82f6">--</p>
+                                <p class="text-xs text-gray-500">IRR<span class="info-tip" data-tip="Internal Rate of Return — annualized, time-weighted return. Drives the Speed of Capital score. Does not include tax benefits.">i</span></p>
+                                <p class="font-bold text-lg" id="summaryIRR" style="color:#3b82f6">--</p>
                             </div>
                             <div>
-                                <p class="text-xs text-muted">Total Capital Required<span class="info-tip" data-tip="Down payment + closing costs + renovation budget + furnishing budget.">i</span></p>
-                                <p class="font-bold text-lg font-mono text-ink" id="summaryTotalCapital">--</p>
+                                <p class="text-xs text-gray-500">Total Capital Required<span class="info-tip" data-tip="Down payment + closing costs + renovation budget + furnishing budget.">i</span></p>
+                                <p class="font-bold text-lg text-white" id="summaryTotalCapital">--</p>
                             </div>
                         </div>
                         <!-- ADR (hidden, hotel/STR detail) -->
                         <div id="summaryADRGroup" style="display:none" class="text-center mt-2">
-                            <p class="text-xs text-muted">ADR</p>
+                            <p class="text-xs text-gray-500">ADR</p>
                             <p class="font-bold text-white text-lg" id="summaryADR">--</p>
                         </div>
                         <!-- Expense ratio note -->
                         <div class="text-center mt-1" style="display:none" id="summaryExpRatioGroup">
-                            <p class="text-xs text-muted">Expense Ratio: <span class="text-ink font-semibold" id="summaryExpRatio">--</span> <span id="summaryExpRatioNote"></span><span id="summaryNOINote"></span></p>
+                            <p class="text-xs text-gray-500">Expense Ratio: <span class="text-white font-semibold" id="summaryExpRatio">--</span> <span id="summaryExpRatioNote"></span><span id="summaryNOINote"></span></p>
                         </div>
                     </div>
                 </div>
@@ -838,64 +830,64 @@
 
                 <!-- Methodology Breakdown (collapsible) -->
                 <div class="gated-section mt-4" id="methodologySection" style="display:none">
-                    <button type="button" onclick="toggleMethodology()" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:rgba(30,92,58,0.05);border:1px solid rgba(0,229,160,0.2);border-radius:8px;padding:10px 14px;cursor:pointer">
-                        <span style="font-size:12px;font-weight:600;color:#1e5c3a;text-transform:uppercase;letter-spacing:.06em">📐 How This Score Is Calculated</span>
-                        <span id="methodologyChevron" style="color:#7a7268;font-size:14px;transition:transform .2s">▼</span>
+                    <button type="button" onclick="toggleMethodology()" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:rgba(108,99,255,0.06);border:1px solid rgba(108,99,255,0.2);border-radius:8px;padding:10px 14px;cursor:pointer">
+                        <span style="font-size:12px;font-weight:600;color:#a89fff;text-transform:uppercase;letter-spacing:.06em">📐 How This Score Is Calculated</span>
+                        <span id="methodologyChevron" style="color:#6b7280;font-size:14px;transition:transform .2s">▼</span>
                     </button>
-                    <div id="methodologyBody" style="display:none;background:rgba(0,0,0,0.2);border:1px solid rgba(30,92,58,0.10);border-top:none;border-radius:0 0 8px 8px;padding:16px 14px">
+                    <div id="methodologyBody" style="display:none;background:rgba(0,0,0,0.2);border:1px solid rgba(108,99,255,0.15);border-top:none;border-radius:0 0 8px 8px;padding:16px 14px">
                         <div class="space-y-4 text-sm">
                             <!-- Equity Creation -->
                             <div>
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#1e5c3a">🟢 Equity Creation (max 40)</span>
-                                    <span style="color:#0f0f14;font-weight:700" id="meth_equity_score">--/40</span>
+                                    <span style="font-weight:600;color:#10b981">🟢 Equity Creation (max 40)</span>
+                                    <span style="color:#fff;font-weight:700" id="meth_equity_score">--/40</span>
                                 </div>
-                                <p style="color:#7a7268;font-size:12px;line-height:1.6" id="meth_equity_detail">
+                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_equity_detail">
                                     Equity Multiple = (ARV after appreciation − remaining loan) ÷ equity invested. Measures only wealth built — not cash flow, not tax benefits.
                                 </p>
-                                <p style="color:#7a7268;font-size:11px;margin-top:4px">Scale: 3x=40pts · 2x=32pts · 1.5x=24pts · 1x=14pts</p>
+                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 3x=40pts · 2x=32pts · 1.5x=24pts · 1x=14pts</p>
                             </div>
                             <!-- Speed of Capital -->
-                            <div style="border-top:1px solid #12151d;padding-top:12px">
+                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
                                     <span style="font-weight:600;color:#3b82f6">🔵 Speed of Capital / IRR (max 25)</span>
-                                    <span style="color:#0f0f14;font-weight:700" id="meth_speed_score">--/25</span>
+                                    <span style="color:#fff;font-weight:700" id="meth_speed_score">--/25</span>
                                 </div>
-                                <p style="color:#7a7268;font-size:12px;line-height:1.6" id="meth_speed_detail">
+                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_speed_detail">
                                     IRR (Internal Rate of Return) — time-weighted annualized return on all cash flows including exit proceeds. Does not include tax benefits.
                                 </p>
-                                <p style="color:#7a7268;font-size:11px;margin-top:4px">Scale: 20%+=25pts · 15%=21pts · 10%=14pts · 5%=7pts</p>
+                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 20%+=25pts · 15%=21pts · 10%=14pts · 5%=7pts</p>
                             </div>
                             <!-- Tax Efficiency -->
-                            <div style="border-top:1px solid #12151d;padding-top:12px">
+                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
                                     <span style="font-weight:600;color:#8b5cf6">🟣 Tax Efficiency (max 15)</span>
-                                    <span style="color:#0f0f14;font-weight:700" id="meth_tax_score">--/15</span>
+                                    <span style="color:#fff;font-weight:700" id="meth_tax_score">--/15</span>
                                 </div>
-                                <p style="color:#7a7268;font-size:12px;line-height:1.6">
+                                <p style="color:#9ca3af;font-size:12px;line-height:1.6">
                                     Land = 20% of purchase price (not depreciable). Depreciable basis = 80%. Of that: 50% = personal property at 100% bonus dep in yr1; 50% = structure on straight-line ÷ 27.5yr.
                                     Renovation budget = 100% bonus dep in yr1. Only takes as much depreciation each year as needed to bring your effective tax rate to 10% — remainder carries forward to next year.
                                 </p>
-                                <div id="meth_tax_breakdown" style="margin-top:8px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:11px;color:#7a7268"></div>
+                                <div id="meth_tax_breakdown" style="margin-top:8px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:11px;color:#9ca3af"></div>
                             </div>
                             <!-- Cash Flow -->
-                            <div style="border-top:1px solid #12151d;padding-top:12px">
+                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
                                     <span style="font-weight:600;color:#f59e0b">🟠 Cash Flow / CoC (max 20)</span>
-                                    <span style="color:#0f0f14;font-weight:700" id="meth_cf_score">--/20</span>
+                                    <span style="color:#fff;font-weight:700" id="meth_cf_score">--/20</span>
                                 </div>
-                                <p style="color:#7a7268;font-size:12px;line-height:1.6" id="meth_cf_detail">
+                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_cf_detail">
                                     Cash-on-Cash = Annual cash flow (NOI − debt service) ÷ total equity invested. DSCR shown for reference but does not drive the score.
                                 </p>
-                                <p style="color:#7a7268;font-size:11px;margin-top:4px">Scale: 30%+=20pts · 15%=15pts · 10%=10pts · 5%=5pts. Penalty: −0.5pt/pp below 15%.</p>
+                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 30%+=20pts · 15%=15pts · 10%=10pts · 5%=5pts. Penalty: −0.5pt/pp below 15%.</p>
                             </div>
                             <!-- Penalties -->
-                            <div style="border-top:1px solid #12151d;padding-top:12px">
+                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
                                     <span style="font-weight:600;color:#ef4444">⚠️ Penalties</span>
                                     <span style="color:#ef4444;font-weight:700" id="meth_penalty_score">-0</span>
                                 </div>
-                                <p style="color:#7a7268;font-size:12px" id="meth_penalty_detail">Friction: high interest rate (≥10%, −1.5), high reno (>20% of price, −1.5), negative cash flow (−2). Metric: CoC below 15% (−0.5/pp), IRR below 18% (−0.5/pp).</p>
+                                <p style="color:#9ca3af;font-size:12px" id="meth_penalty_detail">Friction: high interest rate (≥10%, −1.5), high reno (>20% of price, −1.5), negative cash flow (−2). Metric: CoC below 15% (−0.5/pp), IRR below 18% (−0.5/pp).</p>
                             </div>
                         </div>
                     </div>
@@ -915,7 +907,7 @@
                         <div class="price-rung rung-listed"><span class="price-rung-label">Listed Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x Equity Multiple</span></div>
                     </div>
                     <div id="buyboxExplainer" class="mt-4 p-3 rounded-lg bg-surface-light border border-surface-border text-xs text-gray-500 space-y-1" style="display:none">
-                        <p><strong class="text-muted">How to read this:</strong> Each price shows what you'd pay and the resulting Equity Multiple and annual cash flow at that price.</p>
+                        <p><strong class="text-gray-400">How to read this:</strong> Each price shows what you'd pay and the resulting Equity Multiple and annual cash flow at that price.</p>
                         <p><span class="text-emerald-400 font-semibold">Ideal Price</span> — maximum price that still hits your target return. Negotiate at or below this.</p>
                         <p><span class="text-amber-400 font-semibold">Max Price</span> — returns are thin here. Only pay this if you have a clear plan to boost revenue or cut costs.</p>
                         <p><span class="text-red-400 font-semibold">Stretch Price</span> — marginal deal. You'll need significant operational improvements to make this work.</p>
@@ -946,7 +938,7 @@
                     <div id="capitalRaiseGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-3 text-center">
                     </div>
                     <div class="mt-3 pt-3 border-t border-surface-border text-center">
-                        <p class="text-xs text-muted">Total Capital Needed</p>
+                        <p class="text-xs text-gray-500">Total Capital Needed</p>
                         <p class="font-bold text-white text-2xl" id="capitalRaiseTotal">--</p>
                     </div>
                 </div>
@@ -972,56 +964,56 @@
             <!-- Section 4: Return Attribution -->
             <section id="section-attribution" class="gated-section result-section is-empty">
                 <div class="bg-surface rounded-xl border border-surface-border p-5">
-                    <h2 class="section-title">Return Attribution<span class="info-tip" data-tip="Where your total return comes from: operating cash flow, equity appreciation, tax savings, and mortgage paydown.">i</span> <span class="text-sm font-normal text-muted" id="attrPeriodLabel">(5-Year)</span></h2>
+                    <h2 class="section-title">Return Attribution<span class="info-tip" data-tip="Where your total return comes from: operating cash flow, equity appreciation, tax savings, and mortgage paydown.">i</span> <span class="text-sm font-normal text-gray-500" id="attrPeriodLabel">(5-Year)</span></h2>
                     <div class="mt-3 space-y-4">
                         <!-- Equity Creation -->
                         <div>
                             <div class="flex justify-between items-baseline mb-1.5">
-                                <span class="text-sm text-muted">Equity Creation</span>
-                                <span class="text-ink font-bold"><span id="attrEquityVal">--</span> — <span id="attrEquityPct">--</span></span>
+                                <span class="text-sm text-gray-400">Equity Creation</span>
+                                <span class="text-white font-bold"><span id="attrEquityVal">--</span> — <span id="attrEquityPct">--</span></span>
                             </div>
                             <div class="attr-bar-track"><div class="attr-bar-fill bg-blue-500" id="attrEquityBar" style="width:0%"></div></div>
                         </div>
                         <!-- Cash Flow -->
                         <div>
                             <div class="flex justify-between items-baseline mb-1.5">
-                                <span class="text-sm text-muted">Cash Flow</span>
-                                <span class="text-ink font-bold"><span id="attrCashFlowVal">--</span> — <span id="attrCashFlowPct">--</span></span>
+                                <span class="text-sm text-gray-400">Cash Flow</span>
+                                <span class="text-white font-bold"><span id="attrCashFlowVal">--</span> — <span id="attrCashFlowPct">--</span></span>
                             </div>
                             <div class="attr-bar-track"><div class="attr-bar-fill bg-gray-400" id="attrCashFlowBar" style="width:0%"></div></div>
                         </div>
                         <!-- Tax Benefits -->
                         <div>
                             <div class="flex justify-between items-baseline mb-1.5">
-                                <span class="text-sm text-muted">Tax Benefits</span>
-                                <span class="text-ink font-bold"><span id="attrTaxVal">--</span> — <span id="attrTaxPct">--</span></span>
+                                <span class="text-sm text-gray-400">Tax Benefits</span>
+                                <span class="text-white font-bold"><span id="attrTaxVal">--</span> — <span id="attrTaxPct">--</span></span>
                             </div>
                             <div class="attr-bar-track"><div class="attr-bar-fill bg-green-500" id="attrTaxBar" style="width:0%"></div></div>
                         </div>
                         <!-- Debt Paydown -->
                         <div>
                             <div class="flex justify-between items-baseline mb-1.5">
-                                <span class="text-sm text-muted">Debt Paydown</span>
-                                <span class="text-ink font-bold"><span id="attrDebtVal">--</span> — <span id="attrDebtPct">--</span></span>
+                                <span class="text-sm text-gray-400">Debt Paydown</span>
+                                <span class="text-white font-bold"><span id="attrDebtVal">--</span> — <span id="attrDebtPct">--</span></span>
                             </div>
                             <div class="attr-bar-track"><div class="attr-bar-fill bg-purple-500" id="attrDebtBar" style="width:0%"></div></div>
                         </div>
                         <!-- Total Equity Multiple -->
                         <div class="border-t border-surface-border pt-3 mt-3 flex justify-between items-baseline">
-                            <span class="text-sm text-muted">Equity Multiple</span>
-                            <span class="text-ink font-bold" id="attrTotalMoic">--</span>
+                            <span class="text-sm text-gray-500">Equity Multiple</span>
+                            <span class="text-white font-bold" id="attrTotalMoic">--</span>
                         </div>
                     </div>
                     <p class="text-xs text-gray-500 mt-3 text-center" id="depExhaustionNote" style="display:none"></p>
-                    <details class="mt-4 text-xs text-muted">
+                    <details class="mt-4 text-xs text-gray-500">
                         <summary class="cursor-pointer text-gray-400 hover:text-white transition">How are these calculated?</summary>
                         <div class="mt-2 space-y-2 p-3 rounded-lg bg-surface-light border border-surface-border">
-                            <p><strong class="text-muted">Cash Flow:</strong> Annual revenue (ADR × occupancy × 365 × keys) minus operating expenses minus annual debt service, summed over the hold period.</p>
-                            <p><strong class="text-muted">Equity Creation:</strong> Year 1 includes forced appreciation (ARV minus total cost basis). Subsequent years compound at your annual appreciation rate on the ARV.</p>
-                            <p><strong class="text-muted">Tax Benefits:</strong> 50% of structure value (purchase price × 80%) plus 100% of renovation budget can be bonus depreciated in Year 1. Remaining structure depreciates over 27.5 years (STR) or 39 years (hotel). Capped at your household income. Applied at a flat 30% tax rate.</p>
-                            <p><strong class="text-muted">Debt Paydown:</strong> The principal portion of your mortgage payments that builds equity over the hold period.</p>
-                            <p><strong class="text-muted">Equity Multiple:</strong> Total return (cash flow + equity at exit + tax benefits + debt paydown − initial equity) divided by total equity invested.</p>
-                            <p><strong class="text-muted">IRR:</strong> Annualized return rate that makes the net present value of all cash flows equal zero. Accounts for timing of returns.</p>
+                            <p><strong class="text-gray-400">Cash Flow:</strong> Annual revenue (ADR × occupancy × 365 × keys) minus operating expenses minus annual debt service, summed over the hold period.</p>
+                            <p><strong class="text-gray-400">Equity Creation:</strong> Year 1 includes forced appreciation (ARV minus total cost basis). Subsequent years compound at your annual appreciation rate on the ARV.</p>
+                            <p><strong class="text-gray-400">Tax Benefits:</strong> 50% of structure value (purchase price × 80%) plus 100% of renovation budget can be bonus depreciated in Year 1. Remaining structure depreciates over 27.5 years (STR) or 39 years (hotel). Capped at your household income. Applied at a flat 30% tax rate.</p>
+                            <p><strong class="text-gray-400">Debt Paydown:</strong> The principal portion of your mortgage payments that builds equity over the hold period.</p>
+                            <p><strong class="text-gray-400">Equity Multiple:</strong> Total return (cash flow + equity at exit + tax benefits + debt paydown − initial equity) divided by total equity invested.</p>
+                            <p><strong class="text-gray-400">IRR:</strong> Annualized return rate that makes the net present value of all cash flows equal zero. Accounts for timing of returns.</p>
                         </div>
                     </details>
                 </div>
@@ -1050,8 +1042,8 @@
                             <p class="text-xs text-gray-600 mt-1" id="simOccHint">Current occupancy</p>
                         </div>
                         <div class="sm:col-span-2 text-center pt-2 border-t border-surface-border">
-                            <p class="text-xs text-muted">Simulated Result</p>
-                            <p class="font-bold text-2xl font-mono" id="simMOIC">--x Equity Multiple</p>
+                            <p class="text-xs text-gray-500">Simulated Result</p>
+                            <p class="font-bold text-2xl" id="simMOIC">--x Equity Multiple</p>
                             <p class="text-xs text-gray-500 mt-1" id="simCashFlow">--</p>
                         </div>
                     </div>
@@ -1084,7 +1076,7 @@
     <div id="authModal" class="modal-backdrop hidden">
         <div class="modal-content">
             <button id="authClose" class="modal-close">&times;</button>
-            <h2 class="text-xl font-bold text-ink">Sign in to Velocity</h2>
+            <h2 class="text-xl font-bold text-white">Sign in to Velocity</h2>
             <p class="text-sm text-gray-400 mt-1">Sign in to access your analyses.</p>
             <div class="mt-5">
                 <input type="email" id="authEmail" placeholder="Email" class="field-input text-base py-2.5 w-full" autocomplete="email">
@@ -1094,13 +1086,13 @@
                     <input type="password" id="authConfirmPassword" placeholder="Confirm new password" class="field-input text-base py-2.5 w-full mt-2">
                 </div>
                 <div style="text-align:right;margin-top:6px">
-                    <span id="authForgotLink" style="font-size:12px;color:#1e5c3a;cursor:pointer;text-decoration:underline">Forgot password?</span>
+                    <span id="authForgotLink" style="font-size:12px;color:#6c63ff;cursor:pointer;text-decoration:underline">Forgot password?</span>
                 </div>
-                <button type="button" id="authSubmit" style="width:100%;margin-top:12px;padding:10px 16px;font-size:13px;font-weight:700;border-radius:8px;background:#1e5c3a;color:#f8f5f0;border:none;cursor:pointer;transition:background 0.15s" onmouseover="this.style.background='#2d7a52'" onmouseout="this.style.background='#1e5c3a'">
+                <button type="button" id="authSubmit" class="w-full mt-3 px-4 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">
                     Sign In
                 </button>
-                <p style="text-align:center;margin-top:10px;font-size:12px;color:#7a7268">
-                    <span id="authSwitchToSignUp" style="color:#1e5c3a;cursor:pointer;text-decoration:underline">New here? Create a free account</span>
+                <p style="text-align:center;margin-top:10px;font-size:12px;color:#9ca3af">
+                    <span id="authSwitchToSignUp" style="color:#6c63ff;cursor:pointer;text-decoration:underline">New here? Create a free account</span>
                 </p>
                 <p id="authStatus" class="text-sm mt-3"></p>
             </div>
@@ -1116,12 +1108,12 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                 <!-- Monthly -->
                 <div class="pricing-card">
-                    <h3 class="text-lg font-bold text-ink">Monthly</h3>
+                    <h3 class="text-lg font-bold text-white">Monthly</h3>
                     <div class="mt-2">
-                        <span class="text-3xl font-extrabold text-ink">$29</span>
-                        <span class="text-sm text-muted">/month</span>
+                        <span class="text-3xl font-extrabold text-white">$29</span>
+                        <span class="text-sm text-gray-400">/month</span>
                     </div>
-                    <ul class="mt-4 space-y-2 text-sm text-muted">
+                    <ul class="mt-4 space-y-2 text-sm text-gray-400">
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Unlimited reports</li>
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Listing auto-import</li>
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Full analysis suite</li>
@@ -1133,13 +1125,13 @@
                 <!-- Annual -->
                 <div class="pricing-card pricing-card-featured">
                     <div class="pricing-badge">Save 43%</div>
-                    <h3 class="text-lg font-bold text-ink">Annual</h3>
+                    <h3 class="text-lg font-bold text-white">Annual</h3>
                     <div class="mt-2">
-                        <span class="text-3xl font-extrabold text-ink">$199</span>
-                        <span class="text-sm text-muted">/year</span>
+                        <span class="text-3xl font-extrabold text-white">$199</span>
+                        <span class="text-sm text-gray-400">/year</span>
                     </div>
                     <p class="text-xs text-gray-500 mt-1">$16.58/mo — billed annually</p>
-                    <ul class="mt-4 space-y-2 text-sm text-muted">
+                    <ul class="mt-4 space-y-2 text-sm text-gray-400">
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Unlimited reports</li>
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Listing auto-import</li>
                         <li class="flex items-center gap-2"><svg class="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>Full analysis suite</li>
@@ -1156,7 +1148,7 @@
     <div id="reportsModal" class="modal-backdrop hidden">
         <div class="modal-content modal-content-wide">
             <button id="reportsClose" class="modal-close">&times;</button>
-            <h2 class="text-xl font-bold text-ink">Past Reports</h2>
+            <h2 class="text-xl font-bold text-white">Past Reports</h2>
             <p class="text-sm text-gray-400 mt-1">Open any saved underwriting report and load it back into the main workspace.</p>
             <p id="reportsStatus" class="text-sm text-blue-300 mt-4 min-h-[1.25rem]"></p>
             <div id="reportsList" class="mt-2 report-list"></div>
@@ -1167,7 +1159,7 @@
     <div id="subscriptionModal" class="modal-backdrop hidden">
         <div class="modal-content modal-content-wide">
             <button id="subscriptionClose" class="modal-close">&times;</button>
-            <h2 class="text-xl font-bold text-ink">Manage Subscription</h2>
+            <h2 class="text-xl font-bold text-white">Manage Subscription</h2>
             <p class="text-sm text-gray-400 mt-1">See your current plan, switch billing options, or cancel at the end of the current period.</p>
             <p id="subscriptionFeedback" class="text-sm text-blue-300 mt-4 min-h-[1.25rem]"></p>
             <div id="subscriptionModalBody" class="mt-2"></div>

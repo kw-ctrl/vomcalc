@@ -296,7 +296,7 @@ async function updateHeaderAuth(authState) {
             return;
         }
         container.innerHTML = `
-            <button id="headerSignIn" style="padding:8px 18px;background:#1e5c3a;color:#000;font-size:12px;font-weight:700;border:none;border-radius:8px;cursor:pointer;letter-spacing:0.01em;transition:background 0.15s" onmouseover="this.style.background='#2d7a52'" onmouseout="this.style.background='#1e5c3a'">
+            <button id="headerSignIn" class="px-4 py-2 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white hover:border-gray-500 transition">
                 Sign Up Free
             </button>
         `;
