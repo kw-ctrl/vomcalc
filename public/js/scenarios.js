@@ -189,32 +189,19 @@ export function calculateDealLevers(inputs, baseMOIC, baseIRR, flags) {
             direction: 'Negotiate below asking or find off-market deals'
         },
         {
-            name: 'Increase ADR',
-            key: 'adr',
+            name: 'Grow Revenue',
+            key: 'revenue',
             mutate: (inp) => {
-                const m = { ...inp, adr: inp.adr * 1.15 };
+                // Combined: +15% ADR + +10pp occupancy
+                const m = { ...inp, adr: inp.adr * 1.15, occupancyRate: Math.min(0.90, inp.occupancyRate + 0.10) };
                 m.annualRevenue = m.adr * m.occupancyRate * 365 * m.numKeys;
                 m.totalRevenue = m.annualRevenue + (inp.ancillaryRevenue || 0);
                 m.noi = m.totalRevenue - m.annualOpex;
                 m.annualCashFlow = m.noi - m.annualDebtService;
                 return m;
             },
-            insight: `Increase ADR from $${inputs.adr} to $${newADR} (+15%). Adds ${formatCurrency(adrRevGain)}/yr in revenue.`,
-            direction: 'Invest in professional photography and dynamic pricing'
-        },
-        {
-            name: 'Improve Occupancy',
-            key: 'occupancy',
-            mutate: (inp) => {
-                const m = { ...inp, occupancyRate: Math.min(0.90, inp.occupancyRate + 0.10) };
-                m.annualRevenue = m.adr * m.occupancyRate * 365 * m.numKeys;
-                m.totalRevenue = m.annualRevenue + (inp.ancillaryRevenue || 0);
-                m.noi = m.totalRevenue - m.annualOpex;
-                m.annualCashFlow = m.noi - m.annualDebtService;
-                return m;
-            },
-            insight: `Raise occupancy from ${curOccPct}% to ${newOccPct}% (+10pp). Adds ${formatCurrency(occRevGain)}/yr in revenue.`,
-            direction: 'List on multiple OTAs and build direct booking channel'
+            insight: `Push ADR from $${inputs.adr} to $${newADR} and occupancy from ${curOccPct}% to ${newOccPct}%. Combined revenue lift: ${formatCurrency(adrRevGain + occRevGain)}/yr. Dynamic pricing alone typically adds 10-20%.`,
+            direction: 'Professional photography, dynamic pricing tool (Pricelabs/Wheelhouse), and multi-OTA listing'
         },
         {
             name: 'Reduce Operating Expenses',

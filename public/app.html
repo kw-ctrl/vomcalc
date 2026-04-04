@@ -717,7 +717,7 @@
                         <div class="flex-1 w-full space-y-3">
                             <div class="score-bar-row">
                                 <div class="flex justify-between text-sm mb-1">
-                                    <span class="text-gray-400">Equity at Exit<span class="info-tip" data-tip="Exit Equity Multiple — (ARV after appreciation − remaining loan balance) ÷ equity invested. Measures only the property's wealth creation: forced appreciation + natural appreciation + debt paydown. Separate from operating cash flows (scored under Cash Flow) and tax savings (scored under Tax). Total MOIC in the summary below includes everything. Scale: 3x = 40pts · 2x = 32pts · 1.5x = 24pts · 1x = 14pts">i</span></span>
+                                    <span class="text-gray-400">Equity Creation<span class="info-tip" data-tip="Exit Equity Multiple — (ARV after appreciation − remaining loan balance) ÷ equity invested. Measures only the property's wealth creation: forced appreciation + natural appreciation + debt paydown. Separate from operating cash flows (scored under Cash Flow) and tax savings (scored under Tax). Total Equity Multiple in the summary below includes everything. Scale: 3x = 40pts · 2x = 32pts · 1.5x = 24pts · 1x = 14pts">i</span></span>
                                     <div class="flex items-center gap-2">
                                         <span id="catEquityMoicDisplay" class="text-xs text-gray-500"></span>
                                         <span class="font-semibold text-white" id="catEquityLabel">0 / 40</span>
@@ -794,14 +794,14 @@
                                 <p class="text-xs text-gray-600" id="summaryMonthlyCFSub"></p>
                             </div>
                         </div>
-                        <!-- Row 2: CoC, MOIC, IRR, Total Capital -->
+                        <!-- Row 2: CoC, Equity Multiple, IRR, Total Capital -->
                         <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 text-center pt-3 border-t border-surface-border">
                             <div>
                                 <p class="text-xs text-gray-500">Cash-on-Cash<span class="info-tip" data-tip="Annual cash flow ÷ total equity invested. Primary cash yield metric. Drives the Cash Flow score.">i</span></p>
                                 <p class="font-bold text-lg" id="summaryCOC" style="color:#f59e0b">--</p>
                             </div>
                             <div>
-                                <p class="text-xs text-gray-500">Total MOIC<span class="info-tip" data-tip="Multiple on Invested Capital — every dollar returned: all annual cash flows + net sale proceeds (exit value minus remaining loan), divided by total equity invested. This is the real total return number. Tax benefits are separate.">i</span></p>
+                                <p class="text-xs text-gray-500">Equity Multiple<span class="info-tip" data-tip="Multiple on Invested Capital — every dollar returned: all annual cash flows + net sale proceeds (exit value minus remaining loan), divided by total equity invested. This is the real total return number. Tax benefits are separate.">i</span></p>
                                 <p class="font-bold text-lg" id="summaryMOIC" style="color:#10b981">--</p>
                                 <p class="text-xs" id="summaryEquityExitMultiple" style="color:#6b7280;margin-top:2px"></p>
                             </div>
@@ -901,13 +901,13 @@
                     <p class="text-sm text-gray-500 mb-1" id="buyboxContext">Target MOIC: --x | Current MOIC at listed price: --x</p>
                     <p class="text-xs text-gray-600 mb-4" id="buyboxRefiContext"></p>
                     <div id="priceLadder" class="price-ladder">
-                        <div class="price-rung rung-stretch"><span class="price-rung-label">Stretch Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-max"><span class="price-rung-label">Max Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-ideal"><span class="price-rung-label">Ideal Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
-                        <div class="price-rung rung-listed"><span class="price-rung-label">Listed Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x MOIC</span></div>
+                        <div class="price-rung rung-stretch"><span class="price-rung-label">Stretch Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x Equity Multiple</span></div>
+                        <div class="price-rung rung-max"><span class="price-rung-label">Max Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x Equity Multiple</span></div>
+                        <div class="price-rung rung-ideal"><span class="price-rung-label">Ideal Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x Equity Multiple</span></div>
+                        <div class="price-rung rung-listed"><span class="price-rung-label">Listed Price</span><span class="price-rung-value">--</span><span class="price-rung-moic">--x Equity Multiple</span></div>
                     </div>
                     <div id="buyboxExplainer" class="mt-4 p-3 rounded-lg bg-surface-light border border-surface-border text-xs text-gray-500 space-y-1" style="display:none">
-                        <p><strong class="text-gray-400">How to read this:</strong> Each price shows what you'd pay and the resulting MOIC (return multiple) and annual cash flow at that price.</p>
+                        <p><strong class="text-gray-400">How to read this:</strong> Each price shows what you'd pay and the resulting Equity Multiple and annual cash flow at that price.</p>
                         <p><span class="text-emerald-400 font-semibold">Ideal Price</span> — maximum price that still hits your target return. Negotiate at or below this.</p>
                         <p><span class="text-amber-400 font-semibold">Max Price</span> — returns are thin here. Only pay this if you have a clear plan to boost revenue or cut costs.</p>
                         <p><span class="text-red-400 font-semibold">Stretch Price</span> — marginal deal. You'll need significant operational improvements to make this work.</p>
@@ -921,9 +921,9 @@
                 <div class="bg-surface rounded-xl border border-surface-border p-5">
                     <h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wide mb-3">How to Improve This Deal</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="leverCards">
-                        <div class="lever-card"><div class="lever-card-name">#1 --</div><div class="lever-card-insight">Analyze a deal to see your top improvement levers</div><span class="lever-card-impact">+--x MOIC</span></div>
-                        <div class="lever-card"><div class="lever-card-name">#2 --</div><div class="lever-card-insight">Each lever shows quantified impact on your returns</div><span class="lever-card-impact">+--x MOIC</span></div>
-                        <div class="lever-card"><div class="lever-card-name">#3 --</div><div class="lever-card-insight">Ranked by largest delta to your equity multiple</div><span class="lever-card-impact">+--x MOIC</span></div>
+                        <div class="lever-card"><div class="lever-card-name">#1 --</div><div class="lever-card-insight">Analyze a deal to see your top improvement levers</div><span class="lever-card-impact">+--x Equity Multiple</span></div>
+                        <div class="lever-card"><div class="lever-card-name">#2 --</div><div class="lever-card-insight">Each lever shows quantified impact on your returns</div><span class="lever-card-impact">+--x Equity Multiple</span></div>
+                        <div class="lever-card"><div class="lever-card-name">#3 --</div><div class="lever-card-insight">Ranked by largest delta to your equity multiple</div><span class="lever-card-impact">+--x Equity Multiple</span></div>
                     </div>
                 </div>
             </section>
@@ -998,9 +998,9 @@
                             </div>
                             <div class="attr-bar-track"><div class="attr-bar-fill bg-purple-500" id="attrDebtBar" style="width:0%"></div></div>
                         </div>
-                        <!-- Total MOIC -->
+                        <!-- Total Equity Multiple -->
                         <div class="border-t border-surface-border pt-3 mt-3 flex justify-between items-baseline">
-                            <span class="text-sm text-gray-500">Total MOIC</span>
+                            <span class="text-sm text-gray-500">Equity Multiple</span>
                             <span class="text-white font-bold" id="attrTotalMoic">--</span>
                         </div>
                     </div>
@@ -1012,7 +1012,7 @@
                             <p><strong class="text-gray-400">Equity Creation:</strong> Year 1 includes forced appreciation (ARV minus total cost basis). Subsequent years compound at your annual appreciation rate on the ARV.</p>
                             <p><strong class="text-gray-400">Tax Benefits:</strong> 50% of structure value (purchase price × 80%) plus 100% of renovation budget can be bonus depreciated in Year 1. Remaining structure depreciates over 27.5 years (STR) or 39 years (hotel). Capped at your household income. Applied at a flat 30% tax rate.</p>
                             <p><strong class="text-gray-400">Debt Paydown:</strong> The principal portion of your mortgage payments that builds equity over the hold period.</p>
-                            <p><strong class="text-gray-400">MOIC:</strong> Total return (cash flow + equity at exit + tax benefits + debt paydown − initial equity) divided by total equity invested.</p>
+                            <p><strong class="text-gray-400">Equity Multiple:</strong> Total return (cash flow + equity at exit + tax benefits + debt paydown − initial equity) divided by total equity invested.</p>
                             <p><strong class="text-gray-400">IRR:</strong> Annualized return rate that makes the net present value of all cash flows equal zero. Accounts for timing of returns.</p>
                         </div>
                     </details>
@@ -1043,11 +1043,11 @@
                         </div>
                         <div class="sm:col-span-2 text-center pt-2 border-t border-surface-border">
                             <p class="text-xs text-gray-500">Simulated Result</p>
-                            <p class="font-bold text-2xl" id="simMOIC">--x MOIC</p>
+                            <p class="font-bold text-2xl" id="simMOIC">--x Equity Multiple</p>
                             <p class="text-xs text-gray-500 mt-1" id="simCashFlow">--</p>
                         </div>
                     </div>
-                    <p class="text-sm text-gray-500 mb-3">MOIC at varying ADR × Occupancy</p>
+                    <p class="text-sm text-gray-500 mb-3">Equity Multiple at varying ADR × Occupancy</p>
                     <div class="overflow-x-auto">
                         <table class="w-full text-sm" id="sensitivityTable">
                             <thead id="sensitivityHead"></thead>

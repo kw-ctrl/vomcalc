@@ -209,7 +209,7 @@ function renderRevenueCashFlowSummary(r) {
 
     document.getElementById('summaryAnnualExp').textContent = formatCurrency(r.annualOpex);
 
-    // Total MOIC (all CFs + exit) — the headline return number
+    // Total Equity Multiple (all CFs + exit) — the headline return number
     const moicSumEl = document.getElementById('summaryMOIC');
     if (moicSumEl) moicSumEl.textContent = r.moic ? r.moic.toFixed(2) + 'x' : '--';
 
@@ -443,9 +443,9 @@ function renderBuyBoxSection(r, gatherInputs) {
 
     // Context: if all solved prices are above listing, the deal is underpriced
     const allAboveListed = primary.ideal > primary.listed && primary.max > primary.listed;
-    let contextText = `Target MOIC: ${primary.targetMOIC.toFixed(1)}x | MOIC at listing: ${listedMOIC.toFixed(2)}x`;
+    let contextText = `Target Equity Multiple: ${primary.targetMOIC.toFixed(1)}x | Equity Multiple at listing: ${listedMOIC.toFixed(2)}x`;
     if (allAboveListed) {
-        contextText += ` — Deal exceeds all MOIC thresholds at asking price. Strong buy as-is.`;
+        contextText += ` — Deal exceeds all Equity Multiple thresholds at asking price. Strong buy as-is.`;
     } else if (listedMOIC < 1.0) {
         contextText += ` — Deal loses money at asking price.`;
     } else if (listedMOIC < primary.targetMOIC) {
@@ -475,10 +475,12 @@ function renderBuyBoxSection(r, gatherInputs) {
         const flows = calculateAnnualCashFlows(testInputs);
         const moic = calculateMOIC(flows, testInputs.totalEquity);
         const isListedRow = rung.cls === 'rung-listed';
+        const belowListed = !isListedRow && rung.primary < primary.listed;
         const aboveListed = !isListedRow && rung.primary > primary.listed;
-        // If this solved price is above listing, show a "below asking" note
-        const priceDisplay = aboveListed
+        const priceDisplay = belowListed
             ? `${formatCurrency(rung.primary)} <span style="color:#10b981;font-size:0.7em">✓ below asking</span>`
+            : aboveListed
+            ? `${formatCurrency(rung.primary)} <span style="color:#f59e0b;font-size:0.7em">↑ above asking</span>`
             : formatCurrency(rung.primary);
         const refiNote = rung.refi && rung.refi !== rung.primary && Math.abs(rung.refi - rung.primary) > 1000
             ? `<span class="price-rung-refi">${formatCurrency(rung.refi)} @ refi</span>`
@@ -489,7 +491,7 @@ function renderBuyBoxSection(r, gatherInputs) {
             <div class="price-rung ${rung.cls}">
                 <span class="price-rung-label">${rung.label}</span>
                 <span class="price-rung-value">${priceDisplay}</span>
-                <span class="price-rung-moic">${moic.toFixed(2)}x MOIC · ${cfText}</span>
+                <span class="price-rung-moic">${moic.toFixed(2)}x · ${cfText}</span>
                 ${refiNote}
             </div>`;
     }).join('');
@@ -612,7 +614,7 @@ function renderAttributionSection(r) {
     document.getElementById('attrTaxPct').textContent = txPct.toFixed(0) + '%';
     document.getElementById('attrDebtPct').textContent = dpPct.toFixed(0) + '%';
 
-    // Total MOIC summary
+    // Total Equity Multiple summary
     const totalMoic = document.getElementById('attrTotalMoic');
     if (totalMoic && r.moic !== undefined) {
         totalMoic.textContent = r.moic.toFixed(2) + 'x on ' + formatCurrency(r.totalEquity) + ' invested';
@@ -832,7 +834,7 @@ function setupSensitivitySliders(r, gatherInputs) {
         const moic = calculateMOIC(flows, testInputs.totalEquity);
 
         const moicEl = document.getElementById('simMOIC');
-        moicEl.textContent = moic.toFixed(2) + 'x MOIC';
+        moicEl.textContent = moic.toFixed(2) + 'x Equity Multiple';
         moicEl.className = 'font-bold text-2xl ' + (moic >= 2.5 ? 'text-green-400' : moic >= 1.5 ? 'text-amber-400' : 'text-red-400');
 
         const cfEl = document.getElementById('simCashFlow');
@@ -861,7 +863,7 @@ function renderLeversSection(r) {
         <div class="lever-card">
             <div class="lever-card-name">#${i + 1} ${lever.name}</div>
             <div class="lever-card-insight">${lever.insight}</div>
-            <span class="lever-card-impact">+${lever.deltaMOIC.toFixed(2)}x MOIC | +${(lever.deltaIRR * 100).toFixed(1)}% IRR</span>
+            <span class="lever-card-impact">+${lever.deltaMOIC.toFixed(2)}x Equity Multiple | +${(lever.deltaIRR * 100).toFixed(1)}% IRR</span>
             <div class="lever-card-direction">${lever.direction}</div>
         </div>
     `).join('');
