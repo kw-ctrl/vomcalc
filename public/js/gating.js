@@ -1055,34 +1055,24 @@ async function handleMagicLink() {
             }
         } else {
             ({ error } = await signInWithEmail(email, password));
-            // Always check if a session exists — error can be set even when sign-in succeeds
-            const activeSession = await getBrowserSession();
-            if (activeSession) {
-                // Confirmed signed in — close and proceed regardless of error field
+            if (!error) {
                 status.textContent = 'Signed in!';
                 status.className = 'text-sm mt-3 text-emerald-400';
                 btn.textContent = 'Done';
-                closeModal('authModal');
-                hideSaveNudge();
-                restoreAndReanalyze();
-                return;
-            }
-            if (!error) {
-                // No session but no error — shouldn't happen, treat as success
-                closeModal('authModal');
+                // onAuthStateChange SIGNED_IN will also close the modal — belt and suspenders
+                setTimeout(() => closeModal('authModal'), 800);
                 return;
             }
         }
-        status.textContent = error?.message || 'Something went wrong. Try again.';
+        // Show error and re-enable button
+        const msg = error?.message || 'Something went wrong. Try again.';
+        status.textContent = msg === 'Email not confirmed'
+            ? 'Please check your email for a confirmation link, or contact support.'
+            : msg;
         status.className = 'text-sm mt-3 text-red-400';
         btn.disabled = false;
         btn.textContent = _authMode === 'signup' ? 'Create Free Account' : 'Sign In';
     } catch (err) {
-        // Even on exception, check if they're actually signed in
-        try {
-            const activeSession = await getBrowserSession();
-            if (activeSession) { closeModal('authModal'); return; }
-        } catch {}
         status.textContent = 'Connection error. Please try again.';
         status.className = 'text-sm mt-3 text-red-400';
         btn.disabled = false;
