@@ -725,6 +725,24 @@ function updateDownPaymentHint() {
     } else {
         el.textContent = '';
     }
+    updateMonthlyMortgageDisplay();
+}
+
+function updateMonthlyMortgageDisplay() {
+    const price = parseCurrency(document.getElementById('listedPrice')?.value || '0');
+    const downPct = getVal('downPayment', 20) / 100;
+    const rate = getVal('interestRate', 7.5);
+    const loanAmount = price * (1 - downPct);
+    const displayEl = document.getElementById('monthlyMortgageDisplay');
+    const amountEl = document.getElementById('monthlyMortgageAmount');
+    if (!displayEl || !amountEl) return;
+    if (price <= 0 || loanAmount <= 0) {
+        displayEl.style.display = 'none';
+        return;
+    }
+    const monthly = calculateMortgage(loanAmount, rate);
+    displayEl.style.display = 'flex';
+    amountEl.textContent = `$${Math.round(monthly).toLocaleString()}/mo`;
 }
 
 // ════════════════════════════════════════════════
@@ -1380,6 +1398,13 @@ document.addEventListener('DOMContentLoaded', () => {
             if (['downPayment','interestRate','refiLTV','refiRate'].includes(slider.dataset.input)) {
                 updateRefiCashOut();
             }
+            // Update monthly mortgage display when down payment or rate changes
+            if (['downPayment','interestRate'].includes(slider.dataset.input)) {
+                updateMonthlyMortgageDisplay();
+                // Also re-estimate opex (mgmt fee + insurance driven by price/revenue)
+                const t = estimateOpex();
+                if (t > 0) setCurrencyVal('operatingExpenses', t);
+            }
         });
     });
 
@@ -1963,7 +1988,7 @@ function isSnowZip(address) {
 }
 
 function estimateOpex() {
-    // CHANGE 4 Fix A: Hotel uses expense ratio slider, not this estimator
+    // Hotel uses expense ratio slider, not this estimator
     const type = document.getElementById('propertyType')?.value;
     if (type === 'hotel') return 0;
     const address = document.getElementById('propertyAddress')?.value || '';
@@ -1971,14 +1996,15 @@ function estimateOpex() {
     const sqft = parseInt(document.getElementById('squareFeet')?.value || 0);
     const price = parseCurrency(document.getElementById('listedPrice')?.value || '0');
 
-    const mgmt   = Math.round(annualRev * 0.20 / 12);
-    const insurance = Math.round(Math.max(150, price * 0.001 / 12));
-    const internet  = 100;
-    const utilities = sqft > 0 ? Math.round(Math.max(150, sqft * 0.12)) : 200;
+    const mgmt        = Math.round(annualRev * 0.20 / 12);
+    const insurance   = Math.round(Math.max(150, price * 0.001 / 12));
+    const internet    = 100;
+    const utilities   = sqft > 0 ? Math.round(Math.max(150, sqft * 0.12)) : 200;
     const landscaping = 150;
-    const pest      = 50;
-    const snow      = isSnowZip(address) ? 200 : 0;
-    const maint     = Math.round(Math.max(100, price * 0.005 / 12));
+    const pest        = 50;
+    const snow        = isSnowZip(address) ? 200 : 0;
+    const maint       = Math.round(Math.max(100, price * 0.005 / 12));
+    const propTax     = price > 0 ? Math.round(price * 0.011 / 12) : 0; // ~1.1% annually
 
     // Update detail modal
     const fmt = v => v > 0 ? `$${v.toLocaleString()}/mo` : '—';
@@ -1992,8 +2018,10 @@ function estimateOpex() {
     if (snowRow) snowRow.style.display = snow > 0 ? 'flex' : 'none';
     document.getElementById('opex_snow').textContent = fmt(snow);
     document.getElementById('opex_maint').textContent = fmt(maint);
+    const taxEl = document.getElementById('opex_tax');
+    if (taxEl) taxEl.textContent = fmt(propTax);
 
-    const total = mgmt + insurance + internet + utilities + landscaping + pest + snow + maint;
+    const total = mgmt + insurance + internet + utilities + landscaping + pest + snow + maint + propTax;
     document.getElementById('opex_total_display').textContent = `$${total.toLocaleString()}/mo`;
     return total;
 }

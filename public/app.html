@@ -197,6 +197,10 @@
         <span style="color:#d1d5db">Maintenance Reserve</span>
         <span style="color:#fff;font-weight:600" id="opex_maint">$0</span>
       </div>
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="color:#d1d5db">Property Taxes</span>
+        <span style="color:#fff;font-weight:600" id="opex_tax">$0</span>
+      </div>
       <div style="border-top:1px solid #2a2a3a;margin-top:6px;padding-top:10px;display:flex;justify-content:space-between;align-items:center">
         <span style="color:#fff;font-weight:700">Total Estimated</span>
         <span style="color:#6c63ff;font-weight:700;font-size:15px" id="opex_total_display">$0/mo</span>
@@ -332,6 +336,10 @@
                         </div>
                         <input type="number" id="interestRate" value="7.5" style="display:none">
                         <p class="field-hint" id="rateHint">Acquisition loan rate</p>
+                    </div>
+                    <div id="monthlyMortgageDisplay" style="display:none;background:#1a1a2e;border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
+                        <span style="font-size:12px;color:#9ca3af">Est. Monthly Payment (P&amp;I)</span>
+                        <span style="font-size:14px;font-weight:700;color:#e2e5f0;font-family:'DM Mono',monospace" id="monthlyMortgageAmount">—</span>
                     </div>
                     <div>
                         <label class="field-label flex items-center gap-2">
