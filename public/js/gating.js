@@ -340,7 +340,7 @@ async function updateHeaderAuth(authState) {
                     <p class="mt-1 truncate text-sm font-medium text-white">${escapeHtml(user.email || 'Signed in')}</p>
                 </div>
                 <div class="p-2">
-                    <button type="button" id="menuPastReports" class="menu-action-button">View Past Report</button>
+                    <button type="button" id="menuPastReports" class="menu-action-button">My Deals</button>
                     <button type="button" id="menuSubscription" class="menu-action-button">Subscription</button>
                     <div class="my-2 border-t border-surface-border"></div>
                     <button type="button" id="menuSignOut" class="menu-action-button menu-action-button-danger">Sign Out</button>
@@ -355,7 +355,7 @@ async function updateHeaderAuth(authState) {
     });
     container.querySelector('#menuPastReports')?.addEventListener('click', () => {
         closeHeaderMenu();
-        openModal('reportsModal');
+        if (typeof openMyDeals === 'function') openMyDeals();
     });
     container.querySelector('#menuSubscription')?.addEventListener('click', () => {
         closeHeaderMenu();
