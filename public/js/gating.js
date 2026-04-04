@@ -75,6 +75,9 @@ export async function initGating() {
                     if (hasAuthParams()) {
                         history.replaceState(null, '', window.location.pathname);
                     }
+                    // Always close auth modal on confirmed sign-in — don't rely on
+                    // handleMagicLink getting a clean error:null (network race condition)
+                    closeModal('authModal');
                     hideSaveNudge();
                     restoreAndReanalyze();
                 }
@@ -408,6 +411,14 @@ export function openModal(id) {
 
 function closeModal(id) {
     document.getElementById(id)?.classList.add('hidden');
+    // Reset auth modal button if it was stuck in a loading state
+    if (id === 'authModal') {
+        const btn = document.getElementById('authSubmit');
+        if (btn && btn.disabled) {
+            btn.disabled = false;
+            btn.textContent = _authMode === 'signup' ? 'Create Free Account' : 'Sign In';
+        }
+    }
 }
 
 function closeAllModals() {
