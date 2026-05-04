@@ -251,23 +251,7 @@
                         </div>
                     </div>
 
-                    <!-- Renovation & Furnishing -->
-                    <!-- Hotel renovation: $/key slider -->
-                    <div id="hotelRenoBudgetGroup" style="display:none">
-                        <label class="field-label">Renovation Budget<span class="info-tip" data-tip="Cost per key × number of keys. Slide to set $/key, or edit the total directly.">i</span></label>
-                        <div class="slider-row" style="margin-bottom:8px">
-                            <input type="range" id="perKeyRenoSlider" min="0" max="100000" step="1000" value="15000" class="field-slider">
-                            <span class="slider-value" id="perKeyRenoValue">$15K/key</span>
-                        </div>
-                        <p class="field-hint" id="perKeyRenoHint">Total: $150,000 (10 keys × $15,000)</p>
-                        <div style="display:flex;align-items:center;gap:8px;margin-top:6px">
-                            <div class="relative" style="flex:1">
-                                <span class="field-prefix">$</span>
-                                <input type="text" id="hotelRenoOverrideInput" placeholder="0" class="field-input pl-7" data-currency inputmode="numeric" style="font-size:14px">
-                            </div>
-                        </div>
-                        <p style="font-size:11px;color:#6b7280;margin-top:4px">Edit total to override · slider updates automatically</p>
-                    </div>
+                    <!-- Hotel Reno/Furnish moved to near numKeys section below -->
 
                     <div id="renovationBudgetGroup">
                         <label class="field-label">Renovation Budget<span class="info-tip" data-tip="Total cost of property improvements. Increases your cost basis but can significantly boost ARV and rental income.">i</span></label>
@@ -310,7 +294,7 @@
                         <input type="hidden" id="furnishingBudgetComputed" value="0">
                     </div>
 
-                    <!-- ARV -->
+                    <!-- ARV (STR only — JS hides for hotel) -->
                     <div id="arvWrapper">
                         <label class="field-label" id="arvLabel">After-Repair Value (ARV) <span style="color:#ef4444;font-weight:700">*</span><span class="info-tip" data-tip="Estimated property value after all renovations and improvements. Used to calculate forced equity and cash-out refi proceeds.">i</span></label>
                         <div class="relative">
@@ -333,19 +317,22 @@
                         <input type="number" id="downPayment" value="20" style="display:none">
                         <p class="field-hint" id="downPaymentAmount"></p>
                     </div>
-                    <div>
-                        <label class="field-label">Interest Rate %</label>
-                        <div class="slider-row">
-                            <input type="range" id="interestRateSlider" min="3" max="18" step="0.25" value="7.5" class="field-slider" data-input="interestRate" data-decimals="1">
-                            <span class="slider-value">7.5%</span>
+                    <!-- Multi-Tranche Debt Builder -->
+                    <div id="debtTranchesSection">
+                        <label class="field-label">Financing Structure<span class="info-tip" data-tip="Up to 3 debt tranches. Each tranche is defined as % of purchase price (LTV). Toggle IO for interest-only loans.">i</span></label>
+                        <div id="debtTranchesContainer" class="space-y-2"></div>
+                        <button type="button" id="addTrancheBtn" onclick="addDebtTranche()" style="margin-top:8px;font-size:11px;color:#6c63ff;background:none;border:1px solid rgba(108,99,255,0.4);border-radius:5px;padding:4px 10px;cursor:pointer">+ Add Tranche</button>
+                        <!-- Debt summary -->
+                        <div id="debtSummary" style="margin-top:8px;padding:8px 10px;background:rgba(0,0,0,0.25);border-radius:6px;font-size:11px;color:#9ca3af;line-height:1.8">
+                            <div style="display:flex;justify-content:space-between"><span>Total LTV</span><span id="dsSummaryLTV" style="color:#fff;font-weight:600">--</span></div>
+                            <div style="display:flex;justify-content:space-between"><span>Total Debt</span><span id="dsSummaryDebt" style="color:#fff;font-weight:600">--</span></div>
+                            <div style="display:flex;justify-content:space-between"><span>Blended Rate</span><span id="dsSummaryRate" style="color:#fff;font-weight:600">--</span></div>
+                            <div style="display:flex;justify-content:space-between"><span>Monthly Debt Service</span><span id="dsSummaryDS" style="color:#fff;font-weight:600">--</span></div>
                         </div>
-                        <input type="number" id="interestRate" value="7.5" style="display:none">
-                        <p class="field-hint" id="rateHint">Acquisition loan rate</p>
+                        <input type="hidden" id="interestRate" value="7.5">
+                        <input type="hidden" id="debtTranchesJSON" value="[]">
                     </div>
-                    <div id="monthlyMortgageDisplay" style="display:none;background:#1a1a2e;border-radius:8px;padding:10px 14px;display:flex;justify-content:space-between;align-items:center">
-                        <span style="font-size:12px;color:#9ca3af">Est. Monthly Payment (P&amp;I)</span>
-                        <span style="font-size:14px;font-weight:700;color:#e2e5f0;font-family:'DM Mono',monospace" id="monthlyMortgageAmount">—</span>
-                    </div>
+                    <div id="monthlyMortgageDisplay" style="display:none"></div>
                     <div>
                         <label class="field-label flex items-center gap-2">
                             <span>Refinance Planned?</span>
@@ -415,8 +402,7 @@
                         </select>
                     </div>
 
-                    <!-- Hidden legacy fields kept for calc compatibility -->
-                    <input type="hidden" id="constructionDuration" value="6">
+                    <!-- constructionDuration / constructionKeysOut / rampUpMonths are inside constructionTimelineGroup -->
                 </div>
             </div>
 
@@ -468,14 +454,44 @@
                     </div>
                     <input type="hidden" id="numKeysHidden" value="1">
 
-                    <!-- Hotel calculated revenue -->
+                    <!-- Hotel: Renovation Budget (per key) -->
+                    <div id="hotelRenoBudgetGroup" style="display:none">
+                        <label class="field-label">Renovation Budget<span class="info-tip" data-tip="Hard costs per key — demo, structural, mechanical, finishes.">i</span></label>
+                        <div class="slider-row">
+                            <input type="range" id="perKeyRenoSlider" min="0" max="100000" step="1000" value="15000" class="field-slider">
+                            <span class="slider-value" id="perKeyRenoValue">$15K/key</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+                            <p class="field-hint" id="perKeyRenoHint" style="margin:0">Total: $150,000 (10 keys × $15,000)</p>
+                            <span style="font-size:13px;font-weight:700;color:#a89fff;font-family:'DM Mono',monospace" id="perKeyRenoTotal">$150,000</span>
+                        </div>
+                        <input type="hidden" id="renovationBudget" value="150000">
+                        <input type="hidden" id="renovationBudgetComputed" value="150000">
+                        <input type="hidden" id="hotelRenoOverrideInput" value="150000">
+                    </div>
+
+                    <!-- Hotel: FF&E Budget (per key) -->
+                    <div id="hotelFurnishBudgetGroup" style="display:none">
+                        <label class="field-label">FF&amp;E Budget <span style="font-size:10px;color:#6b7280;font-weight:400">(Furniture, Fixtures &amp; Equipment)</span><span class="info-tip" data-tip="Soft costs per key — furniture, bedding, fixtures, tech, decor. 100% bonus depreciable in Year 1.">i</span></label>
+                        <div class="slider-row">
+                            <input type="range" id="perKeyFurnishSlider" min="0" max="30000" step="500" value="5000" class="field-slider">
+                            <span class="slider-value" id="perKeyFurnishValue">$5K/key</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:4px">
+                            <p class="field-hint" id="perKeyFurnishHint" style="margin:0">Total: $50,000 (10 keys × $5,000)</p>
+                            <span style="font-size:13px;font-weight:700;color:#a89fff;font-family:'DM Mono',monospace" id="perKeyFurnishTotal">$50,000</span>
+                        </div>
+                        <input type="hidden" id="hotelFurnishBudgetComputed" value="50000">
+                    </div>
+
+                    <!-- Hotel calculated revenue (moved before expense ratio) -->
                     <div id="hotelRevenueDisplayGroup" style="display:none">
                         <label class="field-label">Calculated Annual Revenue</label>
                         <p class="text-white font-bold text-lg" id="hotelRevenueValue">--</p>
                         <p class="field-hint">ADR × Occupancy × Keys × 365</p>
                     </div>
 
-                    <!-- Hotel expense ratio -->
+                    <!-- Hotel expense ratio (right after revenue so it's visible) -->
                     <div id="expenseRatioGroup" style="display:none">
                         <label class="field-label">Expense Ratio %<span class="info-tip" data-tip="Operating expenses as a % of gross revenue. Typical hotel: 60-70%.">i</span></label>
                         <div class="slider-row">
@@ -484,6 +500,49 @@
                         </div>
                         <p class="field-hint" id="expenseRatioHint">Auto-calculates monthly expenses from revenue</p>
                     </div>
+
+                    <!-- Hotel: Construction Timeline (phased) -->
+                    <div id="constructionTimelineGroup" style="display:none;padding:12px;background:rgba(255,255,255,0.02);border:1px solid #2a2a3a;border-radius:8px">
+                        <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6b7280;margin-bottom:10px">🏗️ Construction Timeline</p>
+
+                        <!-- Phase rows — injected by JS -->
+                        <div id="constructionPhasesContainer" class="space-y-2"></div>
+
+                        <!-- Add phase button -->
+                        <button type="button" id="addPhaseBtn" onclick="addConstructionPhase()" style="margin-top:8px;font-size:11px;color:#6c63ff;background:none;border:1px solid rgba(108,99,255,0.4);border-radius:5px;padding:4px 10px;cursor:pointer">+ Add Phase</button>
+
+                        <!-- Ramp-up after construction -->
+                        <div style="margin-top:10px;padding-top:10px;border-top:1px solid #2a2a3a">
+                            <label class="field-label">Ramp-Up After Construction (months)<span class="info-tip" data-tip="Months to reach full occupancy after reopening. Revenue ramps linearly from 30% to 100%.">i</span></label>
+                            <div class="slider-row">
+                                <input type="range" id="rampUpMonthsSlider" min="0" max="12" step="1" value="3" class="field-slider">
+                                <span class="slider-value" id="rampUpMonthsValue">3 mo</span>
+                            </div>
+                        </div>
+
+                        <!-- Summary -->
+                        <div style="margin-top:10px;padding:8px 10px;background:rgba(0,0,0,0.25);border-radius:6px;font-size:12px" id="constructionSummary">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                                <span style="color:#6b7280">Total construction:</span>
+                                <span style="color:#fff;font-weight:600" id="constructionTotalMonths">-- mo</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+                                <span style="color:#6b7280">Year 1 revenue reduction:</span>
+                                <span style="color:#f59e0b;font-weight:600" id="constructionRevenueImpactHint">--%</span>
+                            </div>
+                            <div style="display:flex;justify-content:space-between">
+                                <span style="color:#6b7280">Construction reserve needed:</span>
+                                <span style="color:#ef4444;font-weight:700" id="constructionReserveAmount">--</span>
+                            </div>
+                        </div>
+
+                        <input type="hidden" id="constructionPhasesJSON" value="[]">
+                        <input type="hidden" id="constructionDuration" value="6">
+                        <input type="hidden" id="constructionKeysOut" value="10">
+                        <input type="hidden" id="rampUpMonths" value="3">
+                    </div>
+
+                    <!-- Hotel revenue + expense ratio are now above construction timeline -->
 
                     <!-- Additional Unit (STR only) -->
                     <div id="additionalUnitGroup">
@@ -772,8 +831,8 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Deal Verdict Card — removed per Kassidy 2026-04-04 -->
-                    <div id="dealVerdictCard" class="gated-section mt-5 pt-4 border-t border-surface-border" style="display:none !important">
+                    <span id="totalScoreValue" style="display:none"></span>
+                    <div id="dealVerdictCard" style="display:none !important">
                         <div id="dealVerdictInner" style="background:linear-gradient(135deg,rgba(108,99,255,0.08),rgba(16,16,31,0));border:1px solid rgba(108,99,255,0.18);border-radius:12px;padding:18px 20px;position:relative">
                             <div id="dealVerdictOneLiner" style="font-size:17px;font-weight:700;color:#fff;margin-bottom:8px;line-height:1.3"></div>
                             <div id="dealVerdictBody" style="font-size:13px;color:#b4b4cc;line-height:1.6"></div>
@@ -836,75 +895,33 @@
                         <div class="text-center mt-1" style="display:none" id="summaryExpRatioGroup">
                             <p class="text-xs text-gray-500">Expense Ratio: <span class="text-white font-semibold" id="summaryExpRatio">--</span> <span id="summaryExpRatioNote"></span><span id="summaryNOINote"></span></p>
                         </div>
+                        <!-- Hotel Exit Value Banner (hotel only) -->
+                        <div id="summaryExitValueGroup" style="display:none" class="mt-4 pt-4 border-t border-surface-border">
+                            <div style="background:linear-gradient(135deg,rgba(184,134,58,0.15),rgba(212,160,84,0.08));border:1px solid rgba(184,134,58,0.35);border-radius:10px;padding:14px 18px;text-align:center">
+                                <p class="text-xs uppercase tracking-widest mb-1" style="color:#b8863a;font-weight:600;letter-spacing:.1em">Projected Exit Value</p>
+                                <p class="font-bold" id="summaryExitValue" style="color:#d4a054;font-size:2rem;line-height:1.1">--</p>
+                                <p class="text-xs mt-1" id="summaryExitValueSub" style="color:#7a7268">NOI / Cap Rate at exit</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <!-- Deal Flags -->
                 <div id="dealFlags" class="gated-section space-y-2 mt-4" style="display:none"></div>
 
-                <!-- Methodology Breakdown (collapsible) -->
-                <div class="gated-section mt-4" id="methodologySection" style="display:none">
-                    <button type="button" onclick="toggleMethodology()" style="width:100%;display:flex;align-items:center;justify-content:space-between;background:rgba(108,99,255,0.06);border:1px solid rgba(108,99,255,0.2);border-radius:8px;padding:10px 14px;cursor:pointer">
-                        <span style="font-size:12px;font-weight:600;color:#a89fff;text-transform:uppercase;letter-spacing:.06em">📐 How This Score Is Calculated</span>
-                        <span id="methodologyChevron" style="color:#6b7280;font-size:14px;transition:transform .2s">▼</span>
-                    </button>
-                    <div id="methodologyBody" style="display:none;background:rgba(0,0,0,0.2);border:1px solid rgba(108,99,255,0.15);border-top:none;border-radius:0 0 8px 8px;padding:16px 14px">
-                        <div class="space-y-4 text-sm">
-                            <!-- Equity Creation -->
-                            <div>
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#10b981">🟢 Equity Creation (max 40)</span>
-                                    <span style="color:#fff;font-weight:700" id="meth_equity_score">--/40</span>
-                                </div>
-                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_equity_detail">
-                                    Equity Multiple = (ARV after appreciation − remaining loan) ÷ equity invested. Measures only wealth built — not cash flow, not tax benefits.
-                                </p>
-                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 3x=40pts · 2x=32pts · 1.5x=24pts · 1x=14pts</p>
-                            </div>
-                            <!-- Speed of Capital -->
-                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#3b82f6">🔵 Speed of Capital / IRR (max 25)</span>
-                                    <span style="color:#fff;font-weight:700" id="meth_speed_score">--/25</span>
-                                </div>
-                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_speed_detail">
-                                    IRR (Internal Rate of Return) — time-weighted annualized return on all cash flows including exit proceeds. Does not include tax benefits.
-                                </p>
-                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 20%+=25pts · 15%=21pts · 10%=14pts · 5%=7pts</p>
-                            </div>
-                            <!-- Tax Efficiency -->
-                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#8b5cf6">🟣 Tax Efficiency (max 15)</span>
-                                    <span style="color:#fff;font-weight:700" id="meth_tax_score">--/15</span>
-                                </div>
-                                <p style="color:#9ca3af;font-size:12px;line-height:1.6">
-                                    Land = 20% of purchase price (not depreciable). Depreciable basis = 80%. Of that: 50% = personal property at 100% bonus dep in yr1; 50% = structure on straight-line ÷ 27.5yr.
-                                    Renovation budget = 100% bonus dep in yr1. Only takes as much depreciation each year as needed to bring your effective tax rate to 10% — remainder carries forward to next year.
-                                </p>
-                                <div id="meth_tax_breakdown" style="margin-top:8px;padding:8px 10px;background:rgba(0,0,0,0.2);border-radius:6px;font-size:11px;color:#9ca3af"></div>
-                            </div>
-                            <!-- Cash Flow -->
-                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#f59e0b">🟠 Cash Flow / CoC (max 20)</span>
-                                    <span style="color:#fff;font-weight:700" id="meth_cf_score">--/20</span>
-                                </div>
-                                <p style="color:#9ca3af;font-size:12px;line-height:1.6" id="meth_cf_detail">
-                                    Cash-on-Cash = Annual cash flow (NOI − debt service) ÷ total equity invested. DSCR shown for reference but does not drive the score.
-                                </p>
-                                <p style="color:#6b7280;font-size:11px;margin-top:4px">Scale: 30%+=20pts · 15%=15pts · 10%=10pts · 5%=5pts. Penalty: −0.5pt/pp below 15%.</p>
-                            </div>
-                            <!-- Penalties -->
-                            <div style="border-top:1px solid #1e1e2e;padding-top:12px">
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-                                    <span style="font-weight:600;color:#ef4444">⚠️ Penalties</span>
-                                    <span style="color:#ef4444;font-weight:700" id="meth_penalty_score">-0</span>
-                                </div>
-                                <p style="color:#9ca3af;font-size:12px" id="meth_penalty_detail">Friction: high interest rate (≥10%, −1.5), high reno (>20% of price, −1.5), negative cash flow (−2). Metric: CoC below 15% (−0.5/pp), IRR below 18% (−0.5/pp).</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                    <!-- Methodology removed per Kassidy 2026-04-29 -->
+                    <span id="methodologySection" style="display:none"></span>
+                    <span id="methodologyBody" style="display:none"></span>
+                    <span id="meth_equity_score" style="display:none"></span>
+                    <span id="meth_equity_detail" style="display:none"></span>
+                    <span id="meth_speed_score" style="display:none"></span>
+                    <span id="meth_speed_detail" style="display:none"></span>
+                    <span id="meth_tax_score" style="display:none"></span>
+                    <span id="meth_tax_breakdown" style="display:none"></span>
+                    <span id="meth_cf_score" style="display:none"></span>
+                    <span id="meth_cf_detail" style="display:none"></span>
+                    <span id="meth_penalty_score" style="display:none"></span>
+                    <span id="meth_penalty_detail" style="display:none"></span>
+                    <span id="methodologyChevron" style="display:none"></span>
             </section>
 
             <!-- Section 2b: Purchase Price Recommendations (moved above levers) -->
