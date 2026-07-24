@@ -715,13 +715,8 @@ button:active {
 /* ──────────────────────────────────────────────
    Gating — blur locked sections
    ────────────────────────────────────────────── */
-#resultsArea.is-gated .gated-section {
-    filter: blur(8px);
-    pointer-events: none;
-    user-select: none;
-    opacity: 0.6;
-    transition: filter 0.4s ease, opacity 0.4s ease;
-}
+/* Gating removed — all sections fully visible */
+#resultsArea.is-gated .gated-section {}
 
 /* Gate Overlay CTA */
 .gate-overlay {

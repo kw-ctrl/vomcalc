@@ -5,6 +5,30 @@
 import { BONUS_DEPRECIATION_PERCENT, RENO_BONUS_DEPRECIATION_PERCENT, TAX_RATE_FLAT, LAND_VALUE_PERCENT } from './constants.js';
 import { calculateMortgage, calculateRemainingBalance, calculateFederalTax } from './utils.js';
 
+/**
+ * Compute remaining balance across all debt tranches at `years` elapsed.
+ * IO tranches: no paydown. Amortizing: standard formula.
+ * Falls back to single-loan if no tranches defined.
+ */
+function computeTotalRemainingBalance(inputs, years) {
+    const { debtTranches, loanAmount, interestRate, monthlyMortgage } = inputs;
+    if (debtTranches && debtTranches.length > 0 && debtTranches.some(t => t.amount > 0)) {
+        return debtTranches.reduce((sum, t) => {
+            if (!t.amount || t.amount <= 0) return sum;
+            if (t.interestOnly) return sum + t.amount;
+            const mp = t.amount > 0 && t.rate > 0
+                ? t.amount * ((t.rate/100/12) * Math.pow(1+t.rate/100/12, (t.termYears||25)*12)) /
+                  (Math.pow(1+t.rate/100/12, (t.termYears||25)*12) - 1)
+                : 0;
+            const r = t.rate / 100 / 12;
+            const paid = years * 12;
+            if (r <= 0) return sum + Math.max(0, t.amount - mp * paid);
+            return sum + Math.max(0, t.amount * Math.pow(1+r, paid) - mp * (Math.pow(1+r, paid) - 1) / r);
+        }, 0);
+    }
+    return calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, years);
+}
+
 export function calculateAnnualCashFlows(inputs) {
     const {
         totalEquity, annualOpex,
@@ -31,15 +55,45 @@ export function calculateAnnualCashFlows(inputs) {
             ...inputs, holdPeriod: refiYear
         });
         refiLoanAmount = refiAppraisalValue * (inputs.refiLTV || 0.70);
-        const bridgeBalanceAtRefi = calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, refiYear);
+        const bridgeBalanceAtRefi = computeTotalRemainingBalance(inputs, refiYear);
         refiCashOut = Math.max(0, refiLoanAmount - bridgeBalanceAtRefi);
         refiMonthlyMortgage = calculateMortgage(refiLoanAmount, inputs.refiRate);
         refiAnnualDS = refiMonthlyMortgage * 12;
     }
 
+    // Construction timeline parameters (hotel only) — uses phase array for precise calculation
+    const phases = inputs.constructionPhases && inputs.constructionPhases.length > 0
+        ? inputs.constructionPhases
+        : (inputs.constructionDuration > 0
+            ? [{ keysOut: inputs.constructionKeysOut || 0, months: inputs.constructionDuration }]
+            : []);
+    const rampMonths = inputs.rampUpMonths || 0;
+    const totalKeys = inputs.numKeys || 1;
+
+    // Build month-by-month revenue fractions for construction + ramp period
+    const monthRevFracs = [];
+    for (const phase of phases) {
+        const frac = totalKeys > 0 ? (totalKeys - Math.min(phase.keysOut, totalKeys)) / totalKeys : 1;
+        for (let m = 0; m < (phase.months || 0); m++) monthRevFracs.push(frac);
+    }
+    for (let r = 0; r < rampMonths; r++) {
+        monthRevFracs.push(0.30 + 0.70 * (r + 1) / Math.max(1, rampMonths));
+    }
+
+    // Year 1 multiplier = average of first 12 months of revenue fracs (rest = 1.0)
+    const yr1Frac = monthRevFracs.length > 0
+        ? Array.from({ length: 12 }, (_, i) => monthRevFracs[i] ?? 1.0).reduce((s, v) => s + v, 0) / 12
+        : 1.0;
+
     for (let yr = 1; yr <= holdPeriod; yr++) {
         const revGrowthFactor = Math.pow(1 + revenueGrowth, yr - 1);
-        const yearRevenue = baseRevenue * revGrowthFactor;
+        let yearRevenue = baseRevenue * revGrowthFactor;
+
+        // Year 1: apply phased construction revenue reduction
+        if (yr === 1 && yr1Frac < 1.0) {
+            yearRevenue = yearRevenue * yr1Frac;
+        }
+
         const yearNOI = yearRevenue - annualOpex;
 
         // Use bridge debt service pre-refi, refi debt service post-refi
@@ -69,7 +123,7 @@ export function calculateAnnualCashFlows(inputs) {
             if (hasRefi && holdPeriod > refiYear) {
                 remainingBalance = calculateRemainingBalance(refiLoanAmount, inputs.refiRate, refiMonthlyMortgage, holdPeriod - refiYear);
             } else {
-                remainingBalance = calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, holdPeriod);
+                remainingBalance = computeTotalRemainingBalance(inputs, holdPeriod);
             }
             const saleProceeds = exitValue - remainingBalance;
             flows.push(yearCF + saleProceeds);
@@ -139,9 +193,9 @@ export function calculateIRR(cashFlows, guess = 0.15, maxIter = 200, tol = 1e-7)
  */
 export function calculateEquityMultiple(inputs) {
     const exitValue = calculateStabilizedValue(inputs);
-    const { loanAmount, interestRate, monthlyMortgage, holdPeriod, totalEquity } = inputs;
+    const { holdPeriod, totalEquity } = inputs;
     if (totalEquity <= 0) return 0;
-    const remainingBalance = calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, holdPeriod);
+    const remainingBalance = computeTotalRemainingBalance(inputs, holdPeriod);
     const equityAtExit = Math.max(0, exitValue - remainingBalance);
     return equityAtExit / totalEquity;
 }
@@ -159,14 +213,14 @@ export function calculateStabilizedValue(inputs) {
         return arv * Math.pow(1 + annualAppreciation, holdPeriod);
     }
 
-    // Hotel: exit value = projected NOI / exit cap rate (income-based)
+    // Hotel: exit value = projected NOI / exit cap rate (income-based, no ARV)
     const exitNOI = noi * Math.pow(1 + revenueGrowth, holdPeriod);
     if (exitCapRate > 0 && exitNOI > 0) {
         return exitNOI / exitCapRate;
     }
 
-    // Fallback if NOI is negative or no cap rate: use appreciation on listed price
-    return arv * Math.pow(1 + annualAppreciation, holdPeriod);
+    // Fallback if NOI is negative or cap rate missing: appreciate listed price
+    return (inputs.listedPrice || arv) * Math.pow(1 + annualAppreciation, holdPeriod);
 }
 
 /**
@@ -238,12 +292,13 @@ export function calculateAllTaxBenefits(inputs) {
     let carryforward = 0;
 
     for (let yr = 1; yr <= holdPeriod; yr++) {
-        // Available depreciation this year
+        // Available depreciation this year = ongoing straight-line + any prior carryforward + year1 bonus
         let availableDep = ongoingStraightLine + carryforward;
         if (yr === 1) availableDep += year1BonusDep;
 
-        // Cap at income (can't deduct below $0 taxable income — excess carries forward)
-        const maxDep = householdIncome + carryforward; // can use carryforward to go past current income
+        // Cap at household income — can't deduct more than income in any given year.
+        // Excess carries forward to the next year automatically.
+        const maxDep = householdIncome;
         const depTaken = Math.min(availableDep, maxDep);
         carryforward = availableDep - depTaken;
 
@@ -324,26 +379,47 @@ export function calculateProForma(inputs) {
         // Principal paydown: balance at start of year minus balance at end of year
         const balanceStart = yr === 1
             ? inputs.loanAmount
-            : calculateRemainingBalance(inputs.loanAmount, inputs.interestRate, inputs.monthlyMortgage, yr - 1);
-        const balanceEnd = calculateRemainingBalance(inputs.loanAmount, inputs.interestRate, inputs.monthlyMortgage, yr);
+            : computeTotalRemainingBalance(inputs, yr - 1);
+        const balanceEnd = computeTotalRemainingBalance(inputs, yr);
         const principalPaydown = balanceStart - balanceEnd;
 
-        // Equity growth: forced appreciation (Year 1) + annual appreciation on ARV
-        const arvBase = inputs.arv || inputs.listedPrice;
-        const totalCostBasis = inputs.listedPrice + (inputs.renovationBudget || 0) +
-            (inputs.closingCosts || 0) + (inputs.contingencyAmount || 0) + (inputs.furnishingBudget || 0);
-        const appreciation = inputs.annualAppreciation || 0.03;
+        // Equity growth:
+        // Hotels → income-based (NOI / exitCapRate grows with revenue)
+        // STR    → comp-based (ARV appreciates annually)
         let equityGrowth;
-        if (yr === 1) {
-            // Year 1: forced appreciation (ARV minus all capital deployed) + first year's appreciation on ARV
-            const forcedAppreciation = Math.max(0, arvBase - totalCostBasis);
-            const yearAppreciation = arvBase * appreciation;
-            equityGrowth = forcedAppreciation + yearAppreciation;
+        if (inputs.propertyType === 'hotel') {
+            const capRate = inputs.exitCapRate || 0.09;
+            if (capRate > 0 && yearNOI > 0) {
+                const currentValue = yearNOI / capRate;
+                if (yr === 1) {
+                    // Forced appreciation: income-based value vs. total capital deployed
+                    const totalCostBasis = inputs.listedPrice + (inputs.renovationBudget || 0) +
+                        (inputs.closingCosts || 0) + (inputs.contingencyAmount || 0) + (inputs.furnishingBudget || 0);
+                    equityGrowth = Math.max(0, currentValue - totalCostBasis);
+                } else {
+                    const prevYearRevenue = baseRevenue * Math.pow(1 + (inputs.revenueGrowth || 0.02), yr - 2);
+                    const prevNOI = prevYearRevenue - inputs.annualOpex;
+                    const prevValue = prevNOI > 0 ? prevNOI / capRate : inputs.listedPrice;
+                    equityGrowth = Math.max(0, currentValue - prevValue);
+                }
+            } else {
+                equityGrowth = 0;
+            }
         } else {
-            // Years 2+: annual appreciation compounding on ARV
-            const propertyValue = arvBase * Math.pow(1 + appreciation, yr);
-            const priorValue = arvBase * Math.pow(1 + appreciation, yr - 1);
-            equityGrowth = propertyValue - priorValue;
+            // STR: appreciation on ARV
+            const arvBase = inputs.arv || inputs.listedPrice;
+            const totalCostBasis = inputs.listedPrice + (inputs.renovationBudget || 0) +
+                (inputs.closingCosts || 0) + (inputs.contingencyAmount || 0) + (inputs.furnishingBudget || 0);
+            const appreciation = inputs.annualAppreciation || 0.03;
+            if (yr === 1) {
+                const forcedAppreciation = Math.max(0, arvBase - totalCostBasis);
+                const yearAppreciation = arvBase * appreciation;
+                equityGrowth = forcedAppreciation + yearAppreciation;
+            } else {
+                const propertyValue = arvBase * Math.pow(1 + appreciation, yr);
+                const priorValue = arvBase * Math.pow(1 + appreciation, yr - 1);
+                equityGrowth = propertyValue - priorValue;
+            }
         }
 
         rows.push({
@@ -364,37 +440,79 @@ export function calculateProForma(inputs) {
 }
 
 export function calculateWorkingCapitalCushion(inputs) {
-    const { renovationBudget, propertyType, annualOpex, monthlyMortgage, totalRevenue } = inputs;
+    const { renovationBudget, propertyType, annualOpex, monthlyMortgage, totalRevenue, numKeys } = inputs;
 
-    if (renovationBudget <= 0) {
-        return { cushionNeeded: 0, monthsOfDeficit: 0, flag: false };
+    // For hotels with phase data: use precise month-by-month deficit calculation
+    if (propertyType === 'hotel') {
+        return calculateConstructionReserve(inputs);
     }
 
-    const renoMonths = propertyType === 'hotel' ? 6 : 3;
+    // STR fallback
+    if (renovationBudget <= 0) {
+        return { cushionNeeded: 0, monthsOfDeficit: 0, constructionReserve: 0, flag: false };
+    }
+
+    const renoMonths = 3;
     const renoScope = Math.min(1, renovationBudget / (inputs.listedPrice * 0.5));
     const revenueReduction = renoScope * 0.5;
-
     const monthlyRevenue = totalRevenue / 12;
     const monthlyOpex = annualOpex / 12;
 
     let totalDeficit = 0;
     let monthsOfDeficit = 0;
-
-    for (let m = 1; m <= renoMonths; m++) {
-        const reducedRevenue = monthlyRevenue * (1 - revenueReduction);
-        const monthlyCashBurn = (monthlyOpex + monthlyMortgage) - reducedRevenue;
-        if (monthlyCashBurn > 0) {
-            totalDeficit += monthlyCashBurn;
-            monthsOfDeficit++;
-        }
+    for (let m = 0; m < renoMonths; m++) {
+        const burn = (monthlyOpex + monthlyMortgage) - monthlyRevenue * (1 - revenueReduction);
+        if (burn > 0) { totalDeficit += burn; monthsOfDeficit++; }
     }
-
-    const reserveThreshold = monthlyOpex * 6;
 
     return {
         cushionNeeded: Math.round(totalDeficit),
         monthsOfDeficit,
-        flag: totalDeficit > reserveThreshold
+        constructionReserve: Math.round(totalDeficit),
+        flag: totalDeficit > monthlyOpex * 6
+    };
+}
+
+/**
+ * Precise month-by-month construction cash deficit for hotels.
+ * Uses constructionPhases array: [{ keysOut, months }, ...]
+ * Plus rampUpMonths after all phases complete.
+ */
+export function calculateConstructionReserve(inputs) {
+    const { annualOpex, monthlyMortgage, totalRevenue, numKeys, constructionPhases, rampUpMonths } = inputs;
+    const phases = (constructionPhases && constructionPhases.length > 0) ? constructionPhases
+        : [{ keysOut: inputs.constructionKeysOut || 0, months: inputs.constructionDuration || 0 }];
+
+    const totalKeys = numKeys || 1;
+    const monthlyRevFull = totalRevenue / 12;
+    const monthlyOpex = annualOpex / 12;
+    const rampMo = rampUpMonths || 0;
+
+    // Build month-by-month revenue fractions
+    const monthRevFracs = [];
+    for (const phase of phases) {
+        const frac = (totalKeys - Math.min(phase.keysOut, totalKeys)) / totalKeys;
+        for (let m = 0; m < (phase.months || 0); m++) monthRevFracs.push(frac);
+    }
+    // Ramp-up after all phases
+    for (let r = 0; r < rampMo; r++) {
+        monthRevFracs.push(0.30 + 0.70 * (r + 1) / Math.max(1, rampMo));
+    }
+
+    let totalDeficit = 0;
+    let monthsOfDeficit = 0;
+    for (const frac of monthRevFracs) {
+        const rev = monthlyRevFull * frac;
+        const burn = (monthlyOpex + monthlyMortgage) - rev;
+        if (burn > 0) { totalDeficit += burn; monthsOfDeficit++; }
+    }
+
+    const reserve = Math.round(totalDeficit);
+    return {
+        cushionNeeded: reserve,
+        constructionReserve: reserve,
+        monthsOfDeficit,
+        flag: reserve > 0
     };
 }
 
@@ -426,12 +544,12 @@ export function calculateReturnAttribution(inputs) {
         refiLoanAmount = refiAppraisalValue * (inputs.refiLTV || 0.70);
         const refiMonthlyMortgage = calculateMortgage(refiLoanAmount, inputs.refiRate);
         // Principal paid on bridge up to refi + principal paid on refi loan after
-        const bridgePaydown = loanAmount - calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, refiYear);
+        const bridgePaydown = loanAmount - computeTotalRemainingBalance(inputs, refiYear);
         const refiPaydown = refiLoanAmount - calculateRemainingBalance(refiLoanAmount, inputs.refiRate, refiMonthlyMortgage, holdPeriod - refiYear);
-        remainingBalance = refiLoanAmount - refiPaydown; // for other uses
+        remainingBalance = refiLoanAmount - refiPaydown;
         var debtPaydown = bridgePaydown + refiPaydown;
     } else {
-        remainingBalance = calculateRemainingBalance(loanAmount, interestRate, monthlyMortgage, holdPeriod);
+        remainingBalance = computeTotalRemainingBalance(inputs, holdPeriod);
         var debtPaydown = loanAmount - remainingBalance;
     }
 

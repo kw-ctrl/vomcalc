@@ -150,49 +150,8 @@ export function isAnonymous() {
  * Apply or remove anonymous blur on score gauge + deal verdict.
  * Called after each analysis render.
  */
-export function applyAnonBlur() {
-    const anon = isAnonymous();
-
-    // Score gauge blur
-    const gaugeWrap = document.getElementById('scoreGaugeBlurWrap');
-    const scoreAnonOverlay = document.getElementById('anonScoreOverlay');
-    if (gaugeWrap) {
-        const svgEl = gaugeWrap.querySelector('svg');
-        const ratingEl = document.getElementById('scoreRating');
-        if (anon) {
-            if (svgEl) svgEl.style.filter = 'blur(6px)';
-            if (ratingEl) ratingEl.style.filter = 'blur(6px)';
-            if (scoreAnonOverlay) scoreAnonOverlay.style.display = 'flex';
-        } else {
-            if (svgEl) svgEl.style.filter = '';
-            if (ratingEl) ratingEl.style.filter = '';
-            if (scoreAnonOverlay) scoreAnonOverlay.style.display = 'none';
-        }
-    }
-
-    // Deal verdict blur
-    const verdictInner = document.getElementById('dealVerdictInner');
-    const verdictOverlay = document.getElementById('anonVerdictOverlay');
-    if (verdictInner) {
-        const oneLiner = document.getElementById('dealVerdictOneLiner');
-        const body = document.getElementById('dealVerdictBody');
-        if (anon) {
-            if (oneLiner) oneLiner.style.filter = 'blur(5px)';
-            if (body) body.style.filter = 'blur(5px)';
-            if (verdictOverlay) verdictOverlay.style.display = 'flex';
-        } else {
-            if (oneLiner) oneLiner.style.filter = '';
-            if (body) body.style.filter = '';
-            if (verdictOverlay) verdictOverlay.style.display = 'none';
-        }
-    }
-
-    // Key return metrics blur (MOIC, IRR)
-    ['summaryMOIC', 'summaryIRR', 'summaryEquityExitMultiple'].forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.style.filter = anon ? 'blur(5px)' : '';
-    });
-}
+// Blur removed — all content shown without authentication
+export function applyAnonBlur() {}
 
 async function refreshAccess() {
     console.log('[Gating] refreshAccess called');
@@ -213,30 +172,13 @@ async function refreshAccess() {
 
 let gateTriggered = false;
 
+// All gating removed — full access for all users
 function applyGating(sub) {
     const resultsArea = document.getElementById('resultsArea');
-    if (!resultsArea) return;
-
-    const hasAccess = sub.status === 'active' || sub.status === 'trialing';
+    if (resultsArea) resultsArea.classList.remove('is-gated');
     const overlay = document.getElementById('gateOverlay');
-
-    if (hasAccess) {
-        resultsArea.classList.remove('is-gated');
-        if (overlay) overlay.classList.add('hidden');
-        gateTriggered = false;
-    } else if (sub.status === 'anonymous' && !gateTriggered) {
-        // Don't gate anonymous users until they try to analyze
-        resultsArea.classList.remove('is-gated');
-        if (overlay) overlay.classList.add('hidden');
-    } else {
-        // Expired users gate immediately; anonymous users gate after checkAccess()
-        gateTriggered = true;
-        resultsArea.classList.add('is-gated');
-        if (overlay) {
-            overlay.classList.remove('hidden');
-            renderOverlay(sub);
-        }
-    }
+    if (overlay) overlay.classList.add('hidden');
+    gateTriggered = false;
 }
 
 function renderOverlay(sub) {
@@ -293,19 +235,7 @@ async function updateHeaderAuth(authState) {
 
     if (!user) {
         isHeaderMenuOpen = false;
-        if (isBootstrapping) {
-            renderHeaderLoading();
-            return;
-        }
-        container.innerHTML = `
-            <button id="headerSignIn" class="px-4 py-2 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white hover:border-gray-500 transition">
-                Sign Up Free
-            </button>
-        `;
-        container.querySelector('#headerSignIn')?.addEventListener('click', () => {
-            setAuthMode('signup');
-            openModal('authModal');
-        });
+        container.innerHTML = `<span class="text-xs px-3 py-1.5 rounded-full bg-emerald-600/15 text-emerald-400 border border-emerald-500/20 font-medium">Free Access</span>`;
         return;
     }
 
@@ -1179,12 +1109,7 @@ async function handleCheckout(plan) {
 }
 
 function showSaveNudge() {
-    const nudge = document.getElementById('saveNudge');
-    if (!nudge) return;
-    nudge.classList.remove('hidden');
-    document.getElementById('saveNudgeBtn')?.addEventListener('click', () => {
-        openModal('authModal');
-    }, { once: true });
+    // Auth disabled — tool is free access, no nudge
 }
 
 function hideSaveNudge() {
@@ -1193,8 +1118,7 @@ function hideSaveNudge() {
 
 export async function persistLatestReport(report) {
     if (!currentAuthState?.user) {
-        lastReportSaveError = 'Sign in to save reports.';
-        showSaveNudge();
+        // Auth disabled — silently skip save
         return null;
     }
     hideSaveNudge();
@@ -1300,23 +1224,7 @@ function escapeHtml(value) {
 function wireEvents() {
     console.log('[Gating] wireEvents called');
 
-    // Gate "Analyze Deal" for anonymous users — intercept before app.js handler
-    const analyzeBtn = document.getElementById('analyzeBtn');
-    if (analyzeBtn) {
-        analyzeBtn.addEventListener('click', (e) => {
-            if (isAnonymous()) {
-                e.stopImmediatePropagation();
-                saveFormState();
-                setAuthMode('signup');
-                openModal('authModal');
-                const status = document.getElementById('authStatus');
-                if (status) {
-                    status.textContent = 'Create your free account to run the analysis.';
-                    status.className = 'text-sm mt-3 text-blue-400';
-                }
-            }
-        }, true); // capture phase — fires before app.js listener
-    }
+        // analyzeBtn intercept removed — no auth gate on analysis
 
     // Auth modal
     document.getElementById('authSubmit')?.addEventListener('click', handleMagicLink);

@@ -70,6 +70,25 @@ export default async function handler(req, res) {
       redirect: 'follow',
     });
     rawHtml = await r.text();
+    // Detect anti-bot blocks (PerimeterX, Cloudflare, etc.)
+    if (
+      rawHtml.includes('px-captcha') ||
+      rawHtml.includes('PerimeterX') ||
+      rawHtml.includes('_pxAppId') ||
+      rawHtml.includes('Access to this page has been denied') ||
+      rawHtml.includes('cf-mitigated') ||
+      (r.status === 403)
+    ) {
+      const isZillow = url.includes('zillow.com');
+      return res.status(200).json({
+        ok: false,
+        blocked: true,
+        source: isZillow ? 'zillow' : 'unknown',
+        error: isZillow
+          ? 'Zillow blocks automated imports. Try the same property on Redfin — search the address at redfin.com and paste that URL instead.'
+          : 'This site blocks automated access. Try the document upload or enter details manually.',
+      });
+    }
     // Strip tags, scripts, styles
     pageText = rawHtml
       .replace(/<script[^>]*>[\s\S]*?<\/script>/gi, '')

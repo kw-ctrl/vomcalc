@@ -9,7 +9,7 @@ const parseCurrency = v => parseFloat(String(v).replace(/[^0-9.-]/g, '')) || 0;
 import {
     calculateAnnualCashFlows, calculateMOIC, calculateIRR,
     calculateTaxBenefits, calculateAllTaxBenefits, calculateEquityMultiple, calculateStabilizedValue,
-    calculateDepreciationExhaustion, calculateWorkingCapitalCushion,
+    calculateDepreciationExhaustion, calculateWorkingCapitalCushion, calculateConstructionReserve,
     calculateReturnAttribution
 } from './calculations.js';
 import {
@@ -199,6 +199,12 @@ function gatherInputs() {
     const renovationBudget = parseFloat(document.getElementById('renovationBudgetComputed')?.value || 0) ||
                              getVal('renovationBudget', 0);
     const arvInput = getVal('arv');
+    // Read debt tranches from JSON; fall back to single-loan mode
+    let debtTranches = [];
+    try {
+        const raw = document.getElementById('debtTranchesJSON')?.value || '[]';
+        debtTranches = JSON.parse(raw);
+    } catch(e) { debtTranches = []; }
     const interestRate = getVal('interestRate', SMART_DEFAULTS[propertyType].interestRate);
     const occupancyRate = getVal('occupancyRate', 65) / 100;
     const numKeys = propertyType === 'str' ? 1 : getVal('numKeys', SMART_DEFAULTS[propertyType].numKeys);
@@ -246,43 +252,78 @@ function gatherInputs() {
     const refiTimingMonths = refiPlanned ? getVal('refiTiming', 18) : 0;
     const refiLTV = refiPlanned ? getVal('refiLTV', 70) / 100 : 0;
 
-    // For hotels, auto-calculate exit value from NOI / cap rate if not provided
-    // For STR, default to listed price if ARV not provided
+    // Hotels: exit value = NOI / exitCapRate only — no ARV
+    // STR: exit value based on user-entered ARV (comp-based)
     let arv;
-    const arvOverride = arvInput > 0;
-    if (arvOverride) {
-        arv = arvInput;
-    } else if (propertyType === 'hotel' && exitCapRate > 0) {
+    const arvOverride = arvInput > 0 && propertyType === 'str';
+    if (propertyType === 'hotel') {
         const estRevenue = adr * occupancyRate * 365 * numKeys;
         const estOpex = monthlyOpex * 12;
         const estNOI = estRevenue - estOpex;
-        // Floor at listed price — ARV should never be less than what we're paying
-        arv = estNOI > 0 ? Math.max(listedPrice, estNOI / exitCapRate) : listedPrice;
+        // Pure income-based valuation — no ARV floor
+        arv = (exitCapRate > 0 && estNOI > 0) ? estNOI / exitCapRate : listedPrice;
     } else {
-        arv = listedPrice;
+        // STR: use user-entered ARV or fall back to listed price
+        arv = arvInput > 0 ? arvInput : listedPrice;
     }
 
     const householdIncome = getVal('householdIncome', 250000);
     const filingStatus = document.getElementById('filingStatus').value;
     const closingCostsPct = getVal('closingCosts', 3) / 100;
 
-    const furnishingBudget = parseFloat(document.getElementById('furnishingBudgetComputed')?.value || 0) ||
-                            getVal('furnishingBudget', 0);
+    // For hotels, use the hotel-specific FF&E computed field; for STR use the STR furnish field
+    const furnishingBudget = propertyType === 'hotel'
+        ? (parseFloat(document.getElementById('hotelFurnishBudgetComputed')?.value || 0) || 0)
+        : (parseFloat(document.getElementById('furnishingBudgetComputed')?.value || 0) || getVal('furnishingBudget', 0));
 
     // Hotel-specific: contingency and construction
     const contingencyPct = propertyType === 'hotel' ? getVal('contingencySlider', 15) / 100 : 0;
     const contingencyAmount = renovationBudget * contingencyPct;
-    const constructionDuration = propertyType === 'hotel' ? getVal('constructionDuration', 6) : 0;
+    const constructionDuration = propertyType === 'hotel' ? parseInt(document.getElementById('constructionDuration')?.value || 6) : 0;
+    const constructionKeysOut = propertyType === 'hotel' ? parseInt(document.getElementById('constructionKeysOut')?.value || 0) : 0;
+    const rampUpMonths = propertyType === 'hotel' ? parseInt(document.getElementById('rampUpMonths')?.value || 0) : 0;
+    let constructionPhases = [];
+    try {
+        const raw = document.getElementById('constructionPhasesJSON')?.value || '[]';
+        constructionPhases = JSON.parse(raw);
+    } catch(e) { constructionPhases = []; }
+    if (!constructionPhases.length && propertyType === 'hotel' && constructionDuration > 0) {
+        constructionPhases = [{ keysOut: constructionKeysOut, months: constructionDuration }];
+    }
 
     const downPayment = listedPrice * downPct;
-    const loanAmount = listedPrice - downPayment;
+    // Loan amount: sum tranche amounts (amounts are pre-computed LTV*price stored in JSON)
+    const loanAmount = debtTranches.length > 0 && debtTranches.some(t => (t.amount || 0) > 0)
+        ? debtTranches.reduce((s, t) => s + (t.amount || 0), 0)
+        : listedPrice - downPayment;
     const closingCosts = listedPrice * closingCostsPct;
     const totalRenoBudget = renovationBudget + contingencyAmount;
-    const totalEquity = downPayment + closingCosts + totalRenoBudget + furnishingBudget;
+
+    // Pre-compute construction reserve so it's included in totalEquity
+    // (needs monthlyMortgage which we compute below — use a temp estimate here)
+    const tempLoanAmt = loanAmount;
+    const tempMonthlyMortgage = calculateMortgage(tempLoanAmt, interestRate);
+    const constructionReservePreCalc = propertyType === 'hotel' && constructionPhases.length > 0
+        ? calculateConstructionReserve({
+            annualOpex: monthlyOpex * 12,
+            monthlyMortgage: tempMonthlyMortgage,
+            totalRevenue,
+            numKeys,
+            constructionPhases,
+            rampUpMonths,
+            constructionDuration,
+            constructionKeysOut
+          }).constructionReserve
+        : 0;
+
+    const totalEquity = downPayment + closingCosts + totalRenoBudget + furnishingBudget + constructionReservePreCalc;
 
     const annualOpex = monthlyOpex * 12;
     const ancillaryPct = totalRevenue > 0 ? ancillaryRevenue / totalRevenue : 0;
-    const monthlyMortgage = calculateMortgage(loanAmount, interestRate);
+    // Compute monthly DS from tranches if available, otherwise single-loan
+    const monthlyMortgage = debtTranches.length > 0 && debtTranches.some(t => t.amount > 0)
+        ? debtTranches.reduce((s, t) => s + tranchePayment(t), 0)
+        : calculateMortgage(loanAmount, interestRate);
     const annualDebtService = monthlyMortgage * 12;
     const noi = totalRevenue - annualOpex;
     const annualCashFlow = noi - annualDebtService;
@@ -292,12 +333,12 @@ function gatherInputs() {
 
     return {
         propertyType, listedPrice, downPct, renovationBudget, arv, arvOverride,
-        interestRate, adr, occupancyRate, numKeys, monthlyOpex,
+        interestRate, debtTranches, adr, occupancyRate, numKeys, monthlyOpex,
         monthlyFixedOpex, perStayCost, annualVariableCosts,
         holdPeriod, annualAppreciation, revenueGrowth, exitCapRate, marketCapRate,
         householdIncome, filingStatus, closingCostsPct,
         downPayment, loanAmount, closingCosts, totalEquity,
-        contingencyAmount, totalRenoBudget, constructionDuration, furnishingBudget,
+        contingencyAmount, totalRenoBudget, constructionDuration, constructionKeysOut, rampUpMonths, constructionPhases, furnishingBudget, constructionReservePreCalc,
         annualRevenue, ancillaryRevenue, totalRevenue, annualOpex,
         expenseRatio, ancillaryPct,
         monthlyMortgage, annualDebtService, noi, annualCashFlow,
@@ -524,7 +565,8 @@ function applySmartDefaults() {
     const bedsBathsGroup = document.getElementById('bedsBathsGroup');
     if (bedsBathsGroup) bedsBathsGroup.style.display = type === 'str' ? 'block' : 'none';
 
-    document.getElementById('rateHint').textContent =
+    const rateHintEl = document.getElementById('rateHint');
+    if (rateHintEl) rateHintEl.textContent =
         type === 'hotel' ? 'Bridge rate for hotel' : 'Conventional mortgage rate';
 
     // CHANGE 3: ARV — show for STR, hide for hotel (hotel uses cap rate for exit value)
@@ -573,12 +615,23 @@ function applySmartDefaults() {
     // CHANGE 2: Renovation — STR uses $/sqft buttons, hotel uses $/key slider
     const hotelRenoBudgetGroup = document.getElementById('hotelRenoBudgetGroup');
     const renovationBudgetGroup = document.getElementById('renovationBudgetGroup');
+    const hotelFurnishBudgetGroup = document.getElementById('hotelFurnishBudgetGroup');
+    const constructionTimelineGroup = document.getElementById('constructionTimelineGroup');
     if (hotelRenoBudgetGroup) hotelRenoBudgetGroup.style.display = type === 'hotel' ? 'block' : 'none';
     if (renovationBudgetGroup) renovationBudgetGroup.style.display = type === 'str' ? 'block' : 'none';
+    if (hotelFurnishBudgetGroup) hotelFurnishBudgetGroup.style.display = type === 'hotel' ? 'block' : 'none';
+    if (constructionTimelineGroup) constructionTimelineGroup.style.display = type === 'hotel' ? 'block' : 'none';
 
     // Update reno + furnish estimates for new type
     updateRenoEstimate();
     updateFurnishEstimate();
+    if (type === 'hotel') {
+        updatePerKeyFurnish();
+        // Sync phase defaults to numKeys and render
+        const nk = getVal('numKeys', 10);
+        _constructionPhases = [{ keysOut: nk, months: 6 }];
+        renderConstructionPhases();
+    }
     updateRefiCashOut();
 
     // Hotel: show calculated annual revenue + expense ratio slider
@@ -655,12 +708,38 @@ function updatePerKeyReno() {
     const perKey = getVal('perKeyRenoSlider', 15000);
     const keys = getVal('numKeys', 10);
     const total = perKey * keys;
-    document.getElementById('perKeyRenoValue').textContent = '$' + Math.round(perKey / 1000) + 'K';
-    document.getElementById('perKeyRenoHint').textContent = `Total: ${formatCurrency(total)} (${keys} keys × ${formatCurrency(perKey)})`;
-    // Sync to renovation budget field
-    setCurrencyVal('renovationBudget', total);
+    const perKeyLabel = perKey >= 1000 ? `$${Math.round(perKey/1000)}K` : `$${perKey}`;
+    const valEl = document.getElementById('perKeyRenoValue');
+    const hintEl = document.getElementById('perKeyRenoHint');
+    const totalEl = document.getElementById('perKeyRenoTotal');
+    if (valEl) valEl.textContent = perKeyLabel + '/key';
+    if (hintEl) hintEl.textContent = `${keys} keys × ${perKeyLabel}`;
+    if (totalEl) totalEl.textContent = formatCurrency(total);
+    // Sync to hidden budget fields
+    const renoEl = document.getElementById('renovationBudget');
+    const renoComp = document.getElementById('renovationBudgetComputed');
+    const renoOverride = document.getElementById('hotelRenoOverrideInput');
+    if (renoEl) renoEl.value = total;
+    if (renoComp) renoComp.value = total;
+    if (renoOverride) renoOverride.value = total;
     updateContingency();
-    updateRequiredFieldHighlights();
+    recalc();
+}
+
+function updatePerKeyFurnish() {
+    const perKey = getVal('perKeyFurnishSlider', 5000);
+    const keys = getVal('numKeys', 10);
+    const total = perKey * keys;
+    const perKeyLabel = perKey >= 1000 ? `$${Math.round(perKey/1000)}K` : `$${perKey}`;
+    const valEl = document.getElementById('perKeyFurnishValue');
+    const hintEl = document.getElementById('perKeyFurnishHint');
+    const totalEl = document.getElementById('perKeyFurnishTotal');
+    const computedEl = document.getElementById('hotelFurnishBudgetComputed');
+    if (valEl) valEl.textContent = perKeyLabel + '/key';
+    if (hintEl) hintEl.textContent = `${keys} keys × ${perKeyLabel}`;
+    if (totalEl) totalEl.textContent = formatCurrency(total);
+    if (computedEl) computedEl.value = total;
+    recalc();
 }
 
 function updateContingency() {
@@ -671,6 +750,272 @@ function updateContingency() {
     const hintEl = document.getElementById('contingencyHint');
     if (valEl) valEl.textContent = pct + '%';
     if (hintEl) hintEl.textContent = `${formatCurrency(contingencyAmount)} contingency on ${formatCurrency(reno)} renovation`;
+}
+
+// ─── DEBT TRANCHES ─────────────────────────────────────────────────────────
+const TRANCHE_LABELS = ['Conventional','Bridge Loan','Seller Financing','SBA Loan','Hard Money','Mezzanine','DSCR Loan','Other'];
+
+// Each tranche: { label, ltv (% of purchase price), rate, interestOnly, termYears }
+// `amount` is always derived: ltv/100 * listedPrice
+// termYears = amortization term for P&I; balloon term for IO (when loan must be repaid)
+let _debtTranches = [{ label: 'Bridge Loan', ltv: 70, rate: 12.0, interestOnly: true, termYears: 3 }];
+
+function _listedPrice() { return getVal('listedPrice') || 0; }
+function _downPaymentPct() { return getVal('downPayment', 20) / 100; }
+
+/** Compute dollar amount for a tranche from its LTV % */
+function trancheAmount(t) { return Math.round(_listedPrice() * (t.ltv || 0) / 100); }
+
+/** Monthly payment for one tranche */
+function tranchePayment(t) {
+    const amt = trancheAmount(t);
+    if (!amt) return 0;
+    if (t.interestOnly) return amt * (t.rate / 100) / 12;
+    return calculateMortgage(amt, t.rate, t.termYears || 25);
+}
+
+/** Remaining balance for one tranche after `years` */
+function trancheBalance(t, years) {
+    const amt = trancheAmount(t);
+    if (!amt) return 0;
+    if (t.interestOnly) return amt;
+    const mp = tranchePayment(t);
+    const r = t.rate / 100 / 12;
+    const paid = years * 12;
+    if (r <= 0) return Math.max(0, amt - mp * paid);
+    return Math.max(0, amt * Math.pow(1+r, paid) - mp * (Math.pow(1+r, paid) - 1) / r);
+}
+
+function renderDebtTranches() {
+    const listedPrice = _listedPrice();
+    const downPct = _downPaymentPct() * 100; // e.g. 20
+    const container = document.getElementById('debtTranchesContainer');
+    if (!container) return;
+
+    container.innerHTML = _debtTranches.map((t, i) => {
+        const amt = trancheAmount(t);
+        const mp = tranchePayment(t);
+        const dsText = mp > 0 ? formatCurrency(mp) + '/mo' : '--';
+        const dsLabel = t.interestOnly ? '(IO)' : '(P&I)';
+        const labelOpts = TRANCHE_LABELS.map(l => `<option value="${l}" ${l===t.label?'selected':''}>${l}</option>`).join('');
+        const rateSliderMax = ['Bridge Loan','Hard Money','Mezzanine'].includes(t.label) ? 24 : 15;
+        const termLabel = t.interestOnly ? 'Balloon / Payoff Term' : 'Amortization Term';
+        const termMax = t.interestOnly ? 10 : 40;
+        const termVal = t.termYears || (t.interestOnly ? 3 : 25);
+
+        return `<div style="padding:10px 12px;background:rgba(0,0,0,0.3);border:1px solid #2a2a3a;border-radius:8px">
+            <!-- Header: label select + IO toggle + remove -->
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+                <select onchange="updateTrancheField(${i},'label',this.value)"
+                    style="background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#a89fff;font-size:12px;font-weight:700;padding:4px 8px;cursor:pointer;flex:1;max-width:165px">
+                    ${labelOpts}
+                </select>
+                <div style="display:flex;align-items:center;gap:8px">
+                    <span style="font-size:10px;color:#6b7280">Interest Only</span>
+                    <label class="toggle-switch" style="transform:scale(0.85)">
+                        <input type="checkbox" ${t.interestOnly?'checked':''} onchange="updateTrancheField(${i},'interestOnly',this.checked)">
+                        <span class="toggle-track"></span>
+                    </label>
+                    ${_debtTranches.length > 1 ? `<button type="button" onclick="removeDebtTranche(${i})"
+                        style="background:none;border:1px solid rgba(248,113,113,0.3);border-radius:4px;color:#f87171;padding:2px 8px;cursor:pointer;font-size:13px;line-height:1">×</button>` : ''}
+                </div>
+            </div>
+            <!-- LTV -->
+            <div style="margin-bottom:8px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+                    <span style="font-size:10px;color:#6b7280">LTV (% of Purchase Price)</span>
+                    <span style="font-size:13px;font-weight:700;color:#fff;font-family:'DM Mono',monospace">${t.ltv}% = ${formatCurrency(amt)}</span>
+                </div>
+                <input type="range" min="0" max="90" step="1" value="${t.ltv}" class="field-slider"
+                    oninput="updateTrancheField(${i},'ltv',parseInt(this.value))">
+            </div>
+            <!-- Rate -->
+            <div style="margin-bottom:8px">
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+                    <span style="font-size:10px;color:#6b7280">Interest Rate</span>
+                    <span style="font-size:13px;font-weight:700;color:#6c63ff;font-family:'DM Mono',monospace">${t.rate}% → ${dsText} <span style="font-size:10px;color:#6b7280">${dsLabel}</span></span>
+                </div>
+                <input type="range" min="2" max="${rateSliderMax}" step="0.25" value="${t.rate}" class="field-slider"
+                    oninput="updateTrancheField(${i},'rate',parseFloat(this.value))">
+            </div>
+            <!-- Term — always shown. For IO = balloon/payoff term; for P&I = amortization -->
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:3px">
+                    <span style="font-size:10px;color:#6b7280">${termLabel}</span>
+                    <span style="font-size:13px;font-weight:700;color:#9ca3af;font-family:'DM Mono',monospace">${termVal} yr${termVal !== 1 ? 's' : ''}</span>
+                </div>
+                <input type="range" min="1" max="${termMax}" step="1" value="${termVal}" class="field-slider"
+                    oninput="updateTrancheField(${i},'termYears',parseInt(this.value))">
+                ${t.interestOnly ? `<p style="font-size:10px;color:#f59e0b;margin-top:2px">Balloon payment of ${formatCurrency(amt)} due at Year ${termVal}</p>` : ''}
+            </div>
+        </div>`;
+    }).join('');
+
+    // Summary
+    const totalLTV = _debtTranches.reduce((s, t) => s + (t.ltv || 0), 0);
+    const totalAmt = _debtTranches.reduce((s, t) => s + trancheAmount(t), 0);
+    const totalDS = _debtTranches.reduce((s, t) => s + tranchePayment(t), 0);
+    const blendedRate = totalAmt > 0
+        ? _debtTranches.reduce((s, t) => s + t.rate * trancheAmount(t), 0) / totalAmt
+        : 0;
+
+    // LTV + equity check
+    const equityPct = Math.round(100 - totalLTV);
+    const ltvColor = equityPct < 0 ? '#ef4444' : equityPct < 10 ? '#f59e0b' : '#10b981';
+
+    const ltvEl = document.getElementById('dsSummaryLTV');
+    if (ltvEl) { ltvEl.textContent = `${totalLTV}% LTV · ${equityPct}% equity`; ltvEl.style.color = ltvColor; }
+    document.getElementById('dsSummaryDebt').textContent = formatCurrency(totalAmt);
+    document.getElementById('dsSummaryRate').textContent = blendedRate > 0 ? blendedRate.toFixed(2) + '%' : '--';
+    document.getElementById('dsSummaryDS').textContent = totalDS > 0 ? formatCurrency(totalDS) + '/mo' : '--';
+
+    // Sync hidden compat fields with derived amounts
+    const blendedRateEl = document.getElementById('interestRate');
+    if (blendedRateEl) blendedRateEl.value = blendedRate.toFixed(2);
+    // Persist with amounts computed for calc engine
+    const withAmounts = _debtTranches.map(t => ({ ...t, amount: trancheAmount(t) }));
+    const jsonEl = document.getElementById('debtTranchesJSON');
+    if (jsonEl) jsonEl.value = JSON.stringify(withAmounts);
+
+    const addBtn = document.getElementById('addTrancheBtn');
+    if (addBtn) addBtn.style.display = _debtTranches.length >= 3 ? 'none' : 'inline-block';
+
+    recalc();
+}
+
+function updateTrancheField(index, field, value) {
+    if (_debtTranches[index] !== undefined) {
+        _debtTranches[index][field] = value;
+        renderDebtTranches();
+    }
+}
+
+function addDebtTranche() {
+    if (_debtTranches.length >= 3) return;
+    _debtTranches.push({ label: 'Bridge Loan', ltv: 10, rate: 12.0, interestOnly: true, termYears: 3 });
+    renderDebtTranches();
+}
+
+function removeDebtTranche(index) {
+    if (_debtTranches.length <= 1) return;
+    _debtTranches.splice(index, 1);
+    renderDebtTranches();
+}
+
+// ─── CONSTRUCTION PHASES ───────────────────────────────────────────────────
+// Stored as array: [{ keysOut: N, months: M }, ...]
+let _constructionPhases = [{ keysOut: 10, months: 6 }];
+
+function _getNumKeys() { return Math.max(1, getVal('numKeys', 10)); }
+
+function renderConstructionPhases() {
+    const numKeys = _getNumKeys();
+    const container = document.getElementById('constructionPhasesContainer');
+    if (!container) return;
+
+    container.innerHTML = _constructionPhases.map((phase, i) => {
+        const pct = numKeys > 0 ? Math.round(phase.keysOut / numKeys * 100) : 0;
+        const rev = 100 - pct;
+        return `<div style="display:grid;grid-template-columns:60px 1fr 1fr auto;gap:8px;align-items:end;padding:8px;background:rgba(0,0,0,0.2);border-radius:6px;border:1px solid #2a2a3a">
+            <span style="font-size:11px;color:#6c63ff;font-weight:700;align-self:center">Phase ${i+1}</span>
+            <div>
+                <p style="font-size:10px;color:#6b7280;margin-bottom:3px">Keys offline</p>
+                <input type="number" value="${phase.keysOut}" min="0" max="${numKeys}" step="1"
+                    style="width:100%;padding:5px 8px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:13px"
+                    oninput="updatePhaseField(${i},'keysOut',Math.min(${numKeys},Math.max(0,parseInt(this.value)||0)))">
+                <p style="font-size:10px;color:#6b7280;margin-top:2px">${rev}% capacity</p>
+            </div>
+            <div>
+                <p style="font-size:10px;color:#6b7280;margin-bottom:3px">Duration (mo)</p>
+                <input type="number" value="${phase.months}" min="1" max="24" step="1"
+                    style="width:100%;padding:5px 8px;background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#fff;font-size:13px"
+                    oninput="updatePhaseField(${i},'months',Math.max(1,parseInt(this.value)||1))">
+            </div>
+            ${_constructionPhases.length > 1
+                ? `<button type="button" onclick="removeConstructionPhase(${i})"
+                    style="background:none;border:1px solid #3a2a2a;border-radius:5px;color:#f87171;padding:4px 8px;cursor:pointer;font-size:13px;align-self:center">×</button>`
+                : `<span></span>`}
+        </div>`;
+    }).join('');
+
+    // Show/hide add button (max 5 phases)
+    const addBtn = document.getElementById('addPhaseBtn');
+    if (addBtn) addBtn.style.display = _constructionPhases.length >= 5 ? 'none' : 'inline-block';
+
+    updateConstructionTimeline();
+}
+
+function updatePhaseField(index, field, value) {
+    if (_constructionPhases[index]) {
+        _constructionPhases[index][field] = value;
+        renderConstructionPhases();
+    }
+}
+
+function addConstructionPhase() {
+    if (_constructionPhases.length >= 5) return;
+    _constructionPhases.push({ keysOut: Math.floor(_getNumKeys() / 2), months: 3 });
+    renderConstructionPhases();
+}
+
+function removeConstructionPhase(index) {
+    if (_constructionPhases.length <= 1) return;
+    _constructionPhases.splice(index, 1);
+    renderConstructionPhases();
+}
+
+function updateConstructionTimeline() {
+    const numKeys = _getNumKeys();
+    const rampMonths = getVal('rampUpMonthsSlider', 3);
+
+    // Sync hidden fields from phases array
+    const totalConMonths = _constructionPhases.reduce((s, p) => s + p.months, 0);
+    // For legacy single-block compat, use the first phase values as primary
+    const durEl = document.getElementById('constructionDuration');
+    const keysOutEl = document.getElementById('constructionKeysOut');
+    const rampEl = document.getElementById('rampUpMonths');
+    if (durEl) durEl.value = totalConMonths;
+    if (keysOutEl) keysOutEl.value = _constructionPhases[0]?.keysOut ?? numKeys;
+    if (rampEl) rampEl.value = rampMonths;
+
+    // Persist phases as JSON for calc engine
+    const phasesEl = document.getElementById('constructionPhasesJSON');
+    if (phasesEl) phasesEl.value = JSON.stringify(_constructionPhases);
+
+    // Update ramp display
+    const rampValEl = document.getElementById('rampUpMonthsValue');
+    if (rampValEl) rampValEl.textContent = rampMonths + ' mo';
+
+    // Summary: compute month-by-month Year 1 revenue fraction
+    const monthlyRevFull = 1.0; // normalized
+    let cursor = 0;
+    const monthlyRevFracs = [];
+    for (const phase of _constructionPhases) {
+        const frac = numKeys > 0 ? (numKeys - phase.keysOut) / numKeys : 1;
+        for (let m = 0; m < phase.months; m++) {
+            if (cursor < 24) monthlyRevFracs[cursor++] = frac; // track up to 24 months
+        }
+    }
+    // Ramp-up after construction
+    for (let r = 0; r < rampMonths; r++) {
+        if (cursor < 24) monthlyRevFracs[cursor++] = 0.30 + 0.70 * (r + 1) / rampMonths;
+    }
+    // Full revenue after
+    while (cursor < 24) monthlyRevFracs[cursor++] = 1.0;
+
+    // Year 1 = average of first 12 months
+    const yr1Avg = monthlyRevFracs.slice(0, 12).reduce((s, v) => s + v, 0) / 12;
+    const pctLoss = Math.round((1 - yr1Avg) * 100);
+
+    // Compute construction reserve (cash deficit across all construction + ramp months)
+    // We don't have live revenue/opex here, so show a placeholder; real calc happens in calculations.js
+    const impactEl = document.getElementById('constructionRevenueImpactHint');
+    if (impactEl) impactEl.textContent = pctLoss > 0 ? `-${pctLoss}%` : '0%';
+
+    const totalMoEl = document.getElementById('constructionTotalMonths');
+    if (totalMoEl) totalMoEl.textContent = totalConMonths + ' mo';
+
+    recalc();
 }
 
 function updateFurnishingPlaceholder() {
@@ -712,6 +1057,7 @@ function updateExpenseRatioOpex() {
     const hint = document.getElementById('expenseRatioHint');
     if (hint) hint.textContent = `${formatCurrency(monthlyExpenses)}/mo from ${formatCurrency(annualRevenue)} revenue`;
     updateRequiredFieldHighlights();
+    recalc();
 }
 
 function updateDownPaymentHint() {
@@ -722,10 +1068,15 @@ function updateDownPaymentHint() {
     setSliderValue('downPayment', pct);
     if (price > 0) {
         el.textContent = formatCurrency(price * pct / 100);
+        // Only auto-sync first tranche LTV if it's a conventional single-loan setup
+        // (don't override if user has manually configured a bridge/custom structure)
+        if (_debtTranches.length === 1 && !_debtTranches[0].interestOnly) {
+            _debtTranches[0].ltv = Math.max(0, Math.round(100 - pct));
+        }
     } else {
         el.textContent = '';
     }
-    updateMonthlyMortgageDisplay();
+    renderDebtTranches();
 }
 
 function updateMonthlyMortgageDisplay() {
@@ -1307,6 +1658,12 @@ async function fetchListingData() {
         }
     }
 
+    // Warn upfront for Zillow — server-side fetch is always blocked by PerimeterX
+    if (hostname === 'zillow.com' || hostname === 'www.zillow.com') {
+        showFetchStatus('Zillow blocks automated imports. Search the same address on redfin.com and paste that URL — or enter details manually.', 'error');
+        return;
+    }
+
     const allowedDomains = ['zillow.com', 'redfin.com', 'crexi.com', 'loopnet.com', 'costar.com'];
     const isAllowed = allowedDomains.some(domain => hostname === domain || hostname.endsWith('.' + domain));
     if (!isAllowed) {
@@ -1332,6 +1689,12 @@ async function fetchListingData() {
 
         if (!resp.ok) {
             showFetchStatus(data.error || 'Failed to fetch listing.', 'error');
+            return;
+        }
+
+        // Blocked by anti-bot (PerimeterX, Cloudflare, etc.)
+        if (data.blocked) {
+            showFetchStatus(data.error || 'This site blocks automated access. Try the 📄 document upload or enter details manually.', 'error');
             return;
         }
 
@@ -1370,7 +1733,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Property type → smart defaults
     document.getElementById('propertyType').addEventListener('change', applySmartDefaults);
 
-    // Listed price → down payment hint + furnishing placeholder
+    // Listed price → down payment hint + furnishing placeholder + live recalc
     document.getElementById('listedPrice').addEventListener('input', () => {
         updateDownPaymentHint();
         updateFurnishingPlaceholder();
@@ -1378,6 +1741,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Auto-run full opex estimate when price changes (drives insurance + maintenance)
         const newTotal = estimateOpex();
         if (newTotal > 0) setCurrencyVal('operatingExpenses', newTotal);
+        recalc();
     });
 
     // All sliders with data-input attribute → syncSlider
@@ -1405,6 +1769,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const t = estimateOpex();
                 if (t > 0) setCurrencyVal('operatingExpenses', t);
             }
+            // Live recalc on every slider change
+            recalc();
         });
     });
 
@@ -1427,6 +1793,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const t = estimateOpex();
             setCurrencyVal('operatingExpenses', t || 0);
         }
+        recalc();
     });
 
     // Expense ratio slider (hotel)
@@ -1443,13 +1810,30 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    // Per-key renovation slider (hotel) — now a real slider in hotelRenoBudgetGroup
+    // Per-key renovation slider (hotel)
     document.getElementById('perKeyRenoSlider')?.addEventListener('input', updatePerKeyReno);
-    document.getElementById('contingencySlider')?.addEventListener('input', updateContingency);
-    // When numKeys changes, update per-key reno total if hotel
+    document.getElementById('contingencySlider')?.addEventListener('input', () => {
+        updateContingency();
+        recalc();
+    });
+
+    // Hotel FF&E slider
+    document.getElementById('perKeyFurnishSlider')?.addEventListener('input', updatePerKeyFurnish);
+
+    // Ramp-up slider (only slider remaining in construction section)
+    document.getElementById('rampUpMonthsSlider')?.addEventListener('input', updateConstructionTimeline);
+
+    // When numKeys changes: update reno, FF&E, and re-default construction phases
     document.getElementById('numKeys').addEventListener('input', () => {
         if (document.getElementById('propertyType').value === 'hotel') {
             updatePerKeyReno();
+            updatePerKeyFurnish();
+            // Cap any phase keysOut values to new numKeys
+            const nk = _getNumKeys();
+            _constructionPhases = _constructionPhases.map(p => ({
+                ...p, keysOut: Math.min(p.keysOut, nk)
+            }));
+            renderConstructionPhases();
         }
     });
 
@@ -1470,7 +1854,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auto-format currency inputs with commas
     document.querySelectorAll('[data-currency]').forEach(el => setupCurrencyInput(el));
     ['operatingExpenses', 'renovationBudget', 'furnishingBudget'].forEach((id) => {
-        document.getElementById(id)?.addEventListener('input', updateRequiredFieldHighlights);
+        document.getElementById(id)?.addEventListener('input', () => {
+            updateRequiredFieldHighlights();
+            recalc();
+        });
     });
 
     // Square footage — auto-update reno/furnish estimates + opex (utilities driven by sqft)
@@ -1512,24 +1899,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // CHANGE 2: Hotel reno override input — reverse-calculate per-key from total
-    document.getElementById('hotelRenoOverrideInput')?.addEventListener('input', () => {
-        const total = parseCurrency(document.getElementById('hotelRenoOverrideInput').value);
-        const numKeys = getVal('numKeys', 10);
-        const perKey = numKeys > 0 ? Math.round(total / numKeys / 1000) * 1000 : 0;
-        const slider = document.getElementById('perKeyRenoSlider');
-        if (slider) slider.value = Math.min(100000, perKey);
-        const valueDisplay = document.getElementById('perKeyRenoValue');
-        if (valueDisplay) valueDisplay.textContent = '$' + Math.round(perKey / 1000) + 'K';
-        const hint = document.getElementById('perKeyRenoHint');
-        if (hint) hint.textContent = `Total: ${formatCurrency(total)} (${numKeys} keys × ${formatCurrency(perKey)})`;
-        setCurrencyVal('renovationBudget', total);
-        updateRequiredFieldHighlights();
-        recalc();
-    });
+    // hotelRenoOverrideInput is now a hidden field — no listener needed
 
     // Initialize
     applySmartDefaults();
     updateDownPaymentHint();
+    renderDebtTranches(); // ensure tranche always renders on load
     updateRequiredFieldHighlights();
 
     // Auth & gating
@@ -1966,13 +2341,33 @@ function updateRefiCashOut() {
     const display = document.getElementById('refiCashOutDisplay');
     if (!display) return;
     if (!refiOn) return;
-    const arv = parseCurrency(document.getElementById('arv')?.value || '0') ||
-                parseCurrency(document.getElementById('listedPrice')?.value || '0');
+    const propertyType = document.getElementById('propertyType')?.value;
     const ltv = getVal('refiLTV', 75) / 100;
     const listedPrice = parseCurrency(document.getElementById('listedPrice')?.value || '0');
     const downPct = getVal('downPayment', 20) / 100;
-    const originalLoan = listedPrice * (1 - downPct);
-    const refiLoanAmt = arv * ltv;
+    // Use tranche total if available, else single loan
+    const originalLoan = _debtTranches.length > 0 && _debtTranches.some(t => t.amount > 0)
+        ? _debtTranches.reduce((s, t) => s + (t.amount || 0), 0)
+        : listedPrice * (1 - downPct);
+
+    let refiValue;
+    if (propertyType === 'hotel') {
+        // Hotels: value at refi = NOI / refiCapRate (income-based, no ARV)
+        const refiCapRate = getVal('refiCapRate', 8) / 100;
+        const adr = getVal('adr');
+        const occupancyRate = getVal('occupancyRate', 65) / 100;
+        const numKeys = getVal('numKeys', 8);
+        const monthlyOpex = getVal('operatingExpenses', 0);
+        const estRevenue = adr * occupancyRate * 365 * numKeys;
+        const estNOI = estRevenue - (monthlyOpex * 12);
+        refiValue = (refiCapRate > 0 && estNOI > 0) ? estNOI / refiCapRate : listedPrice;
+    } else {
+        // STR: value at refi = ARV (comp-based)
+        refiValue = parseCurrency(document.getElementById('arv')?.value || '0') ||
+                    parseCurrency(document.getElementById('listedPrice')?.value || '0');
+    }
+
+    const refiLoanAmt = refiValue * ltv;
     const cashOut = refiLoanAmt - originalLoan;
     display.textContent = cashOut > 0 ? fmtCurrency(cashOut) : '$0 (no equity yet)';
     display.style.color = cashOut > 0 ? '#a89fff' : '#6b7280';
@@ -2329,4 +2724,12 @@ Object.assign(window, {
   updateRenoEstimate,
   updateRefiCashOut,
   recalc,
+  // Debt tranches
+  addDebtTranche,
+  removeDebtTranche,
+  updateTrancheField,
+  // Construction phases
+  addConstructionPhase,
+  removeConstructionPhase,
+  updatePhaseField,
 });

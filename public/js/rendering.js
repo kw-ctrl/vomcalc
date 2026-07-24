@@ -2,7 +2,7 @@
  * Rendering — all DOM manipulation and display logic
  */
 
-import { formatCurrency, formatPercent } from './utils.js';
+import { formatCurrency, formatPercent, calculateRemainingBalance, calculateMortgage } from './utils.js';
 import { getScoreColor, getScoreRating } from './scoring.js';
 import { calculateAnnualCashFlows, calculateMOIC, calculateProForma } from './calculations.js';
 import { buildInputsAtPrice } from './scenarios.js';
@@ -283,6 +283,24 @@ function renderRevenueCashFlowSummary(r) {
 
     document.getElementById('summaryExpRatio').textContent = formatPercent(r.expenseRatio * 100);
     document.getElementById('summaryExpRatioNote').textContent = 'excl. debt service';
+
+    // Hotel: show prominent exit value banner
+    const exitGroup = document.getElementById('summaryExitValueGroup');
+    const exitValEl = document.getElementById('summaryExitValue');
+    const exitSubEl = document.getElementById('summaryExitValueSub');
+    if (exitGroup) {
+        if (r.propertyType === 'hotel' && r.stabilizedValue > 0) {
+            exitGroup.style.display = 'block';
+            if (exitValEl) exitValEl.textContent = formatCurrency(r.stabilizedValue);
+            if (exitSubEl) {
+                const exitNOI = r.noi * Math.pow(1 + (r.inputs?.revenueGrowth || 0.03), r.inputs?.holdPeriod || 5);
+                const capRate = r.inputs?.exitCapRate > 0 ? (r.inputs.exitCapRate * 100).toFixed(1) + '% cap' : '';
+                exitSubEl.textContent = `NOI ${formatCurrency(exitNOI)} / ${capRate} — Year ${r.inputs?.holdPeriod || 5} exit`;
+            }
+        } else {
+            exitGroup.style.display = 'none';
+        }
+    }
 }
 
 function renderDealFlags(r) {
@@ -357,6 +375,60 @@ function renderDealFlags(r) {
         </div>`);
     }
 
+    // Refi planned — show payoff of existing tranches + net cash-out
+    if (r.refiPlanned && r.inputs) {
+        const { refiLTV, refiTimingMonths } = r.inputs;
+        const ltv = refiLTV || 0.70;
+        const timing = refiTimingMonths || 12;
+        const refiYr = timing / 12;
+
+        // Use stabilized value trajectory for appraisal estimate at refi time
+        const refiAppraisalValue = r.stabilizedValue > 0
+            ? r.inputs.listedPrice + (r.stabilizedValue - r.inputs.listedPrice) * Math.min(1, refiYr / (r.inputs.holdPeriod || 5))
+            : r.inputs.listedPrice;
+        const refiLoanNew = refiAppraisalValue * ltv;
+
+        // Compute outstanding balance per tranche at refi time (respects IO vs amortizing)
+        const tranches = r.inputs.debtTranches || [];
+        let bridgeBalance = 0;
+        const tranchePayoffs = [];
+        if (tranches.length > 0) {
+            for (const t of tranches) {
+                const bal = t.interestOnly
+                    ? t.amount
+                    : calculateRemainingBalance(t.amount, t.rate / 100, calculateMortgage(t.amount, t.rate / 100), refiYr);
+                bridgeBalance += bal;
+                tranchePayoffs.push({ label: t.label || 'Loan', balance: bal, interestOnly: t.interestOnly });
+            }
+        } else {
+            // Fallback single-loan
+            bridgeBalance = r.inputs.loanAmount * 0.97;
+            tranchePayoffs.push({ label: 'Existing Loan', balance: bridgeBalance, interestOnly: false });
+        }
+
+        const netProceeds = refiLoanNew - bridgeBalance;
+        const payoffLines = tranchePayoffs.map(tp =>
+            `${tp.label} payoff: ${formatCurrency(tp.balance)}${tp.interestOnly ? ' (IO — full principal)' : ''}`
+        ).join(' · ');
+
+        if (netProceeds <= 0) {
+            flags.push(`<div class="warning-banner warning-red">
+                <span class="warning-icon">&#9888;</span>
+                <div><strong>Refi Not Feasible</strong> — At ${(ltv * 100).toFixed(0)}% LTV in month ${timing}, new loan ${formatCurrency(refiLoanNew)} doesn't cover outstanding debt ${formatCurrency(bridgeBalance)}. ${payoffLines}. Increase LTV, extend timing, or improve NOI first.</div>
+            </div>`);
+        } else if (netProceeds < r.totalEquity * 0.50) {
+            flags.push(`<div class="warning-banner warning-amber">
+                <span class="warning-icon">&#128176;</span>
+                <div><strong>Partial Refi Recovery</strong> — Refi loan: ${formatCurrency(refiLoanNew)} · ${payoffLines} · Net cash-out: <strong>${formatCurrency(netProceeds)}</strong> (${Math.round(netProceeds / r.totalEquity * 100)}% of equity returned). Consider longer stabilization or higher LTV.</div>
+            </div>`);
+        } else {
+            flags.push(`<div class="warning-banner warning-green" style="border-color:rgba(16,185,129,0.4);background:rgba(16,185,129,0.06)">
+                <span class="warning-icon">&#128176;</span>
+                <div><strong>Refi Viable</strong> — New loan: ${formatCurrency(refiLoanNew)} at ${(ltv*100).toFixed(0)}% LTV · ${payoffLines} · Net cash-out: <strong>${formatCurrency(netProceeds)}</strong> returned to equity.</div>
+            </div>`);
+        }
+    }
+
     if (r.ancillaryPct > 0.40) {
         const cfWithout = r.annualCashFlow - r.ancillaryRevenue;
         const adrToReplace = r.numKeys > 0 && r.occupancyRate > 0
@@ -377,9 +449,14 @@ function renderDealFlags(r) {
     }
 
     if (r.workingCapital && r.workingCapital.flag) {
+        const reserve = r.workingCapital.constructionReserve || r.workingCapital.cushionNeeded || 0;
+        const label = r.propertyType === 'hotel' ? 'Construction Reserve Required' : 'Working Capital Gap';
+        const detail = r.propertyType === 'hotel'
+            ? `${r.workingCapital.monthsOfDeficit} months of negative cash flow during construction/ramp-up totaling <strong>${formatCurrency(reserve)}</strong>. This is already included in your Total Capital Required above.`
+            : `Renovation creates ${r.workingCapital.monthsOfDeficit} months of cash deficit totaling ${formatCurrency(reserve)}. Budget this amount as additional reserves before closing.`;
         flags.push(`<div class="warning-banner warning-amber">
             <span class="warning-icon">&#128176;</span>
-            <div><strong>Working Capital Gap</strong> — Renovation creates ${r.workingCapital.monthsOfDeficit} months of cash deficit totaling ${formatCurrency(r.workingCapital.cushionNeeded)}. Budget this amount as additional reserves before closing.</div>
+            <div><strong>${label}</strong> — ${detail}</div>
         </div>`);
     }
 
@@ -410,8 +487,9 @@ function renderCapitalRaiseSummary(r) {
     if (r.furnishingBudget > 0) {
         items.push({ label: 'Furnishing', value: r.furnishingBudget });
     }
-    if (r.workingCapital && r.workingCapital.cushionNeeded > 0) {
-        items.push({ label: 'Working Capital Reserve', value: r.workingCapital.cushionNeeded });
+    const conReserve = r.workingCapital?.constructionReserve || r.workingCapital?.cushionNeeded || 0;
+    if (conReserve > 0) {
+        items.push({ label: r.propertyType === 'hotel' ? 'Construction Reserve' : 'Working Capital Reserve', value: conReserve });
     }
 
     grid.innerHTML = items.map(item => `
@@ -424,16 +502,16 @@ function renderCapitalRaiseSummary(r) {
     const total = items.reduce((sum, item) => sum + item.value, 0);
     totalEl.textContent = formatCurrency(total);
 
-    // Show exit value for hotels
-    if (r.propertyType === 'hotel' && r.stabilizedValue > 0) {
-        const existingExit = document.getElementById('capitalRaiseExitNote');
-        const exitHTML = `<p id="capitalRaiseExitNote" class="text-xs text-gray-500 mt-2 text-center">Projected Exit Value (NOI / Cap Rate): <span class="text-white font-semibold">${formatCurrency(r.stabilizedValue)}</span></p>`;
-        if (existingExit) {
-            existingExit.outerHTML = exitHTML;
-        } else {
-            totalEl.insertAdjacentHTML('afterend', exitHTML);
-        }
+    // Update construction reserve hint in the timeline section
+    const reserveEl = document.getElementById('constructionReserveAmount');
+    if (reserveEl) {
+        reserveEl.textContent = conReserve > 0 ? formatCurrency(conReserve) : '$0';
+        reserveEl.style.color = conReserve > 0 ? '#ef4444' : '#6b7280';
     }
+
+    // Remove any stale exit note (exit value now shown prominently in summary)
+    const staleExit = document.getElementById('capitalRaiseExitNote');
+    if (staleExit) staleExit.remove();
 }
 
 function renderBuyBoxSection(r, gatherInputs) {
@@ -441,15 +519,15 @@ function renderBuyBoxSection(r, gatherInputs) {
     if (!buyBox || !buyBox.primary) return;
     const primary = buyBox.primary;
 
-    // Context: if all solved prices are above listing, the deal is underpriced
+    // Context: if all solved prices are above listing, the deal is underpriced (returns exceed target at asking)
     const allAboveListed = primary.ideal > primary.listed && primary.max > primary.listed;
     let contextText = `Target Equity Multiple: ${primary.targetMOIC.toFixed(1)}x | Equity Multiple at listing: ${listedMOIC.toFixed(2)}x`;
     if (allAboveListed) {
-        contextText += ` — Deal exceeds all Equity Multiple thresholds at asking price. Strong buy as-is.`;
+        contextText += ` — Returns exceed all thresholds at asking price. Strong buy as-is — no negotiation required.`;
     } else if (listedMOIC < 1.0) {
         contextText += ` — Deal loses money at asking price.`;
     } else if (listedMOIC < primary.targetMOIC) {
-        contextText += ` — Below target. Max price to hit ${primary.targetMOIC.toFixed(1)}x: ${formatCurrency(primary.max)}.`;
+        contextText += ` — Below target. Max price to hit ${primary.targetMOIC.toFixed(1)}x: ${formatCurrency(Math.min(primary.max, primary.listed))}.`;
     }
     document.getElementById('buyboxContext').textContent = contextText;
 
@@ -471,19 +549,22 @@ function renderBuyBoxSection(r, gatherInputs) {
     if (explainer) explainer.style.display = 'block';
 
     container.innerHTML = rungs.map(rung => {
-        const testInputs = buildInputsAtPrice(gatherInputs(), rung.primary);
+        const isListedRow = rung.cls === 'rung-listed';
+        // Cap recommended prices at listed price — never suggest paying above asking
+        const cappedPrice = isListedRow ? rung.primary : Math.min(rung.primary, primary.listed);
+        const wasAboveListed = !isListedRow && rung.primary > primary.listed;
+        const testInputs = buildInputsAtPrice(gatherInputs(), cappedPrice);
         const flows = calculateAnnualCashFlows(testInputs);
         const moic = calculateMOIC(flows, testInputs.totalEquity);
-        const isListedRow = rung.cls === 'rung-listed';
-        const belowListed = !isListedRow && rung.primary < primary.listed;
-        const aboveListed = !isListedRow && rung.primary > primary.listed;
-        const priceDisplay = belowListed
-            ? `${formatCurrency(rung.primary)} <span style="color:#1e5c3a;font-size:0.7em">✓ below asking</span>`
-            : aboveListed
-            ? `${formatCurrency(rung.primary)} <span style="color:#f59e0b;font-size:0.7em">↑ above asking</span>`
-            : formatCurrency(rung.primary);
-        const refiNote = rung.refi && rung.refi !== rung.primary && Math.abs(rung.refi - rung.primary) > 1000
-            ? `<span class="price-rung-refi">${formatCurrency(rung.refi)} @ refi</span>`
+        const belowListed = !isListedRow && cappedPrice < primary.listed;
+        const priceDisplay = wasAboveListed
+            ? `${formatCurrency(cappedPrice)} <span style="color:#10b981;font-size:0.7em">✓ works at asking</span>`
+            : belowListed
+            ? `${formatCurrency(cappedPrice)} <span style="color:#1e5c3a;font-size:0.7em">✓ below asking</span>`
+            : formatCurrency(cappedPrice);
+        const cappedRefi = isListedRow ? rung.refi : Math.min(rung.refi, primary.listed);
+        const refiNote = cappedRefi && cappedRefi !== cappedPrice && Math.abs(cappedRefi - cappedPrice) > 1000
+            ? `<span class="price-rung-refi">${formatCurrency(cappedRefi)} @ refi</span>`
             : '';
         const cf = testInputs.annualCashFlow;
         const cfText = cf < 0 ? `<span style="color:#f87171">${formatCurrency(cf)}/yr</span>` : `${formatCurrency(cf)}/yr`;
@@ -598,14 +679,30 @@ function renderAttributionSection(r) {
     const txPct = absTotal > 0 ? (Math.abs(a.taxBenefits) / absTotal) * 100 : 25;
     const dpPct = absTotal > 0 ? (Math.abs(a.debtPaydown) / absTotal) * 100 : 25;
 
-    // Horizontal bars use width
-    document.getElementById('attrEquityBar').style.width = eqPct + '%';
-    document.getElementById('attrCashFlowBar').style.width = cfPct + '%';
+    // Horizontal bars — negative values get red bar + red label
+    const eqBar = document.getElementById('attrEquityBar');
+    const cfBar = document.getElementById('attrCashFlowBar');
+    if (eqBar) {
+        eqBar.style.width = eqPct + '%';
+        eqBar.className = 'attr-bar-fill ' + (a.equity < 0 ? 'bg-red-500' : 'bg-blue-500');
+    }
+    if (cfBar) {
+        cfBar.style.width = cfPct + '%';
+        cfBar.className = 'attr-bar-fill ' + (a.cashFlow < 0 ? 'bg-red-500' : 'bg-gray-400');
+    }
     document.getElementById('attrTaxBar').style.width = txPct + '%';
     document.getElementById('attrDebtBar').style.width = dpPct + '%';
 
-    document.getElementById('attrEquityVal').textContent = formatCurrency(a.equity);
-    document.getElementById('attrCashFlowVal').textContent = formatCurrency(a.cashFlow);
+    const eqValEl = document.getElementById('attrEquityVal');
+    if (eqValEl) {
+        eqValEl.textContent = formatCurrency(a.equity);
+        eqValEl.style.color = a.equity < 0 ? '#f87171' : '';
+    }
+    const cfValEl = document.getElementById('attrCashFlowVal');
+    if (cfValEl) {
+        cfValEl.textContent = formatCurrency(a.cashFlow);
+        cfValEl.style.color = a.cashFlow < 0 ? '#f87171' : '';
+    }
     document.getElementById('attrTaxVal').textContent = formatCurrency(a.taxBenefits);
     document.getElementById('attrDebtVal').textContent = formatCurrency(a.debtPaydown);
 
