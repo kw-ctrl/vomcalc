@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADU Underwriter — Velocity of Money</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['"Plus Jakarta Sans"', 'sans-serif'] },
+                    colors: {
+                        surface: { DEFAULT: '#141414', light: '#1c1c1c', border: '#2a2a2a', hover: '#222' },
+                        body: '#0a0a0a',
+                    }
+                }
+            }
+        }
+    </script>
+    <script>window.__API_BASE_URL__ = window.__API_BASE_URL__ || 'http://localhost:8080';</script>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0"></script>
+    <style>
+        .j-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: 0.75rem; }
+        .j-label { display:block; font-size: 0.75rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 0.25rem; text-transform: uppercase; letter-spacing: 0.04em; }
+        .j-input { width:100%; padding:0.5rem 0.7rem; border:1px solid var(--border); border-radius:0.5rem; font-size:0.875rem; color:var(--text-primary); background:var(--bg-surface-light); transition:border-color .15s; }
+        .j-input:focus { outline:none; border-color:#555; }
+        .j-select option { background:#1c1c1c; color:#f5f5f5; }
+        .j-tag { font-size:0.6rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; padding:2px 7px; border-radius:9999px; }
+        .j-row { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:6px 0; font-size:0.85rem; border-bottom:1px dashed rgba(42,42,42,0.6); }
+        .j-row:last-child { border-bottom:none; }
+        .j-sub { display:flex; justify-content:space-between; align-items:baseline; gap:12px; padding:7px 0; font-size:0.85rem; font-weight:700; color:#fff; }
+        .j-detail { font-size:0.7rem; color:var(--text-muted); font-weight:400; }
+        .toggle { position:relative; width:38px; height:22px; border-radius:9999px; background:#333; transition:background .15s; cursor:pointer; flex-shrink:0; }
+        .toggle.checked { background:#d97706; }
+        .toggle::after { content:''; position:absolute; top:2px; left:2px; width:18px; height:18px; border-radius:50%; background:#fff; transition:left .15s; }
+        .toggle.checked::after { left:18px; }
+    </style>
+</head>
+<body class="bg-body min-h-screen text-gray-100">
+    <!-- Header -->
+    <header class="bg-surface border-b border-surface-border sticky top-0 z-50">
+        <div class="max-w-[1440px] mx-auto px-4 py-3 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-4 min-w-0">
+                <img src="logo.png" alt="Kassidy Warren" class="h-8 flex-shrink-0">
+                <div class="border-l border-surface-border pl-4 hidden sm:block">
+                    <h1 class="text-lg font-bold text-white leading-tight">Velocity of Money</h1>
+                    <p class="text-xs text-gray-500">ADU Underwriter — Kirkland / Bothell</p>
+                </div>
+            </div>
+            <nav class="flex items-center gap-1 text-sm flex-shrink-0">
+                <a href="app.html" class="px-3 py-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-surface-hover transition whitespace-nowrap">Underwriter</a>
+                <a href="adu.html" class="px-3 py-1.5 rounded-lg font-semibold text-amber-400 bg-amber-400/10 border border-amber-400/20 whitespace-nowrap">ADU Underwriter</a>
+            </nav>
+            <div id="headerAuth" class="flex-shrink-0">
+                <span class="text-sm text-gray-500">Free access</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-[1440px] mx-auto px-4 py-5 flex flex-col lg:flex-row gap-5">
+        <!-- ══════════ INPUTS (left) ══════════ -->
+        <aside class="w-full lg:w-[400px] lg:min-w-[400px] space-y-4">
+
+            <!-- Deal Inputs -->
+            <section class="j-card p-4">
+                <div class="flex items-center justify-between mb-3">
+                    <h2 class="text-sm font-bold text-white">1 · Deal Inputs</h2>
+                    <button id="btnSample" class="text-[11px] font-semibold text-amber-400 border border-amber-400/30 rounded-lg px-2 py-1 hover:bg-amber-400/10 transition">Load sample deal</button>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div class="col-span-2">
+                        <label class="j-label" for="inPurchase">Purchase price</label>
+                        <input id="inPurchase" type="number" class="j-input" value="800000" min="0" step="10000">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inLotSqft">Lot size (sqft)</label>
+                        <input id="inLotSqft" type="number" class="j-input" value="6000" min="0" step="100">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inExistingSqft">Existing house (sqft)</label>
+                        <input id="inExistingSqft" type="number" class="j-input" value="1100" min="0" step="50">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inYearBuilt">Year built</label>
+                        <input id="inYearBuilt" type="number" class="j-input" value="1975" min="1850" max="2026">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inCondition">Existing condition</label>
+                        <select id="inCondition" class="j-input j-select">
+                            <option value="turnkey">Turnkey</option>
+                            <option value="light" selected>Light refresh</option>
+                            <option value="moderate">Major reno</option>
+                            <option value="full">Full gut reno</option>
+                            <option value="teardown">Teardown</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inCity">City</label>
+                        <select id="inCity" class="j-input j-select">
+                            <option value="Kirkland" selected>Kirkland</option>
+                            <option value="Bothell">Bothell</option>
+                            <option value="Custom">Custom</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inZip">Zip</label>
+                        <input id="inZip" type="text" class="j-input" value="98033" placeholder="98033">
+                    </div>
+                </div>
+            </section>
+
+            <!-- City Rules -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">City Rules</h2>
+                <div class="overflow-x-auto"><table id="cityRulesTable" class="w-full text-xs"></table></div>
+                <p class="text-[10px] text-gray-500 mt-2">Verified from city codes, Aug 2026 · State floor HB 1337: 1,000 sqft minimum cities must allow, no owner-occupancy, no parking required within ½ mile of transit.</p>
+            </section>
+
+            <!-- Configuration -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">2 · Configuration <span class="j-detail">(auto-determined — edit)</span></h2>
+                <div id="configSummary" class="text-xs text-gray-300 mb-3 space-y-1"></div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="j-label" for="inMaxAduOverride">Max ADU sqft (override)</label>
+                        <input id="inMaxAduOverride" type="number" class="j-input" value="0" min="0" step="50">
+                        <p class="text-[10px] text-gray-500 mt-0.5">0 = use city rule (1,200)</p>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inNewMainSqft">New main house sqft</label>
+                        <input id="inNewMainSqft" type="number" class="j-input" value="1800" min="0" step="50">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inAdu1Sqft">ADU #1 sqft</label>
+                        <input id="inAdu1Sqft" type="number" class="j-input" value="800" min="0" step="50">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inAdu2Sqft">ADU #2 sqft</label>
+                        <input id="inAdu2Sqft" type="number" class="j-input" value="700" min="0" step="50">
+                    </div>
+                    <div class="col-span-2 flex items-center justify-between pt-1">
+                        <label class="text-xs text-gray-300">Lot allows 2nd ADU</label>
+                        <div id="inLotAdu2" class="toggle" role="checkbox" aria-checked="false" tabindex="0"></div>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="j-label" for="inBuildSeq">Build sequence</label>
+                        <select id="inBuildSeq" class="j-input j-select">
+                            <option value="parallel" selected>Parallel (units built together)</option>
+                            <option value="sequential">Sequential (one after another)</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Deal Quality -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">8 · Deal Quality</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="j-label" for="inAccess">Access</label>
+                        <select id="inAccess" class="j-input j-select">
+                            <option value="standard" selected>Standard street</option>
+                            <option value="alley">Alley access (best for ADU)</option>
+                            <option value="corner">Corner lot (2-street)</option>
+                            <option value="narrow">Narrow frontage</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inLotShape">Lot shape</label>
+                        <select id="inLotShape" class="j-input j-select">
+                            <option value="wide" selected>Wide</option>
+                            <option value="deepNarrow">Deep & narrow</option>
+                            <option value="irregular">Irregular</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inTrees">Trees to remove</label>
+                        <input id="inTrees" type="number" class="j-input" value="0" min="0" step="1">
+                    </div>
+                    <div class="flex items-end pb-1">
+                        <p class="text-[10px] text-gray-500">Access & shape adjust site work ±; trees add removal cost + permit time.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Financing -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">4 · Financing</h2>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="j-label" for="inDownPct">Down payment %</label>
+                        <input id="inDownPct" type="number" class="j-input" value="20" min="0" max="100" step="1">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inRate">Construction loan rate %</label>
+                        <input id="inRate" type="number" class="j-input" value="8.5" min="0" max="30" step="0.1">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inRefiLtv">Refi LTV %</label>
+                        <input id="inRefiLtv" type="number" class="j-input" value="75" min="0" max="100" step="1">
+                    </div>
+                    <div>
+                        <label class="j-label" for="inThreshold">Cash-out equity %</label>
+                        <input id="inThreshold" type="number" class="j-input" value="20" min="0" max="100" step="1">
+                    </div>
+                    <div class="col-span-2 flex items-center justify-between pt-1">
+                        <label class="text-xs text-gray-300">Side sewer replacement needed <span class="j-detail">(pre-1986)</span></label>
+                        <div id="inSideSewer" class="toggle checked" role="checkbox" aria-checked="true" tabindex="0"></div>
+                    </div>
+                    <div>
+                        <label class="j-label" for="inSideSewerCost">Side sewer cost</label>
+                        <input id="inSideSewerCost" type="number" class="j-input" value="20000" min="0" step="1000">
+                    </div>
+                </div>
+            </section>
+
+            <!-- Advanced assumptions -->
+            <details class="j-card p-4">
+                <summary class="text-sm font-bold text-white cursor-pointer select-none">Advanced cost assumptions <span class="j-detail">(default — edit)</span></summary>
+                <div class="grid grid-cols-2 gap-3 mt-3">
+                    <div><label class="j-label" for="inCpsfMain">New main $/sqft</label><input id="inCpsfMain" type="number" class="j-input" value="350" min="0" step="5"></div>
+                    <div><label class="j-label" for="inCpsfDetached">Detached ADU $/sqft</label><input id="inCpsfDetached" type="number" class="j-input" value="315" min="0" step="5"></div>
+                    <div><label class="j-label" for="inCpsfAttached">Attached ADU $/sqft</label><input id="inCpsfAttached" type="number" class="j-input" value="285" min="0" step="5"></div>
+                    <div><label class="j-label" for="inCpsfGarage">Garage conv. $/sqft</label><input id="inCpsfGarage" type="number" class="j-input" value="150" min="0" step="5"></div>
+                    <div><label class="j-label" for="inSoftPct">Soft costs % of hard</label><input id="inSoftPct" type="number" class="j-input" value="22" min="0" max="50" step="1"></div>
+                    <div><label class="j-label" for="inSiteWork">Site work base $</label><input id="inSiteWork" type="number" class="j-input" value="15000" min="0" step="1000"></div>
+                    <div><label class="j-label" for="inTreeCost">Tree removal each $</label><input id="inTreeCost" type="number" class="j-input" value="2500" min="0" step="500"></div>
+                    <div><label class="j-label" for="inDemoCost">Demolition $</label><input id="inDemoCost" type="number" class="j-input" value="30000" min="0" step="5000"></div>
+                    <div><label class="j-label" for="inTaxesIns">Taxes+ins %/yr</label><input id="inTaxesIns" type="number" class="j-input" value="1.4" min="0" step="0.1"></div>
+                    <div><label class="j-label" for="inOppCost">Opportunity cost %</label><input id="inOppCost" type="number" class="j-input" value="5" min="0" step="0.5"></div>
+                    <div><label class="j-label" for="inClosing">Closing costs %</label><input id="inClosing" type="number" class="j-input" value="1.5" min="0" step="0.1"></div>
+                </div>
+            </details>
+
+            <p class="text-[10px] text-gray-600 px-1">All defaults are market estimates (Aug 2026) — edit to match your quote. Kirkland 98033 comps: new construction ≈ $700/sqft, ADUs ≈ $520/sqft.</p>
+        </aside>
+
+        <!-- ══════════ RESULTS (right) ══════════ -->
+        <section class="flex-1 min-w-0 space-y-4">
+
+            <!-- Config banner -->
+            <div id="configBanner" class="j-card p-4"></div>
+
+            <!-- 3 Cost Breakdown -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-1">3 · Cost Breakdown</h2>
+                <div id="costBreakdown" class="text-xs"></div>
+                <div class="mt-2 pt-2 border-t border-surface-border">
+                    <div id="costTotal" class="flex justify-between items-baseline text-sm font-extrabold text-white"></div>
+                </div>
+            </section>
+
+            <!-- 4 Financing -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">4 · Financing</h2>
+                <div id="financingOut" class="text-xs"></div>
+            </section>
+
+            <!-- 5 Exit Value -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">5 · After-Build Exit Value <span class="j-detail">(by zip comps — default, edit)</span></h2>
+                <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 mb-3">
+                    <div><label class="j-label" for="inCompMain">Main $/sqft</label><input id="inCompMain" type="number" class="j-input" value="700" step="10"></div>
+                    <div><label class="j-label" for="inCompAdu">ADU $/sqft</label><input id="inCompAdu" type="number" class="j-input" value="520" step="10"></div>
+                    <div><label class="j-label" for="inCompRent">LTR $/sqft/mo</label><input id="inCompRent" type="number" class="j-input" value="2.5" step="0.1"></div>
+                    <div><label class="j-label" for="inCompAdr">STR ADR $</label><input id="inCompAdr" type="number" class="j-input" value="250" step="5"></div>
+                    <div><label class="j-label" for="inCompOcc">STR occupancy %</label><input id="inCompOcc" type="number" class="j-input" value="62" step="1"></div>
+                </div>
+                <div id="exitValueOut" class="text-xs"></div>
+                <p class="text-[10px] text-gray-500 mt-2">Per-unit appraised values. With unit-lot subdivision / condominiumization, each unit sells separately — values above assume separate-unit appraisals.</p>
+            </section>
+
+            <!-- 6 Equity & Cash-Out -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">6 · Equity &amp; Cash-Out</h2>
+                <div id="equityOut" class="text-xs"></div>
+            </section>
+
+            <!-- 7 Exit Strategy -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">7 · Exit Strategy Recommendation</h2>
+                <div id="exitStrategyOut" class="text-xs"></div>
+            </section>
+
+            <!-- Deal Quality output / Timeline -->
+            <section class="j-card p-4">
+                <h2 class="text-sm font-bold text-white mb-2">Deal Quality &amp; Timeline</h2>
+                <div id="timelineOut" class="text-xs"></div>
+            </section>
+        </section>
+    </main>
+
+    <script type="module">
+        import { runUnderwrite, sampleInputs, CITY_RULES, ZIP_DATA, CONDITIONS, DEFAULTS, fmtMoney, fmtCompact, fmtPct, clamp } from './js/adu-calculations.js';
+
+        const $ = (id) => document.getElementById(id);
+
+        /* ── toggles ── */
+        function initToggle(el, onToggle) {
+            el.addEventListener('click', () => { el.classList.toggle('checked'); el.setAttribute('aria-checked', el.classList.contains('checked')); onToggle(); });
+            el.addEventListener('keydown', (e) => { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); el.click(); } });
+        }
+
+        /* ── read inputs ── */
+        const touched = { lotAdu2: false, sideSewer: false };
+        function readInputs() {
+            const sideSewerAuto = parseInt($('inYearBuilt').value, 10) < 1986;
+            if (!touched.sideSewer) $('inSideSewer').classList.toggle('checked', sideSewerAuto);
+            const lotSqft = parseFloat($('inLotSqft').value) || 0;
+            if (!touched.lotAdu2) $('inLotAdu2').classList.toggle('checked', lotSqft >= DEFAULTS.lotAllowsSecondAduMinSqft);
+            return {
+                purchasePrice: parseFloat($('inPurchase').value) || 0,
+                lotSizeSqft: lotSqft,
+                existingHouseSqft: parseFloat($('inExistingSqft').value) || 0,
+                yearBuilt: parseInt($('inYearBuilt').value, 10) || 1975,
+                condition: $('inCondition').value,
+                city: $('inCity').value,
+                zip: $('inZip').value,
+                maxAduSqftOverride: parseFloat($('inMaxAduOverride').value) || 0,
+                newMainSqft: parseFloat($('inNewMainSqft').value) || 0,
+                adu1Sqft: parseFloat($('inAdu1Sqft').value) || 0,
+                adu2Sqft: parseFloat($('inAdu2Sqft').value) || 0,
+                lotAllowsSecondAdu: $('inLotAdu2').classList.contains('checked'),
+                buildSequential: $('inBuildSeq').value === 'sequential',
+                access: $('inAccess').value,
+                lotShape: $('inLotShape').value,
+                treesToRemove: parseInt($('inTrees').value, 10) || 0,
+                downPct: parseFloat($('inDownPct').value) || 0,
+                constructionRate: parseFloat($('inRate').value) || 0,
+                refiLtv: parseFloat($('inRefiLtv').value) || 0,
+                cashOutThreshold: parseFloat($('inThreshold').value) || 0,
+                sideSewerNeeded: $('inSideSewer').classList.contains('checked'),
+                sideSewerCost: parseFloat($('inSideSewerCost').value) || 0,
+                cpsfNewMain: parseFloat($('inCpsfMain').value) || 0,
+                cpsfDetachedAdu: parseFloat($('inCpsfDetached').value) || 0,
+                cpsfAttachedAdu: parseFloat($('inCpsfAttached').value) || 0,
+                cpsfGarage: parseFloat($('inCpsfGarage').value) || 0,
+                softPct: parseFloat($('inSoftPct').value) || 0,
+                siteWorkBase: parseFloat($('inSiteWork').value) || 0,
+                treeCostEach: parseFloat($('inTreeCost').value) || 0,
+                demoCost: parseFloat($('inDemoCost').value) || 0,
+                taxesInsPct: parseFloat($('inTaxesIns').value) || 0,
+                oppCostPct: parseFloat($('inOppCost').value) || 0,
+                closingPct: parseFloat($('inClosing').value) || 0,
+                compNewMainCpsf: parseFloat($('inCompMain').value) || 0,
+                compAduCpsf: parseFloat($('inCompAdu').value) || 0,
+                compRentPsf: parseFloat($('inCompRent').value) || 0,
+                compAdr: parseFloat($('inCompAdr').value) || 0,
+                compOccupancy: (parseFloat($('inCompOcc').value) || 0) / 100,
+            };
+        }
+
+        /* ── renderers ── */
+        function esc(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+
+        function renderCityRules(r) {
+            const rules = r.config.rules;
+            const maxAdu = r.config.maxAduSqft;
+            const overridden = r.inputs.maxAduSqftOverride > 0;
+            const rows = [
+                ['City', esc(r.inputs.city)],
+                ['Max ADU sqft', `${maxAdu.toLocaleString()}${overridden ? ' (override)' : ' (configurable)'}`],
+                ['Max ADUs / lot', `${rules.maxAdus}`],
+                ['Covered deck exclusion', rules.coveredDeckExclusion ? `${rules.coveredDeckExclusion} sqft` : '—'],
+                ['Owner-occupancy', esc(rules.ownerOccupancy)],
+                ['Unit-lot subdivision', esc(rules.unitLotSubdivision)],
+                ['DADU F.A.R. relief', esc(rules.daduFarRelief)],
+                ['Detached ADU height', esc(rules.detachedHeight)],
+                ['Permit time', `${rules.permitWeeks[0]}–${rules.permitWeeks[1]} weeks`],
+            ];
+            $('cityRulesTable').innerHTML = rows.map(([k, v], i) =>
+                `<tr class="${i % 2 ? 'bg-surface-light/40' : ''}"><td class="py-1.5 pr-3 text-gray-400 font-medium align-top">${k}</td><td class="py-1.5 text-gray-200 align-top">${v}</td></tr>`
+            ).join('');
+        }
+
+        function renderConfigBanner(r) {
+            const c = r.config;
+            const flagColors = { green: 'bg-emerald-500/15 text-emerald-400 border-emerald-500/30', red: 'bg-red-500/15 text-red-400 border-red-500/30', amber: 'bg-amber-500/15 text-amber-400 border-amber-500/30', blue: 'bg-blue-500/15 text-blue-400 border-blue-500/30' };
+            const chips = c.units.map(u => {
+                const kind = u.kind === 'new' ? 'New build' : u.kind === 'existing' ? 'Existing' : u.kind === 'repurposed' ? 'Repurposed' : u.kind;
+                return `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-surface-light border border-surface-border text-xs text-gray-200"><span class="text-[9px] uppercase tracking-wide text-amber-400 font-bold">${kind}</span>${esc(u.label)} · ${u.sqft.toLocaleString()} sqft</span>`;
+            }).join('');
+            $('configBanner').innerHTML = `
+                <div class="flex items-start justify-between gap-3 flex-wrap">
+                    <div class="min-w-0">
+                        <span class="j-tag ${flagColors[c.modeFlag]} border">Config ${c.mode}</span>
+                        <h3 class="text-base font-bold text-white mt-1.5">${esc(c.modeLabel)}</h3>
+                        <p class="text-xs text-gray-400 mt-1 max-w-2xl">${esc(c.modeDetail)}</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap gap-2 mt-3">${chips}</div>
+                <p class="text-[11px] text-gray-500 mt-2">Rule: existing house ${c.existingIsAdu ? '&lt;' : '≥'} ${c.maxAduSqft.toLocaleString()} sqft city max → ${c.existingIsAdu ? 'it becomes an ADU and you build a new main house' : 'it stays the main house and you add ADUs'}. ${c.lotAllowsSecondAdu ? 'Lot allows 2 ADUs.' : 'Lot too small / not flagged for a 2nd ADU (needs ≥ ' + DEFAULTS.lotAllowsSecondAduMinSqft.toLocaleString() + ' sqft by default).'}</p>`;
+        }
+
+        function groupRows(lines, group) { return lines.filter(l => l.group === group); }
+
+        function renderCostBreakdown(r) {
+            const hardNew = groupRows(r.hard.lines, 'new'), hardReno = groupRows(r.hard.lines, 'reno'),
+                hardSite = groupRows(r.hard.lines, 'site'), hardDemo = groupRows(r.hard.lines, 'demo');
+            const row = (l) => `<div class="j-row"><span>${esc(l.label)}<div class="j-detail">${esc(l.detail)}</div></span><span class="text-gray-100 font-medium whitespace-nowrap">${fmtMoney(Math.round(l.amount))}</span></div>`;
+            let html = '';
+            html += `<div class="font-bold text-amber-400 text-[11px] uppercase tracking-wider mt-1 mb-1">Hard costs</div>`;
+            html += hardNew.map(row).join('') + hardReno.map(row).join('') + hardDemo.map(row).join('') + hardSite.map(row).join('');
+            html += `<div class="j-sub text-emerald-400">Hard total<span>${fmtMoney(Math.round(r.hard.total))}</span></div>`;
+            html += `<div class="font-bold text-amber-400 text-[11px] uppercase tracking-wider mt-3 mb-1">Soft costs</div>`;
+            html += r.soft.lines.map(row).join('');
+            html += `<div class="j-sub text-emerald-400">Soft total<span>${fmtMoney(Math.round(r.soft.total))}</span></div>`;
+            html += `<div class="font-bold text-amber-400 text-[11px] uppercase tracking-wider mt-3 mb-1">Carrying costs (${r.timeline.totalMonths.toFixed(1)} mo hold)</div>`;
+            html += [
+                { label: 'Construction loan interest', detail: `${fmtPct(r.inputs.constructionRate, 1)} on avg drawn balance over ${r.timeline.totalMonths.toFixed(1)} mo`, amount: r.carrying.interest },
+                { label: 'Property taxes & insurance', detail: `${fmtPct(r.a.taxesInsPct, 1)}/yr on purchase, pro-rated`, amount: r.carrying.taxesIns },
+                { label: 'Opportunity cost of cash', detail: `${fmtPct(r.a.oppCostPct, 0)}/yr on $${Math.round(r.financing.cashInvested).toLocaleString()} invested`, amount: r.carrying.oppCost },
+            ].map(row).join('');
+            html += `<div class="j-sub text-emerald-400">Carrying total<span>${fmtMoney(Math.round(r.carrying.total))}</span></div>`;
+            $('costBreakdown').innerHTML = html;
+            $('costTotal').innerHTML = `<span>Total project cost (purchase + hard + soft + carrying)</span><span class="text-amber-400">${fmtMoney(Math.round(r.totalCost))}</span>`;
+        }
+
+        function renderFinancing(r) {
+            $('financingOut').innerHTML = [
+                ['Cash invested (down payment)', `${fmtPct(r.inputs.downPct, 0)} of ${fmtCompact(r.financing.projectBase)} project`, r.financing.cashInvested],
+                ['Construction loan (principal)', `funds purchase + build`, r.financing.baseLoan],
+                ['Loan balance at completion', 'total cost − cash invested', r.loanBalance],
+                ['Est. loan interest during build', `avg draw ≈ 55% of balance, ${fmtPct(r.inputs.constructionRate, 1)}/yr`, r.carrying.interest],
+                ['Avg monthly interest', `over ${r.timeline.totalMonths.toFixed(1)} mo`, r.carrying.interest / Math.max(1, r.timeline.totalMonths)],
+            ].map(([label, detail, amt]) =>
+                `<div class="j-row"><span>${label}<div class="j-detail">${detail}</div></span><span class="text-gray-100 font-medium">${fmtMoney(Math.round(amt))}</span></div>`
+            ).join('')
+            + `<p class="text-[10px] text-gray-500 mt-2">Construction loan: interest-only draws during build, converted to permanent / DSCR refi at completion.</p>`;
+        }
+
+        function renderExitValue(r) {
+            const rows = r.exitValue.lines.map(l =>
+                `<div class="j-row"><span>${esc(l.label)}<div class="j-detail">${esc(l.detail)}</div></span><span class="text-gray-100 font-medium whitespace-nowrap">${fmtMoney(Math.round(l.value))}</span></div>`
+            ).join('');
+            $('exitValueOut').innerHTML = rows + `
+                <div class="j-sub text-white mt-1">After-build value<span class="text-emerald-400">${fmtMoney(Math.round(r.exitValue.total))}</span></div>`;
+        }
+
+        function renderEquity(r) {
+            const e = r.equity;
+            const pct = clamp(e.equityPct * 100, -10, 40);
+            const barPct = clamp(e.equityPct / 0.40 * 100, 0, 100);
+            const flag = e.eligible
+                ? `<div class="mt-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 px-3 py-2.5 text-emerald-300"><span class="font-bold">✓ CASH-OUT ELIGIBLE</span> — equity ${fmtPct(e.equityPct)} &gt; ${fmtPct(e.threshold, 0)} threshold. Refi at ${fmtPct(r.inputs.refiLtv, 0)} LTV pulls out <span class="font-extrabold">${fmtMoney(Math.round(e.cashOut))}</span>.</div>`
+                : `<div class="mt-3 rounded-lg border border-amber-500/30 bg-amber-500/10 px-3 py-2.5 text-amber-300"><span class="font-bold">BELOW ${fmtPct(e.threshold, 0)} THRESHOLD</span> — equity ${fmtPct(e.equityPct)}. Hold and let rents build equity, or renegotiate price. No cash-out refi available yet.</div>`;
+            const warn = e.equity < 0 ? `<div class="mt-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-red-300 text-[11px] font-semibold">⚠ Negative equity — this deal destroys value at current comps. Do not proceed without better pricing.</div>` : '';
+            $('equityOut').innerHTML = `
+                <div class="flex items-center gap-6 flex-wrap">
+                    <div>
+                        <div class="text-3xl font-extrabold ${e.equity >= 0 ? 'text-emerald-400' : 'text-red-400'}">${fmtPct(e.equityPct)}</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wide mt-0.5">Equity %</div>
+                    </div>
+                    <div class="flex-1 min-w-[220px]">
+                        <div class="flex justify-between text-[10px] text-gray-500 mb-1"><span>0%</span><span class="text-amber-400">threshold ${fmtPct(e.threshold, 0)}</span><span>40%</span></div>
+                        <div class="h-2 rounded-full bg-surface-light border border-surface-border relative">
+                            <div class="h-full rounded-full ${e.eligible ? 'bg-emerald-500' : 'bg-amber-500'}" style="width:${barPct}%"></div>
+                            <div class="absolute top-[-3px] w-0.5 h-[18px] bg-amber-400" style="left:${clamp(e.threshold / 0.40 * 100, 0, 100)}%"></div>
+                        </div>
+                        <div class="flex justify-between text-[10px] mt-1 text-gray-400"><span>Instant equity ${fmtMoney(Math.round(e.equity))}</span><span>${e.equity >= 0 ? '+' : ''}${fmtMoney(Math.round(e.equity))}</span></div>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-4 text-center">
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-sm font-bold text-white">${fmtMoney(Math.round(e.refiMaxLoan))}</div><div class="text-[9px] text-gray-500 uppercase">Max refi loan (${fmtPct(r.inputs.refiLtv, 0)} LTV)</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-sm font-bold ${e.cashOut > 0 ? 'text-emerald-400' : 'text-gray-300'}">${fmtMoney(Math.round(e.cashOut))}</div><div class="text-[9px] text-gray-500 uppercase">Refi-able cash-out</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-sm font-bold text-white">${fmtMoney(Math.round(r.loanBalance))}</div><div class="text-[9px] text-gray-500 uppercase">Loan to pay off</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-sm font-bold ${e.netCashBack >= 0 ? 'text-emerald-400' : 'text-gray-300'}">${fmtMoney(Math.round(e.netCashBack))}</div><div class="text-[9px] text-gray-500 uppercase">Net cash back vs invested</div></div>
+                </div>
+                ${warn}${flag}`;
+        }
+
+        function renderExitStrategy(r) {
+            const es = r.exitStrategies;
+            const coc = (p) => p.kind === 'sell'
+                ? `Profit ${fmtMoney(Math.round(p.returnVal))}`
+                : `Annual NOI ${fmtMoney(Math.round(p.annualNoi))}`;
+            const rows = es.ranked.map((p, i) => {
+                const isRec = p.id === es.recommended;
+                return `<div class="j-row ${isRec ? '!border-amber-400/40 bg-amber-400/5 rounded-md px-2 -mx-2' : ''}">
+                    <span class="font-semibold ${isRec ? 'text-amber-300' : 'text-gray-200'}">${i + 1}. ${esc(p.name)} ${isRec ? '<span class="j-tag bg-amber-400/20 text-amber-300 border border-amber-400/30 ml-1">RECOMMENDED</span>' : ''}<div class="j-detail">${esc(p.desc)}</div></span>
+                    <span class="text-right whitespace-nowrap"><span class="block font-bold ${p.coc >= 0 ? 'text-emerald-400' : 'text-red-400'}">${fmtPct(p.coc)} CoC</span><span class="block text-[10px] text-gray-500">${coc(p)}</span></span>
+                </div>`;
+            }).join('');
+            const noGo = es.doNotProceed ? `<div class="mt-2 rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-red-300 text-[11px] font-semibold">⚠ Negative equity — recommended exit: DO NOT PROCEED. Renegotiate price or walk.</div>` : '';
+            const insight = es.insight ? `<div class="mt-3 rounded-lg border border-blue-500/30 bg-blue-500/10 px-3 py-2.5 text-blue-200 text-[11px]"><span class="font-bold text-blue-300">💡 ${esc(es.insight.title)}</span><br>${esc(es.insight.body)}</div>` : '';
+            const unitLines = es.unitNos.map(u =>
+                `<div class="j-row text-[11px]"><span>${esc(u.label)}</span><span class="text-gray-400">STR ${fmtMoney(Math.round(u.strNoi))}/yr · LTR ${fmtMoney(Math.round(u.ltrNoi))}/yr</span></div>`
+            ).join('');
+            $('exitStrategyOut').innerHTML = `${noGo}${rows}<div class="mt-2 font-bold text-gray-400 text-[10px] uppercase tracking-wider">Per-unit annual net</div>${unitLines}${insight}`;
+        }
+
+        function renderTimeline(r) {
+            const t = r.timeline;
+            const units = t.unitMonths.map(u => `${esc(u.label)}: ${u.months} mo`).join(' · ');
+            const adjLines = r.hard.lines.find(l => l.group === 'site');
+            $('timelineOut').innerHTML = `
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 text-center">
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-lg font-extrabold text-white">${t.permitWeeks.toFixed(0)} wks</div><div class="text-[9px] text-gray-500 uppercase">Permit</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-lg font-extrabold text-white">${t.buildMonths} mo</div><div class="text-[9px] text-gray-500 uppercase">Construction</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-lg font-extrabold text-amber-400">${t.totalMonths.toFixed(1)} mo</div><div class="text-[9px] text-gray-500 uppercase">Total to completion</div></div>
+                    <div class="rounded-lg bg-surface-light border border-surface-border p-2"><div class="text-lg font-extrabold text-white">${Math.round(t.totalMonths / 12 * 10) / 10} yr</div><div class="text-[9px] text-gray-500 uppercase">Hold to refi</div></div>
+                </div>
+                <div class="mt-3 text-[11px] text-gray-400 space-y-1">
+                    <div><span class="text-gray-500">Permit notes:</span> ${t.notes.join(' · ')}</div>
+                    <div><span class="text-gray-500">Build plan (${r.inputs.buildSequential ? 'sequential' : 'parallel'}):</span> ${units}</div>
+                    <div><span class="text-gray-500">Site work:</span> ${esc(adjLines ? adjLines.detail : '')}</div>
+                </div>`;
+        }
+
+        /* ── main ── */
+        function recalc() {
+            const inputs = readInputs();
+            const r = runUnderwrite(inputs);
+            renderCityRules(r);
+            renderConfigBanner(r);
+            renderCostBreakdown(r);
+            renderFinancing(r);
+            renderExitValue(r);
+            renderEquity(r);
+            renderExitStrategy(r);
+            renderTimeline(r);
+        }
+
+        /* ── wire events ── */
+        let debounce;
+        document.addEventListener('input', () => { clearTimeout(debounce); debounce = setTimeout(recalc, 60); });
+        initToggle($('inLotAdu2'), () => { touched.lotAdu2 = true; recalc(); });
+        initToggle($('inSideSewer'), () => { touched.sideSewer = true; recalc(); });
+
+        $('inCity').addEventListener('change', () => {
+            const city = $('inCity').value;
+            const rule = CITY_RULES[city];
+            const zips = Object.keys(ZIP_DATA).filter(z => ZIP_DATA[z].city === city);
+            if (zips.length && !zips.includes($('inZip').value)) $('inZip').value = zips[0];
+            recalc();
+        });
+        $('inZip').addEventListener('change', () => {
+            const z = $('inZip').value;
+            const comp = ZIP_DATA[z];
+            if (comp) {
+                $('inCompMain').value = comp.newMainCpsf;
+                $('inCompAdu').value = comp.aduCpsf;
+                $('inCompRent').value = comp.rentPsf;
+                $('inCompAdr').value = comp.adr;
+                $('inCompOcc').value = Math.round(comp.occupancy * 100);
+            }
+            recalc();
+        });
+        $('inYearBuilt').addEventListener('change', () => { touched.sideSewer = false; recalc(); });
+        $('inLotSqft').addEventListener('change', () => { touched.lotAdu2 = false; recalc(); });
+
+        $('btnSample').addEventListener('click', () => {
+            const s = sampleInputs();
+            $('inPurchase').value = s.purchasePrice; $('inLotSqft').value = s.lotSizeSqft;
+            $('inExistingSqft').value = s.existingHouseSqft; $('inYearBuilt').value = s.yearBuilt;
+            $('inCondition').value = s.condition; $('inCity').value = s.city; $('inZip').value = s.zip;
+            $('inMaxAduOverride').value = 0; $('inNewMainSqft').value = s.newMainSqft;
+            $('inAdu1Sqft').value = s.adu1Sqft; $('inAdu2Sqft').value = s.adu2Sqft;
+            $('inLotAdu2').classList.toggle('checked', s.lotAllowsSecondAdu); touched.lotAdu2 = true;
+            $('inBuildSeq').value = 'parallel'; $('inAccess').value = 'standard'; $('inLotShape').value = 'wide';
+            $('inTrees').value = 0; $('inDownPct').value = 20; $('inRate').value = 8.5;
+            $('inRefiLtv').value = 75; $('inThreshold').value = 20;
+            $('inSideSewer').classList.add('checked'); touched.sideSewer = true;
+            $('inSideSewerCost').value = 20000;
+            $('inCpsfMain').value = 350; $('inCpsfDetached').value = 315; $('inCpsfAttached').value = 285; $('inCpsfGarage').value = 150;
+            $('inSoftPct').value = 22; $('inSiteWork').value = 15000; $('inTreeCost').value = 2500; $('inDemoCost').value = 30000;
+            $('inTaxesIns').value = 1.4; $('inOppCost').value = 5; $('inClosing').value = 1.5;
+            const comp = ZIP_DATA[s.zip];
+            $('inCompMain').value = comp.newMainCpsf; $('inCompAdu').value = comp.aduCpsf;
+            $('inCompRent').value = comp.rentPsf; $('inCompAdr').value = comp.adr; $('inCompOcc').value = Math.round(comp.occupancy * 100);
+            recalc();
+        });
+
+        /* header auth — mirrors app.html pattern (auth currently disabled; free access) */
+        $('headerAuth').innerHTML = `<span class="text-sm text-gray-500">Free access</span>`;
+
+        recalc();
+    </script>
+</body>
+</html>
