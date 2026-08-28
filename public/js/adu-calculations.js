@@ -46,11 +46,11 @@ export const CITY_RULES = {
 
 /** After-build comps + rental assumptions by zip. All "default — edit" market estimates (Aug 2026). */
 export const ZIP_DATA = {
-    '98033': { city: 'Kirkland', label: 'Kirkland — Rose Hill / Downtown', newMainCpsf: 700, aduCpsf: 520, rentPsf: 2.5, adr: 250, occupancy: 0.62 },
-    '98034': { city: 'Kirkland', label: 'Kirkland — North / Finn Hill', newMainCpsf: 640, aduCpsf: 470, rentPsf: 2.3, adr: 230, occupancy: 0.60 },
-    '98011': { city: 'Bothell', label: 'Bothell — East', newMainCpsf: 580, aduCpsf: 420, rentPsf: 2.2, adr: 215, occupancy: 0.58 },
-    '98012': { city: 'Bothell', label: 'Bothell — West / Mill Creek', newMainCpsf: 560, aduCpsf: 400, rentPsf: 2.1, adr: 205, occupancy: 0.57 },
-    '98021': { city: 'Bothell', label: 'Bothell — Canyon Park', newMainCpsf: 540, aduCpsf: 390, rentPsf: 2.0, adr: 200, occupancy: 0.57 },
+    '98033': { city: 'Kirkland', label: 'Kirkland — Rose Hill / Downtown', newMainCpsf: 700, aduCpsf: 520, rentPsf: 2.5, adr: 350, occupancy: 0.62 },
+    '98034': { city: 'Kirkland', label: 'Kirkland — North / Finn Hill', newMainCpsf: 640, aduCpsf: 470, rentPsf: 2.3, adr: 320, occupancy: 0.60 },
+    '98011': { city: 'Bothell', label: 'Bothell — East', newMainCpsf: 580, aduCpsf: 420, rentPsf: 2.2, adr: 280, occupancy: 0.58 },
+    '98012': { city: 'Bothell', label: 'Bothell — West / Mill Creek', newMainCpsf: 560, aduCpsf: 400, rentPsf: 2.1, adr: 260, occupancy: 0.57 },
+    '98021': { city: 'Bothell', label: 'Bothell — Canyon Park', newMainCpsf: 540, aduCpsf: 390, rentPsf: 2.0, adr: 250, occupancy: 0.57 },
 };
 export const FALLBACK_ZIP = { city: 'Custom', label: 'Custom comps', newMainCpsf: 600, aduCpsf: 440, rentPsf: 2.2, adr: 220, occupancy: 0.60 };
 
@@ -66,10 +66,10 @@ export const CONDITIONS = {
 export const DEFAULTS = {
     cpsfNewMain: 350, cpsfDetachedAdu: 315, cpsfAttachedAdu: 285, cpsfGarage: 150,
     softPct: 0.22, siteWorkBase: 15000, treeCostEach: 2500, demoCost: 30000,
-    sideSewerCost: 20000, downPct: 0.20, constructionRate: 0.085, refiLtv: 0.75,
+    sideSewerCost: 20000, downPct: 0.10, constructionRate: 0.085, refiLtv: 0.75,
     cashOutThreshold: 0.20, taxesInsPct: 0.014, oppCostPct: 0.05, closingPct: 0.015,
     strExpensePct: 0.45, ltrOpexPct: 0.30, lotAllowsSecondAduMinSqft: 6500,
-    newMainSqft: 1800, adu1Sqft: 800, adu2Sqft: 700,
+    newMainSqft: 3000, adu1Sqft: 1200, adu2Sqft: 1200,
 };
 
 /* ── helpers ─────────────────────────────────────────────── */
@@ -290,9 +290,20 @@ export function computeEquity(inputs, totalCost, afterBuildValue, cashInvested, 
 }
 
 /* ── 8. Exit strategy recommendation ─────────────────────── */
+// STR comps: use top-quartile Kirkland data (AirROI/StaySTRA 2026):
+//   main house 3BR+  $475-825 ADR at 55-65% occ → $80-150K+ gross
+//   ADU 2BR         $300-450 ADR at 55-65% occ → $45-70K+ gross
+// The tool's earlier flat $250 ADR × 0.62 occ massively understated revenue.
 function unitStrNoi(u, comps, isAdu, a) {
-    const adr = comps.adr * (isAdu ? 0.85 : 1);
-    return adr * comps.occupancy * 365 * (1 - a.strExpensePct);
+    // Scale ADR by unit type: ADUs command ~0.7x of main-house ADR.
+    // Main house ADR comes from comps.adr (zip-level, default 250 → but for
+    // a NEW 3,000 sqft main in Kirkland, that's a top-quartile listing).
+    const baseAdr = comps.adr;
+    const adr = isAdu ? baseAdr * 0.72 : baseAdr;
+    // Top-quartile occupancy for well-run listings (Kassidy: low STR supply,
+    // our ability to make real money → don't model average/mid occupancy).
+    const occ = Math.max(comps.occupancy, 0.60);
+    return adr * occ * 365 * (1 - a.strExpensePct);
 }
 function unitLtrNoi(u, comps, a) {
     return comps.rentPsf * u.sqft * 12 * (1 - a.ltrOpexPct);
@@ -416,7 +427,7 @@ export function sampleInputs() {
     return {
         purchasePrice: 800000, lotSizeSqft: 6000, existingHouseSqft: 1100, yearBuilt: 1975,
         condition: 'light', city: 'Kirkland', zip: '98033',
-        maxAduSqftOverride: 0, newMainSqft: 1800, adu1Sqft: 800, adu2Sqft: 700,
+        maxAduSqftOverride: 0, newMainSqft: 3000, adu1Sqft: 1200, adu2Sqft: 1200,
         lotAllowsSecondAdu: false, buildSequential: false,
         access: 'standard', lotShape: 'wide', treesToRemove: 0,
         downPct: 20, constructionRate: 8.5, refiLtv: 75, cashOutThreshold: 20,
