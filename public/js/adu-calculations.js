@@ -46,11 +46,11 @@ export const CITY_RULES = {
 
 /** After-build comps + rental assumptions by zip. All "default — edit" market estimates (Aug 2026). */
 export const ZIP_DATA = {
-    '98033': { city: 'Kirkland', label: 'Kirkland — Rose Hill / Downtown', newMainCpsf: 700, aduCpsf: 520, rentPsf: 2.5, adr: 350, occupancy: 0.62 },
-    '98034': { city: 'Kirkland', label: 'Kirkland — North / Finn Hill', newMainCpsf: 640, aduCpsf: 470, rentPsf: 2.3, adr: 320, occupancy: 0.60 },
-    '98011': { city: 'Bothell', label: 'Bothell — East', newMainCpsf: 580, aduCpsf: 420, rentPsf: 2.2, adr: 280, occupancy: 0.58 },
-    '98012': { city: 'Bothell', label: 'Bothell — West / Mill Creek', newMainCpsf: 560, aduCpsf: 400, rentPsf: 2.1, adr: 260, occupancy: 0.57 },
-    '98021': { city: 'Bothell', label: 'Bothell — Canyon Park', newMainCpsf: 540, aduCpsf: 390, rentPsf: 2.0, adr: 250, occupancy: 0.57 },
+    '98033': { city: 'Kirkland', label: 'Kirkland — Rose Hill / Downtown', newMainCpsf: 700, aduCpsf: 520, rentPsf: 2.5, adr: 475, occupancy: 0.62 },
+    '98034': { city: 'Kirkland', label: 'Kirkland — North / Finn Hill', newMainCpsf: 640, aduCpsf: 470, rentPsf: 2.3, adr: 425, occupancy: 0.60 },
+    '98011': { city: 'Bothell', label: 'Bothell — East', newMainCpsf: 580, aduCpsf: 420, rentPsf: 2.2, adr: 350, occupancy: 0.58 },
+    '98012': { city: 'Bothell', label: 'Bothell — West / Mill Creek', newMainCpsf: 560, aduCpsf: 400, rentPsf: 2.1, adr: 325, occupancy: 0.57 },
+    '98021': { city: 'Bothell', label: 'Bothell — Canyon Park', newMainCpsf: 540, aduCpsf: 390, rentPsf: 2.0, adr: 300, occupancy: 0.57 },
 };
 export const FALLBACK_ZIP = { city: 'Custom', label: 'Custom comps', newMainCpsf: 600, aduCpsf: 440, rentPsf: 2.2, adr: 220, occupancy: 0.60 };
 
@@ -292,14 +292,13 @@ export function computeEquity(inputs, totalCost, afterBuildValue, cashInvested, 
 /* ── 8. Exit strategy recommendation ─────────────────────── */
 // STR comps: use top-quartile Kirkland data (AirROI/StaySTRA 2026):
 //   main house 3BR+  $475-825 ADR at 55-65% occ → $80-150K+ gross
-//   ADU 2BR         $300-450 ADR at 55-65% occ → $45-70K+ gross
+//   ADU 2BR boutique $300-450 ADR at 55-65% occ → $45-70K+ gross
 // The tool's earlier flat $250 ADR × 0.62 occ massively understated revenue.
 function unitStrNoi(u, comps, isAdu, a) {
-    // Scale ADR by unit type: ADUs command ~0.7x of main-house ADR.
-    // Main house ADR comes from comps.adr (zip-level, default 250 → but for
-    // a NEW 3,000 sqft main in Kirkland, that's a top-quartile listing).
+    // ADUs in Kirkland are boutique/new and command a PREMIUM per sqft vs older
+    // main homes (top comps $300-450 ADR for 2BR ADUs). Don't discount them.
     const baseAdr = comps.adr;
-    const adr = isAdu ? baseAdr * 0.72 : baseAdr;
+    const adr = isAdu ? baseAdr * 0.95 : baseAdr;
     // Top-quartile occupancy for well-run listings (Kassidy: low STR supply,
     // our ability to make real money → don't model average/mid occupancy).
     const occ = Math.max(comps.occupancy, 0.60);
