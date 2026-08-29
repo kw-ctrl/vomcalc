@@ -51,6 +51,16 @@ export const ZIP_DATA = {
     '98011': { city: 'Bothell', label: 'Bothell — East', newMainCpsf: 580, aduCpsf: 420, rentPsf: 2.2, adr: 350, occupancy: 0.58 },
     '98012': { city: 'Bothell', label: 'Bothell — West / Mill Creek', newMainCpsf: 560, aduCpsf: 400, rentPsf: 2.1, adr: 325, occupancy: 0.57 },
     '98021': { city: 'Bothell', label: 'Bothell — Canyon Park', newMainCpsf: 540, aduCpsf: 390, rentPsf: 2.0, adr: 300, occupancy: 0.57 },
+    // Seattle — Thach's home market (Phase 4: up to 6 units/lot, 1,200 sqft each, separate APNs)
+    '98103': { city: 'Seattle', label: 'Seattle — Fremont / Phinney / Ballard', newMainCpsf: 680, aduCpsf: 520, rentPsf: 2.6, adr: 425, occupancy: 0.60 },
+    '98105': { city: 'Seattle', label: 'Seattle — U District / Ravenna', newMainCpsf: 660, aduCpsf: 500, rentPsf: 2.5, adr: 400, occupancy: 0.60 },
+    '98107': { city: 'Seattle', label: 'Seattle — Ballard', newMainCpsf: 660, aduCpsf: 500, rentPsf: 2.5, adr: 400, occupancy: 0.60 },
+    '98115': { city: 'Seattle', label: 'Seattle — Ravenna / Maple Leaf / Green Lake', newMainCpsf: 650, aduCpsf: 490, rentPsf: 2.4, adr: 390, occupancy: 0.60 },
+    '98118': { city: 'Seattle', label: 'Seattle — Rainier Valley / Seward Park', newMainCpsf: 580, aduCpsf: 430, rentPsf: 2.1, adr: 330, occupancy: 0.58 },
+    '98133': { city: 'Seattle', label: 'Seattle — Northgate / Bitter Lake', newMainCpsf: 560, aduCpsf: 420, rentPsf: 2.0, adr: 320, occupancy: 0.58 },
+    '98136': { city: 'Seattle', label: 'Seattle — West Seattle / Fauntleroy', newMainCpsf: 600, aduCpsf: 450, rentPsf: 2.2, adr: 350, occupancy: 0.58 },
+    '98144': { city: 'Seattle', label: 'Seattle — Mt Baker / Columbia City', newMainCpsf: 590, aduCpsf: 440, rentPsf: 2.2, adr: 340, occupancy: 0.58 },
+    '98177': { city: 'Seattle', label: 'Seattle — Broadview / Blue Ridge', newMainCpsf: 580, aduCpsf: 430, rentPsf: 2.1, adr: 330, occupancy: 0.58 },
 };
 export const FALLBACK_ZIP = { city: 'Custom', label: 'Custom comps', newMainCpsf: 600, aduCpsf: 440, rentPsf: 2.2, adr: 220, occupancy: 0.60 };
 
@@ -63,13 +73,19 @@ export const CONDITIONS = {
 };
 
 /** Default cost/financing assumptions — "default — edit" market estimates. */
+// Thach Nguyen (Seattle $100M ADU investor, EV call 4/9/26):
+//   - ADU build ~$450K per 1,000-1,200 sqft (~$375-450/sqft all-in hard)
+//   - Plans+permits ~$25K per ADU
+//   - 100% construction financing possible with plans/permits in hand
+//   - Lot min 5,000 sqft w/ alley access to back
 export const DEFAULTS = {
-    cpsfNewMain: 350, cpsfDetachedAdu: 315, cpsfAttachedAdu: 285, cpsfGarage: 150,
-    softPct: 0.22, siteWorkBase: 15000, treeCostEach: 2500, demoCost: 30000,
-    sideSewerCost: 20000, downPct: 0.10, constructionRate: 0.085, refiLtv: 0.75,
+    cpsfNewMain: 375, cpsfDetachedAdu: 375, cpsfAttachedAdu: 340, cpsfGarage: 175,
+    softPct: 0.22, siteWorkBase: 20000, treeCostEach: 2500, demoCost: 35000,
+    sideSewerCost: 25000, downPct: 0.10, constructionRate: 0.085, refiLtv: 0.75,
     cashOutThreshold: 0.20, taxesInsPct: 0.014, oppCostPct: 0.05, closingPct: 0.015,
-    strExpensePct: 0.45, ltrOpexPct: 0.30, lotAllowsSecondAduMinSqft: 6500,
+    strExpensePct: 0.45, ltrOpexPct: 0.30, lotAllowsSecondAduMinSqft: 5000,
     newMainSqft: 3000, adu1Sqft: 1200, adu2Sqft: 1200,
+    permitCostPerAdu: 25000, plansCostPerProject: 15000,
 };
 
 /* ── helpers ─────────────────────────────────────────────── */
@@ -200,11 +216,18 @@ export function computeHardCosts(inputs, config, a) {
 /* ── 3. Soft costs ───────────────────────────────────────── */
 export function computeSoftCosts(inputs, hardTotal, a, closingCosts) {
     const lines = [];
-    const permitsArchEng = hardTotal * a.softPct;
+    // Thach: plans+permits ~$25K per ADU (Seattle, EV call 4/9/26) — use explicit
+    // line item when ADUs are in the config; otherwise % of hard as fallback.
+    const aduCount = (inputs.adu1Sqft > 0 ? 1 : 0) + (inputs.adu2Sqft > 0 ? 1 : 0);
+    const permitLine = aduCount > 0
+        ? aduCount * a.permitCostPerAdu + a.plansCostPerProject
+        : hardTotal * a.softPct;
     lines.push({
         label: 'Permits, architect, engineering, impact fees & contingency',
-        detail: `${fmtPct(a.softPct, 0)} of hard costs (20–25% typical)`,
-        amount: permitsArchEng,
+        detail: aduCount > 0
+            ? `${aduCount} ADU(s) × ${fmtMoney(a.permitCostPerAdu)} plans+permits (Thach Seattle estimate) + ${fmtMoney(a.plansCostPerProject)} project plans`
+            : `${fmtPct(a.softPct, 0)} of hard costs (20–25% typical)`,
+        amount: permitLine,
     });
     if (inputs.sideSewerNeeded) {
         lines.push({
@@ -332,6 +355,10 @@ export function computeExitStrategies(inputs, config, comps, totalCost, afterBui
 
     const paths = [
         { id: 'sell', name: 'Sell (flip)', desc: 'Sell all units — whole or condominiumized via unit-lot subdivision', annualNoi: 0, returnLabel: 'Net profit', returnVal: profit, coc: cashInvested > 0 ? profit / cashInvested : 0, kind: 'sell' },
+        // Thach's primary move (EV call 4/9/26): sell the front/main house to clear
+        // the debt, keep the ADU(s) as rental — the ADU cash flows because no debt
+        // is attached to it. Value = sale proceeds - total cost, plus keep ADU NOI.
+        { id: 'sellfront', name: 'Sell front / keep ADU (Thach)', desc: 'Sell the main house to pay off the acquisition debt; keep ADU(s) as rental — the ADU cash flows because it carries no debt', annualNoi: unitNos.filter(u => u.isAdu).reduce((s, u) => s + u.ltrNoi, 0), returnLabel: 'ADU NOI (kept)', returnVal: unitNos.filter(u => u.isAdu).reduce((s, u) => s + u.ltrNoi, 0), coc: cashInvested > 0 ? profit / cashInvested : 0, kind: 'sellfront' },
         { id: 'str', name: 'STR (all units)', desc: 'Short-term rent every unit', annualNoi: strTotal, returnLabel: 'Annual NOI', returnVal: strTotal, coc: cashInvested > 0 ? strTotal / cashInvested : 0, kind: 'rent' },
         { id: 'hybrid', name: 'Hybrid — 1 STR + LTR', desc: bestStr ? `STR the ${bestStr.label.toLowerCase()} (${fmtMoney(Math.round(bestStr.strNoi))}/yr net), LTR the rest` : '', annualNoi: hybridNoi, returnLabel: 'Annual NOI', returnVal: hybridNoi, coc: cashInvested > 0 ? hybridNoi / cashInvested : 0, kind: 'rent' },
         { id: 'ltr', name: 'LTR (all units)', desc: 'Long-term rent every unit', annualNoi: ltrTotal, returnLabel: 'Annual NOI', returnVal: ltrTotal, coc: cashInvested > 0 ? ltrTotal / cashInvested : 0, kind: 'rent' },
@@ -386,6 +413,8 @@ export function runUnderwrite(rawInputs) {
         closingPct: num(inputs.closingPct, DEFAULTS.closingPct) / 100,
         strExpensePct: DEFAULTS.strExpensePct,
         ltrOpexPct: DEFAULTS.ltrOpexPct,
+        permitCostPerAdu: num(inputs.permitCostPerAdu, DEFAULTS.permitCostPerAdu),
+        plansCostPerProject: num(inputs.plansCostPerProject, DEFAULTS.plansCostPerProject),
     };
     inputs.downPct = num(inputs.downPct, DEFAULTS.downPct) / 100;
     inputs.constructionRate = num(inputs.constructionRate, DEFAULTS.constructionRate) / 100;
@@ -424,15 +453,16 @@ export function runUnderwrite(rawInputs) {
 /* Reference sample (used by tests + the page's "Load sample deal" button) */
 export function sampleInputs() {
     return {
-        purchasePrice: 800000, lotSizeSqft: 6000, existingHouseSqft: 1100, yearBuilt: 1975,
+        purchasePrice: 800000, lotSizeSqft: 5000, existingHouseSqft: 1100, yearBuilt: 1975,
         condition: 'light', city: 'Kirkland', zip: '98033',
         maxAduSqftOverride: 0, newMainSqft: 3000, adu1Sqft: 1200, adu2Sqft: 1200,
-        lotAllowsSecondAdu: false, buildSequential: false,
+        lotAllowsSecondAdu: true, buildSequential: false,
         access: 'standard', lotShape: 'wide', treesToRemove: 0,
-        downPct: 20, constructionRate: 8.5, refiLtv: 75, cashOutThreshold: 20,
-        sideSewerNeeded: true, sideSewerCost: 20000,
-        cpsfNewMain: 350, cpsfDetachedAdu: 315, cpsfAttachedAdu: 285, cpsfGarage: 150,
-        softPct: 22, siteWorkBase: 15000, treeCostEach: 2500, demoCost: 30000,
+        downPct: 10, constructionRate: 8.5, refiLtv: 75, cashOutThreshold: 20,
+        sideSewerNeeded: true, sideSewerCost: 25000,
+        cpsfNewMain: 375, cpsfDetachedAdu: 375, cpsfAttachedAdu: 340, cpsfGarage: 175,
+        softPct: 22, siteWorkBase: 20000, treeCostEach: 2500, demoCost: 35000,
         taxesInsPct: 1.4, oppCostPct: 5, closingPct: 1.5,
+        permitCostPerAdu: 25000, plansCostPerProject: 15000,
     };
 }
