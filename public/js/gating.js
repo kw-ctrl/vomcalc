@@ -22,6 +22,17 @@ import {
     updateUserPassword,
 } from './auth.js';
 import { API_BASE_URL } from './config.js';
+import {
+    getAccess,
+    refreshAccess as refreshEntitlements,
+    shouldLock as entitlementsShouldLock,
+    isPremium as entitlementsIsPremium,
+    redeemCode as redeemAccessCode,
+    startCheckout as startStripeCheckout,
+    openBillingPortal as openStripePortal,
+    badge as accessBadge,
+    onChange as onAccessChange,
+} from './entitlements.js';
 
 let currentStatus = 'anonymous';
 let currentSub = { status: 'anonymous' };
@@ -153,16 +164,28 @@ export function isAnonymous() {
 // Blur removed — all content shown without authentication
 export function applyAnonBlur() {}
 
+/**
+ * Called after every render. Locks the premium sections when the server says the
+ * visitor is not entitled (and the gate is enabled); otherwise does nothing.
+ */
+export function applyAccessGate() {
+    applyGating(currentSub);
+}
+
+export { openCodeModal, closeCodeModal };
+
 async function refreshAccess() {
-    console.log('[Gating] refreshAccess called');
-    const authState = await getAuthState();
-    const sub = authState.subscription || { status: 'anonymous' };
-    console.log('[Gating] Subscription status:', sub.status);
+    // Entitlements come from the server (/api/auth/state → effective_access()).
+    const access = await refreshEntitlements();
+    const authState = {
+        user: access.signedIn ? { email: access.email } : null,
+        subscription: { status: access.level },
+    };
     currentAuthState = authState;
-    currentStatus = sub.status;
-    currentSub = sub;
+    currentStatus = access.level;
+    currentSub = authState.subscription;
     billingSummaryCache = null;
-    applyGating(sub);
+    applyGating(authState.subscription);
     updateHeaderAuth(authState);
 }
 
@@ -172,13 +195,30 @@ async function refreshAccess() {
 
 let gateTriggered = false;
 
-// All gating removed — full access for all users
+/**
+ * The paid gate is SERVER-DRIVEN and off by default: while the server reports
+ * gateEnabled = false the tool stays free for everyone (today's behaviour).
+ * When it is on, non-premium visitors get the full results blurred behind an
+ * upgrade / redeem-code overlay.
+ */
 function applyGating(sub) {
+    const locked = entitlementsShouldLock();
     const resultsArea = document.getElementById('resultsArea');
-    if (resultsArea) resultsArea.classList.remove('is-gated');
     const overlay = document.getElementById('gateOverlay');
-    if (overlay) overlay.classList.add('hidden');
-    gateTriggered = false;
+
+    if (!locked) {
+        if (resultsArea) resultsArea.classList.remove('is-gated');
+        if (overlay) { overlay.classList.add('hidden'); overlay.innerHTML = ''; }
+        gateTriggered = false;
+        return;
+    }
+
+    if (resultsArea) resultsArea.classList.add('is-gated');
+    if (overlay) {
+        overlay.classList.remove('hidden');
+        renderOverlay(sub);
+    }
+    gateTriggered = true;
 }
 
 function renderOverlay(sub) {
@@ -192,34 +232,94 @@ function renderOverlay(sub) {
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/>
                 </svg>
             </div>
-            <h3 class="text-xl font-bold text-white mt-3">Your free trial has ended</h3>
-            <p class="text-sm text-gray-400 mt-1 max-w-md">Subscribe to unlock the full underwriting analysis — buy box, scenarios, pro forma, sensitivity, and more.</p>
+            <h3 class="text-xl font-bold text-white mt-3">Your free access has ended</h3>
+            <p class="text-sm text-gray-400 mt-1 max-w-md">Subscribe to keep the full underwriting analysis — buy box, scenarios, pro forma, sensitivity, and deal improvement levers.</p>
             <div class="flex gap-3 mt-5">
-                <button id="gateViewPlans" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">View Plans</button>
+                <button id="gateViewPlans" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">See Plans</button>
                 <button id="gateSignOut" class="px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white transition">Sign Out</button>
             </div>
+            ${codeRedeemMarkup('Have another code?')}
         `;
         overlay.querySelector('#gateViewPlans')?.addEventListener('click', () => openModal('pricingModal'));
         overlay.querySelector('#gateSignOut')?.addEventListener('click', handleSignOut);
+        wireCodeRedeem(overlay);
     } else {
-        // Anonymous
+        // Anonymous or free tier
+        const signedIn = !!currentAuthState?.user;
         overlay.innerHTML = `
             <div class="gate-icon">
                 <svg class="w-8 h-8 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M13 10V3L4 14h7v7l9-11h-7z"/>
                 </svg>
             </div>
-            <h3 class="text-xl font-bold text-white mt-3">Create a free account to see results</h3>
-            <p class="text-sm text-gray-400 mt-1 max-w-md">Free access to the full analysis — buy box pricing, scenario comparisons, pro forma, sensitivity analysis, and deal improvement levers.</p>
-            <p class="text-xs text-gray-500 mt-1">No credit card. No trial. Just free.</p>
+            <h3 class="text-xl font-bold text-white mt-3">${signedIn ? 'Unlock the full report' : 'Sign in to see the full report'}</h3>
+            <p class="text-sm text-gray-400 mt-1 max-w-md">The Velocity Score is free. The full analysis — buy box pricing, scenario comparisons, pro forma, sensitivity, and deal improvement levers — is part of the paid plan.</p>
+            <p class="text-xs text-gray-500 mt-1">Got a code from YouTube or Instagram? It's free for 2 weeks.</p>
             <div class="flex gap-3 mt-5">
-                <button id="gateSignUp" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">Create Free Account</button>
-                <button id="gateSignIn" class="px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white transition">Sign In</button>
+                ${signedIn
+                    ? `<button id="gateViewPlans" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">See Plans</button>
+                       <button id="gateSignOut" class="px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white transition">Sign Out</button>`
+                    : `<button id="gateSignUp" class="px-6 py-2.5 text-sm font-semibold rounded-lg bg-white text-black hover:bg-gray-200 transition">Create Free Account</button>
+                       <button id="gateSignIn" class="px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-gray-400 hover:text-white transition">Sign In</button>`}
             </div>
+            ${codeRedeemMarkup('Or enter your code')}
         `;
+        overlay.querySelector('#gateViewPlans')?.addEventListener('click', () => openModal('pricingModal'));
+        overlay.querySelector('#gateSignOut')?.addEventListener('click', handleSignOut);
         overlay.querySelector('#gateSignUp')?.addEventListener('click', () => openModal('authModal'));
         overlay.querySelector('#gateSignIn')?.addEventListener('click', () => openModal('authModal'));
+        wireCodeRedeem(overlay);
     }
+}
+
+/** Shared markup for redeeming a code, used by the gate overlay and its own modal. */
+function codeRedeemMarkup(label = 'Have a code?') {
+    return `
+        <div class="mt-5 w-full max-w-sm">
+            <p class="text-xs text-gray-500 mb-1.5">${label}</p>
+            <div class="flex gap-2">
+                <input id="codeInput" type="text" placeholder="YOUR-CODE"
+                       class="flex-1 px-3 py-2 text-sm rounded-lg bg-surface border border-surface-border text-white placeholder-gray-600 focus:outline-none focus:border-gray-500 uppercase tracking-wide"
+                       style="background:#141414;border:1px solid #2a2a2a">
+                <button id="codeSubmit" class="px-4 py-2 text-sm font-semibold rounded-lg bg-surface-light border border-surface-border text-white hover:border-gray-500 transition">Redeem</button>
+            </div>
+            <p id="codeMsg" class="text-xs mt-2"></p>
+        </div>
+    `;
+}
+
+function wireCodeRedeem(root) {
+    const input = root.querySelector('#codeInput');
+    const btn = root.querySelector('#codeSubmit');
+    const msg = root.querySelector('#codeMsg');
+    if (!input || !btn) return;
+
+    const submit = async () => {
+        const code = input.value.trim();
+        if (!code) return;
+        btn.disabled = true;
+        const original = btn.textContent;
+        btn.textContent = 'Checking...';
+        if (msg) { msg.textContent = ''; msg.style.color = ''; }
+
+        if (!currentAuthState?.user) {
+            if (msg) { msg.style.color = '#f59e0b'; msg.textContent = 'Create a free account first — takes 10 seconds — then enter your code.'; }
+            openModal('authModal');
+            btn.disabled = false; btn.textContent = original;
+            return;
+        }
+
+        const result = await redeemAccessCode(code);
+        if (msg) {
+            msg.style.color = result.ok ? '#34d399' : '#f87171';
+            msg.textContent = result.message || (result.ok ? 'Code applied.' : 'That code did not work.');
+        }
+        btn.disabled = false; btn.textContent = original;
+        if (result.ok) { await refreshAccess(); applyGating(currentSub); }
+    };
+
+    btn.addEventListener('click', submit);
+    input.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); submit(); } });
 }
 
 // ════════════════════════════════════════════════
@@ -240,14 +340,15 @@ async function updateHeaderAuth(authState) {
     }
 
     isHeaderMenuOpen = false;
-    let badge = '';
-    if (sub.status === 'trialing' && sub.trialEndsAt) {
-        const msRemaining = sub.trialEndsAt - new Date();
-        const days = Math.max(1, Math.ceil(msRemaining / (1000 * 60 * 60 * 24)));
-        badge = `<span class="text-xs px-2.5 py-1 rounded-full bg-blue-600/15 text-blue-300 border border-blue-500/20 font-medium">Trial: ${days}d left</span>`;
-    } else if (sub.status === 'expired') {
-        badge = '<span class="text-xs px-2.5 py-1 rounded-full bg-red-600/15 text-red-300 border border-red-500/20 font-medium">Expired</span>';
-    }
+    const b = accessBadge();
+    const tone = {
+        gold: 'bg-amber-500/15 text-amber-300 border-amber-500/25',
+        green: 'bg-emerald-600/15 text-emerald-400 border-emerald-500/20',
+        blue: 'bg-blue-600/15 text-blue-300 border-blue-500/20',
+        amber: 'bg-amber-600/15 text-amber-300 border-amber-500/20',
+        neutral: 'bg-white/5 text-gray-300 border-white/10',
+    }[b.tone] || 'bg-white/5 text-gray-300 border-white/10';
+    let badge = `<span class="text-xs px-2.5 py-1 rounded-full border font-medium ${tone}">${b.text}</span>`;
 
     container.innerHTML = `
         <div id="headerMenuRoot" class="relative flex items-center gap-3">
@@ -273,6 +374,7 @@ async function updateHeaderAuth(authState) {
                 </div>
                 <div class="p-2">
                     <button type="button" id="menuPastReports" class="menu-action-button">My Deals</button>
+                    <button type="button" id="menuRedeemCode" class="menu-action-button">Redeem a Code</button>
                     <button type="button" id="menuSubscription" class="menu-action-button">Subscription</button>
                     <div class="my-2 border-t border-surface-border"></div>
                     <button type="button" id="menuSignOut" class="menu-action-button menu-action-button-danger">Sign Out</button>
@@ -288,6 +390,10 @@ async function updateHeaderAuth(authState) {
     container.querySelector('#menuPastReports')?.addEventListener('click', () => {
         closeHeaderMenu();
         if (typeof openMyDeals === 'function') openMyDeals();
+    });
+    container.querySelector('#menuRedeemCode')?.addEventListener('click', () => {
+        closeHeaderMenu();
+        openCodeModal();
     });
     container.querySelector('#menuSubscription')?.addEventListener('click', () => {
         closeHeaderMenu();
@@ -1070,42 +1176,45 @@ async function handleCheckout(plan) {
     }
 
     try {
-        const session = await getBrowserSession();
-        if (!session?.access_token) {
-            throw new Error('No active session');
-        }
-
-        const baseUrl = API_BASE_URL ? API_BASE_URL.replace(/\/$/, '') : '';
-        const res = await fetch(`${baseUrl}/billing/checkout`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${session.access_token}`,
-            },
-            body: JSON.stringify({
-                plan,
-                returnUrl: window.location.href,
-            }),
-        });
-
-        const data = await res.json();
-        if (data.url) {
-            window.location.href = data.url;
-        } else {
-            alert(data.error || 'Failed to start checkout. Please try again.');
-            if (btn) {
-                btn.disabled = false;
-                btn.textContent = origText;
-            }
-        }
+        const result = await startStripeCheckout(plan);
+        if (result.ok) return;   // navigating to Stripe
+        alert(result.message || 'Failed to start checkout. Please try again.');
     } catch (err) {
         console.error('[Checkout] Error:', err);
         alert('Connection error. Please try again.');
-        if (btn) {
-            btn.disabled = false;
-            btn.textContent = origText;
-        }
     }
+    if (btn) {
+        btn.disabled = false;
+        btn.textContent = origText;
+    }
+}
+
+/** Self-contained "redeem a code" modal — works whether or not the gate is showing. */
+function openCodeModal() {
+    let modal = document.getElementById('codeModal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'codeModal';
+        modal.style.cssText = 'position:fixed;inset:0;z-index:80;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.75);backdrop-filter:blur(4px)';
+        modal.innerHTML = `
+            <div style="background:#141414;border:1px solid #2a2a2a;border-radius:14px;padding:26px;width:min(420px,92vw);text-align:center">
+                <button id="codeClose" style="float:right;background:none;border:none;color:#6b7280;font-size:20px;cursor:pointer;line-height:1">&times;</button>
+                <h3 style="color:#fff;font-size:17px;font-weight:700;margin-bottom:6px">Redeem a Code</h3>
+                <p style="color:#9ca3af;font-size:13px;margin-bottom:16px">Codes from YouTube, Instagram or the Escape Velocity community unlock free access.</p>
+                ${codeRedeemMarkup('Your code')}
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.addEventListener('click', (e) => { if (e.target === modal) closeCodeModal(); });
+        modal.querySelector('#codeClose')?.addEventListener('click', closeCodeModal);
+        wireCodeRedeem(modal);
+    }
+    modal.style.display = 'flex';
+}
+
+function closeCodeModal() {
+    const modal = document.getElementById('codeModal');
+    if (modal) modal.style.display = 'none';
 }
 
 function showSaveNudge() {

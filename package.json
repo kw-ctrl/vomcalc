@@ -2,6 +2,11 @@
   "name": "vomcalc",
   "version": "1.0.0",
   "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bash supabase/tests/run.sh",
+    "test:logic": "node supabase/tests/access.test.mjs"
+  },
   "dependencies": {
     "pg": "^8.11.0"
   }

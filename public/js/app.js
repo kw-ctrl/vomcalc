@@ -19,7 +19,7 @@ import {
 import { solveBuyBoxPrices, buildScenarios, calculateDealLevers } from './scenarios.js';
 import { renderResults } from './rendering.js';
 import { calculateRemainingBalance } from './utils.js';
-import { initGating, checkAccess, persistLatestReport, applyAnonBlur, openModal, setAuthMode } from './gating.js';
+import { initGating, checkAccess, persistLatestReport, applyAnonBlur, applyAccessGate, openCodeModal, openModal, setAuthMode } from './gating.js';
 import { API_BASE_URL } from './config.js';
 import { getBrowserSession } from './auth.js';
 
@@ -508,6 +508,9 @@ function _runCalculation({ scroll = true } = {}) {
 
     // Apply blur for anonymous users after render
     applyAnonBlur();
+
+    // Server-driven access gate (no-op unless the paid gate is switched on)
+    applyAccessGate();
 }
 
 // ════════════════════════════════════════════════
@@ -1909,6 +1912,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth & gating
     initGating();
+
+    // Deep links for code hand-outs: /app?code=YOUTUBE14 or /app#redeem
+    // (used from YouTube descriptions and IG DMs so the field is already filled in)
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const deepCode = params.get('code');
+        const wantsRedeem = params.has('redeem') || window.location.hash === '#redeem';
+        if (deepCode || wantsRedeem) {
+            setTimeout(() => {
+                openCodeModal();
+                const field = document.getElementById('codeInput');
+                if (field && deepCode) {
+                    field.value = String(deepCode).toUpperCase();
+                    field.focus();
+                }
+                // Clean the URL so a refresh doesn't reopen the modal
+                if (window.history?.replaceState) {
+                    history.replaceState(null, '', window.location.pathname);
+                }
+            }, 600);
+        }
+    } catch { /* deep-link handling must never break the page */ }
 });
 
 // ── Renovation Budget ─────────────────────────────────────────────────────────
@@ -2846,4 +2871,7 @@ Object.assign(window, {
   // Referenced by inline onclick in the generated deals list
   deleteDeal,
   saveVariantOf,
+  // Accounts / access
+  openCodeModal,
+  applyAccessGate,
 });
