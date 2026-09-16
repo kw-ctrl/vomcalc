@@ -18,7 +18,12 @@ export const config = { api: { bodyParser: false }, maxDuration: 20 };
  */
 async function upsertAccount(userId, patch) {
   if (!userId) return false;
-  const body = { ...patch, updated_at: new Date().toISOString() };
+
+  // Normalise the email OUTSIDE the spread: a subscription event often has no email, and
+  // spreading a null over the column's NOT NULL constraint silently kills the insert —
+  // leaving a paying customer with no access while the webhook still reports success.
+  const email = String(patch.email || '').toLowerCase();
+  const body = { ...patch, email, updated_at: new Date().toISOString() };
 
   const r = await sb(`/rest/v1/accounts?user_id=eq.${userId}`, {
     method: 'PATCH', prefer: 'return=representation', body,
@@ -28,11 +33,10 @@ async function upsertAccount(userId, patch) {
   const ins = await sb('/rest/v1/accounts', {
     method: 'POST',
     prefer: 'resolution=merge-duplicates,return=representation',
-    body: { user_id: userId, email: String(patch.email || '').toLowerCase(), ...body },
+    body: { user_id: userId, ...body },
   });
   if (!ins.ok) {
-    console.error('[webhook] account upsert failed', ins.status, ins.data);
-    return false;
+    throw new Error(`account upsert failed: ${ins.status} ${JSON.stringify(ins.data)}`);
   }
   return true;
 }
@@ -51,6 +55,8 @@ function periodEnd(sub) {
 }
 
 async function findUserIdFor({ userId, customerId, email }) {
+  // Returns null when an event cannot be tied to an account (no metadata, unknown customer).
+  // Callers must not treat that as success-with-nothing-to-do silently.
   if (userId) return userId;
   if (customerId) {
     const r = await sb(`/rest/v1/accounts?stripe_customer_id=eq.${encodeURIComponent(customerId)}&select=user_id`);
