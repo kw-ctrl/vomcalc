@@ -78,6 +78,37 @@ ANNUAL_ID="$(price_for "$ANNUAL_AMOUNT" year)"
 say "monthly: $MONTHLY_ID  (\$$(echo "scale=2; $MONTHLY_AMOUNT/100" | bc)/mo)"
 say "annual:  $ANNUAL_ID  (\$$(echo "scale=2; $ANNUAL_AMOUNT/100" | bc)/yr)"
 
+# ── 2b. Escape Velocity membership — a DELIBERATELY separate product ─────────
+# EV is a community membership (permanent `ev_member` access), not a tool subscription.
+# Separate products keep "cancel" unambiguous: cancelling a $20 tool subscription must never
+# revoke a lifetime community membership, and they land in different code paths in the
+# webhook. The webhook also accepts metadata.tier=ev, so the payment link works even if this
+# price id is never stored.
+EV_PRODUCT_NAME="${EV_PRODUCT_NAME:-Escape Velocity — Membership}"
+EV_AMOUNT="${EV_AMOUNT:-800000}"        # cents — $8,000.00
+EV_INTERVAL="${EV_INTERVAL:-one_time}"  # one_time | month | year
+
+EV_PRODUCT_ID="$(sget "/products?limit=100" | jq -r --arg n "$EV_PRODUCT_NAME" '.data[] | select(.name==$n) | .id' | head -1)"
+if [ -z "$EV_PRODUCT_ID" ]; then
+  say "creating product"
+  EV_PRODUCT_ID="$(spost /products -d "name=$EV_PRODUCT_NAME" -d 'description=Escape Velocity community membership' | jq -r '.id // empty')"
+  [ -n "$EV_PRODUCT_ID" ] || { echo "✗ EV product creation failed" >&2; exit 1; }
+fi
+say "EV product: $EV_PRODUCT_ID"
+
+EV_PRICE_ID="$(sget "/prices?limit=100&product=$EV_PRODUCT_ID&active=true" | jq -r --arg a "$EV_AMOUNT" --arg i "$EV_INTERVAL" '
+  .data[] | select(.unit_amount == ($a|tonumber))
+  | if $i == "one_time" then (select(.recurring == null) | .id) else (select(.recurring.interval == $i) | .id) end' | head -1)"
+if [ -z "$EV_PRICE_ID" ]; then
+  if [ "$EV_INTERVAL" = "one_time" ]; then
+    EV_PRICE_ID="$(spost /prices -d "product=$EV_PRODUCT_ID" -d "unit_amount=$EV_AMOUNT" -d 'currency=usd' | jq -r '.id // empty')"
+  else
+    EV_PRICE_ID="$(spost /prices -d "product=$EV_PRODUCT_ID" -d "unit_amount=$EV_AMOUNT" -d 'currency=usd' -d "recurring[interval]=$EV_INTERVAL" | jq -r '.id // empty')"
+  fi
+fi
+[ -n "$EV_PRICE_ID" ] || { echo "✗ EV price creation failed" >&2; exit 1; }
+say "EV:       $EV_PRICE_ID  (\$$(echo "scale=2; $EV_AMOUNT/100" | bc), $EV_INTERVAL)"
+
 # ── 3. webhook endpoint ──────────────────────────────────────────────────────
 WEBHOOK_URL="$APP_URL/api/billing/webhook"
 EVENTS=(checkout.session.completed customer.subscription.created customer.subscription.updated customer.subscription.deleted invoice.payment_failed)
@@ -121,12 +152,13 @@ set_env() {
 set_env STRIPE_SECRET_KEY "$KEY"
 set_env STRIPE_MONTHLY_PRICE_ID "$MONTHLY_ID"
 set_env STRIPE_ANNUAL_PRICE_ID "$ANNUAL_ID"
+set_env STRIPE_EV_PRICE_ID "$EV_PRICE_ID"
 set_env STRIPE_WEBHOOK_SECRET "$WH_SECRET"
 
 # ── 5. local env (so re-runs reuse the same ids/secret) ──────────────────────
 ENV_FILE="$HOME/.hermes/vomcalc_env"
 touch "$ENV_FILE"; chmod 600 "$ENV_FILE"
-for kv in "STRIPE_SECRET_KEY=$KEY" "STRIPE_MONTHLY_PRICE_ID=$MONTHLY_ID" "STRIPE_ANNUAL_PRICE_ID=$ANNUAL_ID" "STRIPE_WEBHOOK_SECRET=$WH_SECRET"; do
+for kv in "STRIPE_SECRET_KEY=$KEY" "STRIPE_MONTHLY_PRICE_ID=$MONTHLY_ID" "STRIPE_ANNUAL_PRICE_ID=$ANNUAL_ID" "STRIPE_EV_PRICE_ID=$EV_PRICE_ID" "STRIPE_WEBHOOK_SECRET=$WH_SECRET"; do
   k="${kv%%=*}"
   grep -v "^$k=" "$ENV_FILE" > "$ENV_FILE.tmp" 2>/dev/null || true
   mv "$ENV_FILE.tmp" "$ENV_FILE"
@@ -165,11 +197,17 @@ Still to do:
        open $APP_URL/app, sign in, "See Plans", then at Stripe checkout enter promo
        code SEVEN-E2E-TEST — completes for \$0 and should flip the account to paid.
        (Re-run with ADD_TEST_COUPON=1 first if you skipped it; delete the coupon after.)
-  2. Flip the paid gate when the landing copy is updated:
+  2. Escape Velocity: create the payment link and TAG IT.
+       Stripe → Payment links → New → product "$EV_PRODUCT_NAME" → after saving, set
+       Metadata  tier = ev
+       That metadata is what tells the webhook this is a membership, not a tool
+       subscription. Without it the buyer pays and gets nothing.
+       Verify any time with:  node scripts/ev-onboarding-test.mjs
+  3. Flip the paid gate when the landing copy is updated:
        vercel env rm VOM_GATE_ENABLED production --yes
        printf 'true' | vercel env add VOM_GATE_ENABLED production
        vercel --prod --yes
-  3. Google SSO: OAuth client (Web application) with redirect URI
+  4. Google SSO: OAuth client (Web application) with redirect URI
        ${SUPABASE_URL:-https://luaqzmyvgliljtiecojg.supabase.co}/auth/v1/callback
 ────────────────────────────────────────────────────────────────────────────
 EOF

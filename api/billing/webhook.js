@@ -1,12 +1,66 @@
 /**
  * POST /api/billing/webhook — Stripe → account state.
  * Signature is verified against the raw body; unverified calls are rejected.
+ *
+ * Two products land here and they are NOT the same thing:
+ *   • VomCalc subscription ($20/mo, $150/yr) — a TOOL subscription. Grants level `paid`,
+ *     which ends when the subscription does.
+ *   • Escape Velocity membership — a COMMUNITY membership. Grants level `ev_member`, which
+ *     is permanent and unlocks the courses, the resource library and the partner directory.
+ * The discriminator is `metadata.tier = 'ev'` on the checkout session (and the EV price id as
+ * a backstop), never the amount — an amount comparison breaks the first time a discount,
+ * currency or price change is introduced.
  */
 import { sb, configured, logEvent, json } from '../_shared/access.js';
 import { verifyWebhook, readRawBody, stripePost } from '../_shared/stripe.js';
 
 // Stripe signs the exact bytes — do not let anything parse the body first.
 export const config = { api: { bodyParser: false }, maxDuration: 20 };
+
+const EV_PRICE_ID = process.env.STRIPE_EV_PRICE_ID || '';
+
+/** Is this checkout/subscription an Escape Velocity purchase? */
+function isEv(obj) {
+  const tier = String(obj?.metadata?.tier || obj?.metadata?.product || '').toLowerCase();
+  if (tier === 'ev' || tier === 'ev_member' || tier === 'escape-velocity' || tier === 'escape_velocity') return true;
+  if (!EV_PRICE_ID) return false;
+  return (obj?.items?.data || []).some((i) => i?.price?.id === EV_PRICE_ID);
+}
+
+/**
+ * Grant Escape Velocity. Writes BOTH places on purpose:
+ *
+ *   • `ev_member_emails` is the durable grant. Someone who buys from a payment link may not
+ *     have an account yet (or may sign up later with the same email) — the allowlist is what
+ *     makes `effective_access()` return ev_member the moment they sign in, with no second step.
+ *   • `accounts.base_level` covers the buyer who is already signed in.
+ *
+ * Idempotent: Stripe retries, and this gets replayed.
+ */
+async function grantEv({ userId, email, source }) {
+  const clean = String(email || '').trim().toLowerCase();
+  if (!clean && !userId) return false;
+
+  if (clean) {
+    const r = await sb('/rest/v1/ev_member_emails', {
+      method: 'POST',
+      prefer: 'resolution=merge-duplicates,return=representation',
+      body: { email: clean, note: source || 'stripe' },
+    });
+    if (!r.ok) throw new Error(`EV allowlist write failed: ${r.status} ${JSON.stringify(r.data)}`);
+  }
+
+  if (userId) {
+    const a = await sb(`/rest/v1/accounts?user_id=eq.${userId}`, {
+      method: 'PATCH',
+      prefer: 'return=representation',
+      body: { base_level: 'ev_member', updated_at: new Date().toISOString() },
+    });
+    if (!a.ok) throw new Error(`EV account grant failed: ${a.status} ${JSON.stringify(a.data)}`);
+  }
+
+  return true;
+}
 
 /**
  * Write subscription state onto the user's access record.
@@ -85,11 +139,36 @@ export default async function handler(req, res) {
   try {
     switch (event.type) {
       case 'checkout.session.completed': {
+        const email = obj.customer_details?.email || obj.customer_email || obj.metadata?.email || null;
         const userId = await findUserIdFor({
           userId: obj.client_reference_id || obj.metadata?.user_id,
           customerId: obj.customer,
-          email: obj.customer_details?.email || obj.customer_email,
+          email,
         });
+
+        // ── Escape Velocity is a membership, not a tool subscription ────────────
+        // This runs BEFORE the `if (!userId) break` guard below, and that ordering is the
+        // whole point: someone buying from a Stripe payment link usually has no account in
+        // our database yet, so the guard would hand a paying member nothing at all and the
+        // webhook would still report success.
+        if (isEv(obj)) {
+          await grantEv({ userId, email, source: `stripe:${obj.id || 'checkout'}` });
+          if (userId) {
+            await upsertAccount(userId, {
+              email,
+              stripe_customer_id: obj.customer || null,
+              stripe_subscription_id: obj.subscription || null,
+              subscription_status: 'active',
+              plan: 'ev',
+            });
+          }
+          await logEvent('ev_activated', {
+            userId, email,
+            props: { session: obj.id, mode: obj.mode, amountTotal: obj.amount_total },
+          });
+          break;
+        }
+
         if (!userId) break;
 
         // Pull the subscription so we store a real status + period end.

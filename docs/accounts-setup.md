@@ -84,13 +84,69 @@ field arrives pre-filled.
 
 ## 4. Still to do
 
-**Stripe (billing).** Needs a live key — the one in the repo expired and was test-mode anyway.
-Create the two prices, then re-run provisioning with `STRIPE_SECRET_KEY`,
-`STRIPE_MONTHLY_PRICE_ID`, `STRIPE_ANNUAL_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`. Webhook:
-`https://www.vomcalc.com/api/billing/webhook` with `checkout.session.completed`,
-`customer.subscription.*`, `invoice.payment_failed`.
+**Stripe (billing).** Blocker is only the key — the one in the repo expired and was test-mode
+anyway. Then `bash scripts/stripe-setup.sh` creates **both** products (VomCalc monthly/annual
+AND the Escape Velocity membership), the webhook endpoint, and pushes every id to Vercel.
 
 **A price.** Not chosen yet.
+
+---
+
+## 4b. Escape Velocity onboarding — Stripe payment → access
+
+Two different things land in the same webhook and they are not interchangeable:
+
+| | VomCalc subscription | Escape Velocity |
+|---|---|---|
+| What it is | a tool subscription | a community membership |
+| Grants | `paid` (ends with the subscription) | `ev_member` (permanent) |
+| Cancelling it | revokes premium at period end | **never** auto-revokes (see below) |
+
+**The chain**
+
+1. Buyer pays on a Stripe **payment link** that carries `metadata.tier = ev`.
+2. `checkout.session.completed` hits `/api/billing/webhook`.
+3. The EV branch calls `grantEv()` **before** the `if (!userId) break` guard — a payment-link
+   buyer has no account yet, so that guard would hand a paying member nothing while the
+   webhook still reported success.
+4. `grantEv()` writes two places: `ev_member_emails` (durable — makes them `ev_member` the
+   moment they sign up with the email they paid with, order no longer matters) and
+   `accounts.base_level` (when they were already signed in).
+5. `effective_access()` then returns `ev_member` everywhere: courses, resource library,
+   partner directory and the full tool.
+
+**The bug this uncovered (fixed 16 Sep, migration `0004_accounts_on_signup.sql`)**
+
+`effective_access()` loads the `accounts` row first and returned `free` / "no account record"
+before it ever consulted the allowlist. Accounts rows were only created lazily, so anyone who
+had just signed up had none — meaning **the EV allowlist and the Stripe EV grant both silently
+failed for anyone who had not already transacted**. Proven against production before the fix
+(a fresh signup resolved to `{"level":"free","reason":"no account record"}` with the address
+sitting in `ev_member_emails`). 0004 adds an `auth.users` trigger that creates the access row
+on signup, plus a backfill. Applied to production and verified.
+
+**Still manual — the last mile**
+
+Paying grants portal access; it does **not** put anyone in the Google Drive folders. Those are
+shared user-by-user (~38 members), with no link sharing, so a member who is not on the share
+gets "You need access" on every resource link. Today that is a manual step. It is automatable:
+read new `ev_member_emails` rows and `permissions.create` (role `reader`) on the EV folder
+tree with kw@'s Drive token, tracked in a state file so it is idempotent. Worth building —
+otherwise the welcome email links to resources the member cannot open.
+
+**Not auto-revoked, on purpose.** Cancelling an EV subscription does not strip the allowlist
+row: a manual grant and a Stripe grant look identical in that table, so an automatic revoke
+would silently remove a member Kassidy added by hand. Revoking an EV membership is a
+deliberate manual action until the grant records its origin separately.
+
+**Verify it any time (no Stripe key needed, hits the real database with the real handler):**
+
+```bash
+node scripts/ev-onboarding-test.mjs    # 12 assertions — EV grant, replay, and the control
+                                       # that a $20 tool subscription is NOT mistaken for EV
+```
+
+---
 
 **Google SSO — DONE.** OAuth client created and wired into Supabase. Verified by starting the real
 authorize handshake: Google returns its sign-in page rather than `redirect_uri_mismatch`, so the

@@ -66,8 +66,11 @@ export function parseListingUrl(input) {
   const parts = url.pathname.split('/').filter(Boolean).map((p) => decodeURIComponent(p));
   if (!parts.length) return null;
 
+  const isUSState = (t) => US_STATES.has(String(t || '').toUpperCase());
+  const isNum = (t) => /^\d+$/.test(String(t || ''));
+
   // ── Redfin: /<STATE>/<City>/<street-and-zip>/home/<id> ────────────────────
-  // The path is structured, so street/city/state/zip are all unambiguous.
+  // Structured path, so street/city/state/zip are all unambiguous.
   if (/redfin\.com$/.test(host)) {
     const homeIdx = parts.findIndex((p) => p === 'home' || p === 'apartment');
     const head = homeIdx > 0 ? parts.slice(0, homeIdx) : parts;
@@ -84,42 +87,77 @@ export function parseListingUrl(input) {
     }
   }
 
-  // ── Zillow: /homedetails/12000-NE-80th-St-Kirkland-WA-98033/123_zpid/ ──────
-  // Address, city, state and zip are all in ONE dash-joined slug, so the street/city
-  // boundary is ambiguous. We don't need to resolve it: passing the whole thing to the
-  // estimator (which geocodes) works, and state+zip come out cleanly for display.
-  const slugPart = parts.find((p) => /\d{5}(?:-\d{4})?$/.test(p)) || '';
-  if (/(zillow|trulia)\.com$/.test(host) && slugPart) {
-    const { zip } = splitStreetAndZip(slugPart);
-    const tokens = slugPart.split(/[-_]+/).filter(Boolean);
-    // walk back from the end: zip, then 2-letter state
-    const tail = tokens.slice();
-    if (zip) tail.pop();
-    const state = (tail[tail.length - 1] || '').toUpperCase();
-    if (US_STATES.has(state) && tail.length >= 3) {
-      tail.pop(); // drop state
-      const flat = tail.join(' ');
-      // Trim a trailing unit marker ("Unit 2") so the geocoder sees the building.
-      const cleaned = flat.replace(/\s+(unit|apt|apartment|#)\s*\w+$/i, '').trim();
-      return {
-        address: `${titleCaseAddress(cleaned)}, ${state}${zip ? ' ' + zip : ''}`,
-        street: null, city: null, state, zip, source: 'zillow-url', confident: false,
-      };
+  // ── Crexi: /properties/<id>/<state>-<city>-<street...> ────────────────────
+  // State comes FIRST here (unlike Zillow), so this is fully recoverable: the street
+  // starts at the house number, everything between state and that number is the city.
+  if (/crexi\.com$/.test(host)) {
+    const slug = parts.find((p) => /^[a-z]{2}-/i.test(p) && isUSState(p.slice(0, 2)));
+    if (slug) {
+      const tokens = slug.split(/[-_]+/).filter(Boolean);
+      const state = tokens[0].toUpperCase();
+      const numIdx = tokens.findIndex((t, i) => i > 0 && isNum(t));
+      if (isUSState(state) && numIdx > 1) {
+        const city = titleCaseAddress(tokens.slice(1, numIdx).join(' '));
+        const street = titleCaseAddress(tokens.slice(numIdx).join(' '));
+        if (street) {
+          return {
+            address: `${street}, ${city}, ${state}`,
+            street, city, state, zip: null, source: 'crexi-url', confident: true,
+          };
+        }
+      }
     }
   }
 
-  // ── Generic /address/<slug>/ layouts (crexi, loopnet, realtor, etc.) ──────
-  const addrIdx = parts.findIndex((p) => /^(address|homedetails|property)$/.test(p));
-  const generic = addrIdx >= 0 ? parts[addrIdx + 1] : parts.find((p) => /\d/.test(p) && /-/.test(p));
+  // ── Zillow / Trulia / LoopNet / CoStar: one dash-joined slug, state near the end ──
+  // Where the street ends and the city begins is ambiguous in these slugs, and resolving it
+  // isn't necessary: the estimator geocodes, so passing the whole "<street> <city>, <ST> <zip>"
+  // string resolves correctly. State and zip still come out cleanly for display.
+  const zipSlug = parts.find((p) => /\d{5}(?:-\d{4})?$/.test(p));
+  const tailSlug = zipSlug || parts.slice().reverse().find((p) => /-[a-z]{2}(-\d{5})?$/i.test(p));
+  const slug = zipSlug || tailSlug || '';
+  if (slug && /(zillow|trulia|loopnet|costar|realtor|movoto|har)\.com$/.test(host)) {
+    const { zip } = splitStreetAndZip(slug);
+    const tokens = slug.split(/[-_]+/).filter(Boolean);
+    const tail = tokens.slice();
+    if (zip && isNum(tail[tail.length - 1])) tail.pop();           // drop the zip
+    const state = (tail[tail.length - 1] || '').toUpperCase();
+    if (isUSState(state) && tail.length >= 3) {
+      tail.pop();                                                  // drop the state
+      const flat = tail.join(' ').replace(/\s+(unit|ste|suite|apt|apartment|#)\s*\w+/gi, '').trim();
+      if (flat) {
+        return {
+          address: `${titleCaseAddress(flat)}, ${state}${zip ? ' ' + zip : ''}`,
+          street: null, city: null, state, zip, source: `${host.split('.')[0]}-url`, confident: !zip ? false : false,
+        };
+      }
+    }
+  }
+
+  // ── Generic: /address/<slug>/ or any dashed slug carrying a state ──────────
+  const addrIdx = parts.findIndex((p) => /^(address|homedetails|property|properties|listing|Listing)$/.test(p));
+  const generic = (addrIdx >= 0 ? parts[addrIdx + 1] : null) || parts.find((p) => /\d/.test(p) && /-/.test(p) && p.length > 6);
   if (generic) {
     const { street, zip } = splitStreetAndZip(generic);
     const tokens = street.split(' ').filter(Boolean);
-    const state = (tokens[tokens.length - 1] || '').toUpperCase();
-    if (US_STATES.has(state) && tokens.length >= 4) {
+    // state-last ("...-Seattle-WA")
+    if (isUSState(tokens[tokens.length - 1]) && tokens.length >= 4) {
+      const state = tokens[tokens.length - 1].toUpperCase();
       return {
         address: `${titleCaseAddress(tokens.slice(0, -1).join(' '))}, ${state}${zip ? ' ' + zip : ''}`,
         street: null, city: null, state, zip, source: `${host}-url`, confident: false,
       };
+    }
+    // state-first ("wa-seattle-1234-5th-ave")
+    if (isUSState(tokens[0]) && tokens.length >= 4) {
+      const state = tokens[0].toUpperCase();
+      const numIdx = tokens.findIndex((t, i) => i > 0 && /^\d+$/.test(t));
+      if (numIdx > 1) {
+        return {
+          address: `${titleCaseAddress(tokens.slice(numIdx).join(' '))}, ${titleCaseAddress(tokens.slice(1, numIdx).join(' '))}, ${state}`,
+          street: null, city: null, state, zip, source: `${host}-url`, confident: false,
+        };
+      }
     }
     if (street) {
       return { address: titleCaseAddress(street), street, city: null, state: null, zip, source: `${host}-url`, confident: false };
@@ -137,7 +175,7 @@ export function normalizeQuery(raw) {
   const input = String(raw || '').trim();
   if (input.length < 5 || input.length > 500) return null;
 
-  if (/^https?:\/\//i.test(input) || /^(www\.)?(zillow|redfin|redf\.in|trulia|realtor|crexi|loopnet)\./i.test(input)) {
+  if (/^https?:\/\//i.test(input) || /^(www\.)?(zillow|redfin|redf\.in|trulia|realtor|crexi|loopnet|costar|movoto)\./i.test(input)) {
     const parsed = parseListingUrl(/^https?:\/\//i.test(input) ? input : `https://${input}`);
     if (parsed) return parsed;
     return { address: null, source: 'url-unparsed', confident: false, rawUrl: input };
@@ -181,6 +219,111 @@ export async function fetchPageAddress(url) {
     }
     return null;
   } catch { return null; }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Asking price for link types whose pages block direct fetching (Zillow, Crexi,
+// LoopNet, CoStar). Firecrawl renders those pages; a plain fetch cannot.
+//
+// Correctness guard: these sites sometimes serve a DIFFERENT property than the one
+// requested (a stale listing id redirects elsewhere). The scraped address is therefore
+// checked against the address we resolved from the link, and a mismatch returns no price
+// rather than filling the underwriting with another property's number.
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Kept deliberately narrow. Verified against known listings: Zillow's residential list price
+// comes back correct. LoopNet/Crexi do NOT — asked for a listing priced at $4,750,000 the
+// extraction returned $3,195,000, and returned nothing at all on another. A confidently wrong
+// price silently produces a wrong score, so those hosts get no price scrape (the visitor's
+// asking price is one field, and everything else still fills in).
+const PRICE_HOSTS = /(zillow|trulia)\.com$/i;
+
+export function firecrawlReady() { return Boolean(process.env.FIRECRAWL_API_KEY); }
+
+export async function fetchListingPrice(url, expectedAddress) {
+  if (!firecrawlReady() || !url || !PRICE_HOSTS.test(new URL(url).hostname.replace(/^www\./, ''))) return null;
+
+  const schema = {
+    type: 'object',
+    properties: {
+      address: { type: 'string', description: 'The full property address shown on the page' },
+      price: { type: 'number', description: 'Asking / list price in USD as a number, no symbols. Omit if not shown.' },
+      priceType: { type: 'string', enum: ['list price', 'estimated value', 'other'], description: 'What the price above actually is: the asking/list price if the home is for sale, otherwise the automated estimate shown.' },
+      bedrooms: { type: 'number' },
+      bathrooms: { type: 'number' },
+      squareFeet: { type: 'number', description: 'Living area in square feet. Omit if not shown.' },
+      propertyType: { type: 'string' },
+    },
+  };
+
+  try {
+    const res = await fetch('https://api.firecrawl.dev/v1/scrape', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${process.env.FIRECRAWL_API_KEY}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        url,
+        formats: ['json'],
+        jsonOptions: {
+          schema,
+          prompt: 'Extract this listing\'s address and its asking price. The price is often in a "Property Facts" table labelled "Price" (commercial listings) or shown as the list price near the top (residential). Also capture bedrooms, bathrooms and building/living square footage when present, but never guess — use only values actually shown.',
+        },
+        // Keep the whole page: LoopNet/Crexi put the price in facts tables that "main content"
+        // extraction strips, which is exactly how the price went missing.
+        onlyMainContent: false,
+      }),
+      signal: AbortSignal.timeout(60000),
+    });
+    if (!res.ok) return null;
+    const body = await res.json();
+    const d = body?.data?.json || body?.data || null;
+    if (!d || typeof d !== 'object') return null;
+
+    const price = Number(d.price);
+    const addressOnPage = String(d.address || body?.data?.metadata?.ogTitle || '').trim();
+
+    // Refuse a price that belongs to a different property.
+    if (addressOnPage && expectedAddress && !addressMatches(addressOnPage, expectedAddress)) {
+      return { mismatch: true, addressOnPage, resumedAt: body?.data?.metadata?.url || null };
+    }
+    return {
+      price: Number.isFinite(price) && price > 10000 && price < 100000000 ? Math.round(price) : null,
+      bedrooms: Number.isFinite(Number(d.bedrooms)) ? Number(d.bedrooms) : null,
+      bathrooms: Number.isFinite(Number(d.bathrooms)) ? Number(d.bathrooms) : null,
+      squareFeet: Number.isFinite(Number(d.squareFeet)) && Number(d.squareFeet) > 100 ? Math.round(Number(d.squareFeet)) : null,
+      propertyType: d.propertyType || null,
+      priceType: d.priceType || null,
+      addressOnPage: addressOnPage || null,
+      source: 'firecrawl',
+    };
+  } catch { return null; }
+}
+
+/**
+ * A price has to make sense against the revenue we independently estimated, or we do not
+ * use it. This is the backstop that stops a mis-scraped figure from silently producing a
+ * confident, wrong score: outside a 1.5%–35% gross yield we surface it for confirmation
+ * instead of filling the underwriting with it.
+ */
+export function priceIsPlausible(price, annualRevenue) {
+  const p = Number(price), r = Number(annualRevenue);
+  if (!Number.isFinite(p) || p <= 0) return false;
+  if (!Number.isFinite(r) || r <= 0) return true;   // nothing to check against yet
+  const grossYield = r / p;
+  return grossYield >= 0.015 && grossYield <= 0.35;
+}
+
+/** Loose but meaningful: the house number and the street name must both appear. */
+export function addressMatches(a, b) {
+  const norm = (t) => String(t || '').toLowerCase().replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim();
+  const na = norm(a), nb = norm(b);
+  if (!na || !nb) return false;
+  const houseA = (na.match(/^\d+/) || [])[0];
+  const houseB = (nb.match(/^\d+/) || [])[0];
+  if (houseA && houseB && houseA !== houseB) return false;
+  const wordsA = new Set(na.split(' '));
+  const streetWords = nb.split(' ').filter((w) => w.length > 2 && !/^\d+$/.test(w));
+  const shared = streetWords.filter((w) => wordsA.has(w)).length;
+  return streetWords.length === 0 ? Boolean(houseA && houseA === houseB) : shared / streetWords.length >= 0.5;
 }
 
 /** Stable cache key for an address so repeat lookups are free. */

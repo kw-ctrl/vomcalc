@@ -85,13 +85,14 @@ const created = await fetch(`${SB}/auth/v1/admin/users`, {
 const USER_ID = created.id;
 if (!USER_ID) { console.error('✗ could not create the test user:', created); process.exit(1); }
 
-const level = async () => {
+const levelOf = async (id) => {
   const r = await fetch(`${SB}/rest/v1/rpc/effective_access`, {
-    method: 'POST', headers: sbHeaders, body: JSON.stringify({ p_user_id: USER_ID }),
+    method: 'POST', headers: sbHeaders, body: JSON.stringify({ p_user_id: id }),
   }).then(x => x.json());
   const row = Array.isArray(r) ? r[0] : r;
   return row?.level;
 };
+const level = () => levelOf(USER_ID);
 const account = async () => (await db(`/rest/v1/accounts?user_id=eq.${USER_ID}&select=*`))?.[0] || {};
 
 console.log('Baseline');
@@ -161,12 +162,59 @@ const replay = await fetch(`${APP}/api/billing/webhook`, {
 });
 check('2-hour-old signature rejected (replay)', replay.status, 400);
 
+// ── 5. an Escape Velocity purchase grants permanent membership ──────────────
+// The hard case: someone buys from a Stripe payment link and has NO account in our
+// database at that moment. Nothing may be tied to a user id, so the grant has to be
+// durable by email or the paying member gets nothing until someone notices by hand.
+console.log('\nEscape Velocity purchase (buyer has no account yet)');
+const EV_EMAIL = `seven-ev-test-${TS}@kassidywarren.com`;
+const r6 = await postEvent({
+  id: 'evt_test_ev_buy', type: 'checkout.session.completed',
+  data: { object: {
+    id: `cs_test_seven_${TS}`, mode: 'payment', amount_total: 800000,
+    customer: CUSTOMER, customer_email: EV_EMAIL,
+    customer_details: { email: EV_EMAIL },
+    metadata: { tier: 'ev' },
+  } },
+});
+check('webhook accepted', r6.status, 200);
+const allow = await db(`/rest/v1/ev_member_emails?email=eq.${encodeURIComponent(EV_EMAIL)}&select=email,note`);
+check('buyer is on the EV allowlist', Array.isArray(allow) && allow.length === 1, true);
+
+// Now they sign up with the email they paid with.
+const evUser = await fetch(`${SB}/auth/v1/admin/users`, {
+  method: 'POST', headers: sbHeaders,
+  body: JSON.stringify({ email: EV_EMAIL, password: `Ev-${TS}!aB`, email_confirm: true }),
+}).then(r => r.json());
+const EV_USER_ID = evUser.id;
+check('buyer can create their account', Boolean(EV_USER_ID), true);
+check('buyer is ev_member the moment they sign in', await levelOf(EV_USER_ID), 'ev_member');
+
+// Replay: Stripe retries, so the same event must not break or double-grant.
+const r7 = await postEvent({
+  id: 'evt_test_ev_buy', type: 'checkout.session.completed',
+  data: { object: {
+    id: `cs_test_seven_${TS}`, mode: 'payment', amount_total: 800000,
+    customer: CUSTOMER, customer_email: EV_EMAIL,
+    customer_details: { email: EV_EMAIL },
+    metadata: { tier: 'ev' },
+  } },
+});
+check('replayed EV event is accepted', r7.status, 200);
+const allow2 = await db(`/rest/v1/ev_member_emails?email=eq.${encodeURIComponent(EV_EMAIL)}&select=email`);
+check('replay did not duplicate the grant', Array.isArray(allow2) && allow2.length === 1, true);
+check('still ev_member after replay', await levelOf(EV_USER_ID), 'ev_member');
+
 // ── cleanup ─────────────────────────────────────────────────────────────────
 console.log('\nCleanup');
+if (EV_USER_ID) await fetch(`${SB}/auth/v1/admin/users/${EV_USER_ID}`, { method: 'DELETE', headers: sbHeaders });
+await fetch(`${SB}/rest/v1/ev_member_emails?email=eq.${encodeURIComponent(EV_EMAIL)}`, { method: 'DELETE', headers: sbHeaders });
 await fetch(`${SB}/auth/v1/admin/users/${USER_ID}`, { method: 'DELETE', headers: sbHeaders });
 await fetch(`${SB}/rest/v1/subscribers?email=eq.${encodeURIComponent(EMAIL)}`, { method: 'DELETE', headers: sbHeaders });
 const left = await db(`/rest/v1/accounts?user_id=eq.${USER_ID}&select=user_id`);
 check('test account removed', Array.isArray(left) ? left.length : -1, 0);
+const allowLeft = await db(`/rest/v1/ev_member_emails?email=eq.${encodeURIComponent(EV_EMAIL)}&select=email`);
+check('test EV grant removed', Array.isArray(allowLeft) ? allowLeft.length : -1, 0);
 
 console.log(`\n${fail === 0 ? 'ALL PASS' : 'FAILURES PRESENT'} — ${pass} passed, ${fail} failed\n`);
 process.exit(fail === 0 ? 0 : 1);

@@ -1663,15 +1663,30 @@ async function applyMarketData(query) {
             if (adrEl) adrEl.value = Math.round(e.adr);   // display only — no handler, no re-derive
         }
 
+        // Asking price, when the lookup managed to read it (it scrapes the sites that block
+        // plain fetching). Labelled honestly, because a Zestimate is not a list price.
+        const L = d.listing;
+        if (L && L.price) {
+            setCurrencyVal('listedPrice', L.price);
+            if (L.bedrooms) { const b = document.getElementById('bedrooms'); if (b) b.value = L.bedrooms; }
+            if (L.bathrooms) { const ba = document.getElementById('bathrooms'); if (ba) ba.value = L.bathrooms; }
+            if (L.squareFeet) { const sf = document.getElementById('squareFeet'); if (sf) sf.value = L.squareFeet; }
+            if (typeof updateDownPaymentHint === 'function') updateDownPaymentHint();
+            if (typeof updateRenoEstimate === 'function') updateRenoEstimate();
+            if (typeof updateFurnishEstimate === 'function') updateFurnishEstimate();
+        }
+
         window.__vomMarketData = d;
         if (typeof recalc === 'function') recalc();
 
         const bits = [];
+        if (L && L.price) bits.push(`$${L.price.toLocaleString()} ${L.priceType || 'asking price'}`);
         if (e.annualRevenue) bits.push('$' + Math.round(e.annualRevenue).toLocaleString() + '/yr revenue');
         if (e.adr) bits.push('$' + Math.round(e.adr) + ' ADR');
         if (e.occupancy) bits.push(Math.round(e.occupancy) + '% occupancy');
+        const priceNote = (L && L.unavailable) ? ' \u2014 (the listing page served a different property, so no price was used)' : '';
         showFetchStatus(
-            `\u2713 Real market data for ${d.address}: ${bits.join(', ')} \u2014 from ${n} actual listings nearby${d.cached ? ' (cached)' : ''}.`,
+            `\u2713 ${d.address}: ${bits.join(', ')} \u2014 from ${n} actual listings nearby${d.cached ? ' (cached)' : ''}${priceNote}.`,
             'success'
         );
         return d;
@@ -1763,9 +1778,14 @@ async function fetchListingData() {
             return;
         }
 
-        // Blocked by anti-bot (PerimeterX, Cloudflare, etc.)
+        // Blocked by anti-bot (PerimeterX, Cloudflare, etc.) — but the property still exists,
+        // so pull what we CAN: the address from the link, then real market data (and the
+        // asking price where we can read it). Better than turning the visitor away.
         if (data.blocked) {
-            showFetchStatus(data.error || 'This site blocks automated access. Try the 📄 document upload or enter details manually.', 'error');
+            const market = await applyMarketData(resolvedUrl);
+            if (!market || market.error) {
+                showFetchStatus(data.error || 'This site blocks automated access. Enter the asking price and the rest is already filled in.', 'error');
+            }
             return;
         }
 
@@ -1985,18 +2005,38 @@ document.addEventListener('DOMContentLoaded', () => {
     // Auth & gating
     initGating();
 
-    // Landing-page handoff: /app?address=… arrives when someone ran a lookup on the front
-    // door and clicked through. Prefill the field and pull the same real market data.
+    // Handoff from the landing page. The front-door box sends a listing link (or an address)
+    // here with start=1, and the expectation is that the deal is already underwritten and
+    // scored when it loads — not that the visitor has to press anything else.
     try {
-        const arriving = new URLSearchParams(window.location.search).get('address');
-        if (arriving) {
+        const hp = new URLSearchParams(window.location.search);
+        const inUrl = hp.get('url');
+        const inAddress = hp.get('address');
+        const autoStart = hp.has('start');
+        if (inUrl || inAddress) {
             setTimeout(async () => {
                 const urlField = document.getElementById('listingUrl');
-                if (urlField) urlField.value = arriving;
-                showFetchStatus('Loading real market data for ' + arriving + '\u2026', 'loading');
-                const market = await applyMarketData(arriving);
-                if (market && market.error) showFetchStatus(market.error, 'error');
+                if (urlField && (inUrl || inAddress)) urlField.value = inUrl || inAddress;
                 if (window.history?.replaceState) history.replaceState(null, '', window.location.pathname);
+
+                if (inUrl) {
+                    // Full import: asking price, beds/baths, square footage + market data.
+                    showFetchStatus('Loading that listing\u2026', 'loading');
+                    await fetchListingData();
+                } else {
+                    showFetchStatus('Pulling real market data for ' + inAddress + '\u2026', 'loading');
+                    const market = await applyMarketData(inAddress);
+                    if (market && market.error) showFetchStatus(market.error, 'error');
+                }
+
+                if (autoStart) {
+                    // Underwrite immediately. If something essential is genuinely missing (a bare
+                    // address carries no asking price) the app highlights exactly what it needs
+                    // instead of quietly doing nothing.
+                    setTimeout(() => {
+                        try { analyzeProperty(); } catch { /* never block the page on a calc */ }
+                    }, 500);
+                }
             }, 600);
         }
     } catch { /* a malformed query string must never block the app */ }

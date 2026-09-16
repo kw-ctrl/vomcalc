@@ -17,10 +17,11 @@ import {
   normalizeQuery, addressKey, parseListingUrl, fetchPageAddress,
   airroiEstimate, summarizeAirROI, bnbcalcBuy, summarizeBnBCalc,
   readCache, writeCache, airroiReady, bnbcalcReady, paidLookupsAllowed,
+  fetchListingPrice, priceIsPlausible,
 } from './_shared/str-data.js';
 
-const PER_IP_PER_HOUR = 12;
-const PER_IP_PER_DAY = 40;
+const PER_IP_PER_HOUR = 25;    // NEW addresses only — cache hits are never limited
+const PER_IP_PER_DAY = 150;   // a real person comparing 15 listings is never blocked
 const PER_ACCOUNT_PAID_PER_DAY = 5;
 
 function clientIp(req) {
@@ -105,16 +106,6 @@ export default async function handler(req, res) {
     return res.status(503).json({ error: 'Revenue data is not configured yet.' });
   }
 
-  // ── rate limit ─────────────────────────────────────────────────────────────
-  const ip = clientIp(req);
-  const day = new Date().toISOString().slice(0, 10);
-  const hourBucket = `lookup:h:${ip}:${new Date().toISOString().slice(0, 13)}`;
-  const dayBucket = `lookup:d:${ip}:${day}`;
-  const hourly = await underLimit(hourBucket, PER_IP_PER_HOUR);
-  if (!hourly.allowed) return res.status(429).json({ error: 'Too many lookups for now — try again in a little while.' });
-  const daily = await underLimit(dayBucket, PER_IP_PER_DAY);
-  if (!daily.allowed) return res.status(429).json({ error: 'Daily limit reached for this connection.' });
-
   // ── resolve the address ────────────────────────────────────────────────────
   let target = parsed;
   if (!target.address && target.rawUrl) {
@@ -128,13 +119,26 @@ export default async function handler(req, res) {
     });
   }
 
-  const key = addressKey(target.address);
-
   // ── cache ──────────────────────────────────────────────────────────────────
+  // Checked BEFORE any rate limiting on purpose: serving a cached address costs nothing, so
+  // it should never consume a visitor's quota. This also means the landing page's warming
+  // lookup makes the app's follow-up call free, and an office or mobile network full of
+  // people (all sharing one IP) never blocks itself on repeats.
+  const key = addressKey(target.address);
   const cached = await readCache(key);
   if (cached) {
     return res.status(200).json({ ...cached, cached: true, address: cached.address || target.address });
   }
+
+  // ── rate limit — only now, because only now can this cost anything ─────────
+  const ip = clientIp(req);
+  const day = new Date().toISOString().slice(0, 10);
+  const hourBucket = `lookup:h:${ip}:${new Date().toISOString().slice(0, 13)}`;
+  const dayBucket = `lookup:d:${ip}:${day}`;
+  const hourly = await underLimit(hourBucket, PER_IP_PER_HOUR);
+  if (!hourly.allowed) return res.status(429).json({ error: 'Too many new addresses at once — give it a minute, or look up an address we have already priced.' });
+  const daily = await underLimit(dayBucket, PER_IP_PER_DAY);
+  if (!daily.allowed) return res.status(429).json({ error: 'Daily limit reached for this connection.' });
 
   // ── paid tier (signed-in only, capped, and off unless explicitly enabled) ──
   let userId = null;
@@ -152,9 +156,33 @@ export default async function handler(req, res) {
     }
   }
 
+  // ── asking price (only for link types whose pages block plain fetching) ────
+  // Zillow/Crexi/LoopNet can't be fetched directly, and without a price there is nothing to
+  // underwrite — so those links get rendered through Firecrawl. StreetAddress/Redfin links
+  // skip this: their own import already returns the price for free.
+  let listing = null;
+  const sourceUrl = parsed.rawUrl || (parsed.source.endsWith('-url') ? query : null);
+  if (sourceUrl) {
+    const fetched = await fetchListingPrice(sourceUrl, target.address);
+    if (fetched && !fetched.mismatch) listing = fetched;
+    else if (fetched && fetched.mismatch) {
+      listing = { unavailable: true, reason: 'the page served a different property', addressOnPage: fetched.addressOnPage };
+    }
+  }
+
   // ── free tier: real operating comps + revenue forecast ────────────────────
   const airroiRaw = await airroiEstimate({ address: target.address, bedrooms });
   const primary = summarizeAirROI(airroiRaw) || paid;
+
+  // A scraped price must survive contact with the revenue we independently estimated —
+  // otherwise it is a mis-read and must not silently drive the score.
+  if (listing && listing.price && primary?.annualRevenue && !priceIsPlausible(listing.price, primary.annualRevenue)) {
+    listing = {
+      unavailable: true,
+      reason: 'the price read from the page did not line up with the market revenue',
+      scrapedPrice: listing.price,
+    };
+  }
 
   if (!primary) {
     return res.status(404).json({
@@ -171,6 +199,7 @@ export default async function handler(req, res) {
     estimate: paid || primary,
     ...(paid ? { crossCheck: primary } : {}),
     comps: buildComps(airroiRaw?.comparable_listings),
+    ...(listing ? { listing } : {}),
     generatedAt: new Date().toISOString(),
   };
 
