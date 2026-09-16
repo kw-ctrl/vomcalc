@@ -4,7 +4,19 @@
  */
 export const config = { maxDuration: 10 };
 
-const SUPABASE_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
+// Account-backend config. Single source of truth: the SUPABASE_URL env var.
+// Falls back to the historical project ref so behaviour is unchanged if unset.
+const SUPABASE_URL = process.env.SUPABASE_URL || 'https://rxkeeidytafjogiohvgi.supabase.co';
+
+// Cheap liveness probe so an unreachable backend returns a clean 503 JSON
+// instead of an unhandled fetch throw (which surfaces as FUNCTION_INVOCATION_FAILED).
+async function backendReachable() {
+  if (!SUPABASE_URL) return false;
+  try {
+    const r = await fetch(`${SUPABASE_URL}/auth/v1/health`, { signal: AbortSignal.timeout(4000) });
+    return r.status < 500;
+  } catch { return false; }
+}
 const SERVICE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY;
 
 export default async function handler(req, res) {
@@ -14,6 +26,10 @@ export default async function handler(req, res) {
   if (req.method === 'OPTIONS') return res.status(200).end();
 
   const token = (req.headers.authorization || '').replace('Bearer ', '');
+
+  if (!(await backendReachable())) {
+    return res.status(503).json({ error: 'Account backend unavailable' });
+  }
   if (!token) return res.status(200).json({ deals: [] });
 
   let userId = null;

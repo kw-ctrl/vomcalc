@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Velocity of Money - Property Underwriting Tool</title>
+    <link rel="icon" href="/logo.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -24,7 +25,7 @@
         }
     </script>
     <script>
-        window.__API_BASE_URL__ = window.__API_BASE_URL__ || 'http://localhost:8080';
+        window.__API_BASE_URL__ = window.__API_BASE_URL__ || '';
     </script>
     <link rel="stylesheet" href="styles.css?v=20260317d">
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0"></script>
@@ -426,6 +427,7 @@
                             <input type="text" id="annualRevenueInput" placeholder="60,000" class="field-input pl-7" data-currency inputmode="numeric" oninput="onAnnualRevenueChange()">
                         </div>
                         <p class="field-hint">Primary input — ADR and occupancy derive from this</p>
+                        <p class="field-hint" id="annualRevenueHint" style="color:#2DD4BF;margin-top:2px"></p>
                     </div>
 
                     <!-- ADR + Occupancy inline row -->

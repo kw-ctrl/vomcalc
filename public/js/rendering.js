@@ -916,7 +916,7 @@ function setupSensitivitySliders(r, gatherInputs) {
         const newADR = Math.round(baseADR * (1 + adrDelta / 100));
         const newOcc = Math.min(0.95, Math.max(0.20, baseOcc + occDelta / 100));
 
-        document.getElementById('simADRHint').textContent = `$${baseADR} → $${newADR}/night`;
+        document.getElementById('simADRHint').textContent = `$${Math.round(baseADR)} → $${newADR}/night`;
         document.getElementById('simOccHint').textContent = `${Math.round(baseOcc * 100)}% → ${Math.round(newOcc * 100)}%`;
 
         const testInputs = { ...gatherInputs() };

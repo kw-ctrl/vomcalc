@@ -1783,8 +1783,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const hint = document.getElementById('annualRevenueHint');
         if (rev > 0 && nights > 0) {
             const computedADR = Math.round(rev / nights);
-            hint.textContent = `Implied ADR: $${computedADR}/night`;
-        } else {
+            if (hint) hint.textContent = `Implied ADR: $${computedADR}/night`;
+        } else if (hint) {
             hint.textContent = 'ADR will be calculated from revenue, occupancy, and keys';
         }
         updateRequiredFieldHighlights();
@@ -1980,6 +1980,55 @@ function syncRenoComputed() {
 let _lastRenderPayload = null;   // populated after every Analyze
 let _currentDealId = null;       // set when a saved deal is loaded
 let _allDeals = [];              // cached deals list
+let _dealsAreLocal = false;      // true when the list came from this browser, not the server
+
+// ── Local deal store ─────────────────────────────────────────────────────────
+// The tool is free and needs no account to underwrite. Deal-saving historically
+// required an account backend; when that backend is unavailable we persist deals
+// in this browser instead so Save Deal / My Deals keep working. Records use the
+// exact shape /api/deals returns, so the existing list renderer is unchanged.
+const LOCAL_DEALS_KEY = 'vom_local_deals_v1';
+
+function _localDealsRead() {
+    try {
+        const arr = JSON.parse(localStorage.getItem(LOCAL_DEALS_KEY) || '[]');
+        return Array.isArray(arr) ? arr : [];
+    } catch { return []; }
+}
+
+function _localDealsWrite(deals) {
+    try { localStorage.setItem(LOCAL_DEALS_KEY, JSON.stringify(deals)); return true; }
+    catch { return false; }
+}
+
+function _localDealRecord(payload) {
+    const now = new Date().toISOString();
+    const priorId = payload.id && String(payload.id).startsWith('local_') ? payload.id : null;
+    return {
+        id: priorId || 'local_' + Date.now(),
+        title: payload.name || payload.address || 'Untitled Deal',
+        property_address: payload.address || '',
+        property_type: payload.property_type || 'str',
+        listed_price: payload.listed_price || 0,
+        velocity_score: payload.velocity_score || 0,
+        moic: payload.moic || 0,
+        irr: payload.irr || 0,
+        input_snapshot: payload.inputs || {},
+        created_at: now,
+        updated_at: now,
+        _local: true,
+        result_snapshot: {
+            ...(payload.outputs || {}),
+            status: payload.status || 'analyzing',
+            notes: payload.notes || '',
+            tags: [],
+            variant_of: payload.variant_of || null,
+            variant_name: payload.variant_name || null,
+            is_base_case: payload.is_base_case ?? true,
+            savedAt: now,
+        },
+    };
+}
 
 async function _getSession() {
     try {
@@ -2035,20 +2084,20 @@ async function saveDeal() {
     msg.textContent = '';
 
     const session = await _getSession();
-    if (!session) {
+
+    const r = _lastRenderPayload;
+    if (!r) {
         msg.style.color = '#f87171';
-        msg.textContent = 'Sign in to save deals.';
+        msg.textContent = 'Analyze a deal first.';
         btn.disabled = false; btn.textContent = 'Save Deal';
         return;
     }
-
-    const r = _lastRenderPayload;
     const coc = r.stabilityResult?.coc ?? (r.totalEquity > 0 ? (r.annualCashFlow / r.totalEquity) * 100 : 0);
     const isVariant = document.getElementById('saveAsVariant')?.checked;
 
     const payload = {
         id: _currentDealId || undefined,
-        user_id: session.user.id,
+        user_id: session?.user?.id || null,
         name: document.getElementById('saveDealName').value.trim() || r.inputs?.address || 'Untitled Deal',
         address: document.getElementById('propertyAddress')?.value || '',
         property_type: r.inputs?.propertyType || 'str',
@@ -2084,6 +2133,27 @@ async function saveDeal() {
             dscr: r.dscr,
         },
     };
+
+    // No account backend reachable → persist to this browser so the feature still works
+    if (!session) {
+        const rec = _localDealRecord(payload);
+        const all = _localDealsRead();
+        const idx = all.findIndex(d => d.id === rec.id);
+        if (idx >= 0) all[idx] = { ...all[idx], ...rec, created_at: all[idx].created_at };
+        else all.unshift(rec);
+        if (!_localDealsWrite(all)) {
+            msg.style.color = '#f87171';
+            msg.textContent = 'Could not save — browser storage is full or blocked.';
+        } else {
+            _currentDealId = rec.id;
+            msg.style.color = '#34d399';
+            msg.textContent = '✓ Saved in this browser';
+            document.getElementById('saveDealBtn').textContent = '✓ Saved';
+            setTimeout(closeSaveDeal, 1200);
+        }
+        btn.disabled = false; btn.textContent = 'Save Deal';
+        return;
+    }
 
     try {
         const resp = await fetch('/api/deals', {
@@ -2134,10 +2204,22 @@ async function refreshDealsList() {
     const container = document.getElementById('dealsListContainer');
     container.innerHTML = '<p style="color:#6b7280;font-size:13px;text-align:center;padding:20px">Loading...</p>';
     const session = await _getSession();
+
     if (!session) {
-        container.innerHTML = '<p style="color:#f87171;font-size:13px;text-align:center;padding:20px">Sign in to view saved deals.</p>';
+        // No account backend → show deals saved in this browser
+        _dealsAreLocal = true;
+        _allDeals = _localDealsRead();
+        filterDeals();
+        if (_allDeals.length) {
+            const banner = document.createElement('p');
+            banner.style.cssText = 'color:#9ca3af;font-size:11px;margin:0 0 10px';
+            banner.textContent = 'Saved in this browser on this device.';
+            container.prepend(banner);
+        }
         return;
     }
+
+    _dealsAreLocal = false;
     try {
         const r = await fetch('/api/deals', { headers: { Authorization: `Bearer ${session.access_token}` } });
         _allDeals = await r.json();
@@ -2227,6 +2309,9 @@ async function loadDeal(id) {
 
     // Try cache first, then fetch full deal from load endpoint
     let inputs = _allDeals.find(d => d.id === id)?.input_snapshot || null;
+    if (!inputs && String(id).startsWith('local_')) {
+        inputs = _localDealsRead().find(d => d.id === id)?.input_snapshot || null;
+    }
     if (!inputs) {
         try {
             const r = await fetch(`/api/deals/load?id=${id}`, {
@@ -2271,7 +2356,13 @@ function saveVariantOf(parentId, parentName) {
 async function deleteDeal(id) {
     if (!confirm('Delete this deal?')) return;
     const session = await _getSession();
-    if (!session) return;
+    if (!session) {
+        const all = _localDealsRead().filter(d => d.id !== id && d.result_snapshot?.variant_of !== id);
+        _localDealsWrite(all);
+        if (_currentDealId === id) { _currentDealId = null; document.getElementById('saveDealBtn').textContent = '💾 Save Deal'; }
+        await refreshDealsList();
+        return;
+    }
     await fetch(`/api/deals?id=${id}`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${session.access_token}` },
@@ -2732,4 +2823,7 @@ Object.assign(window, {
   addConstructionPhase,
   removeConstructionPhase,
   updatePhaseField,
+  // Furnishing estimates — referenced by inline oninput/onchange in app.html
+  updateFurnishEstimate,
+  syncFurnishComputed,
 });

@@ -3,7 +3,17 @@
  * Uses the existing `reports` table as the deals store.
  * Extra fields (equity_multiple, coc, status, variant_of, variant_name) live in result_snapshot.
  */
-const SB_URL = 'https://rxkeeidytafjogiohvgi.supabase.co';
+const SB_URL = process.env.SUPABASE_URL || 'https://rxkeeidytafjogiohvgi.supabase.co';
+
+// Cheap liveness probe (see api/deals/save.js) so an unreachable account backend
+// returns a clean 503 JSON instead of an unhandled fetch throw.
+async function backendReachable() {
+  if (!SB_URL) return false;
+  try {
+    const r = await fetch(`${SB_URL}/auth/v1/health`, { signal: AbortSignal.timeout(4000) });
+    return r.status < 500;
+  } catch { return false; }
+}
 const SB_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ4a2VlaWR5dGFmam9naW9odmdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI5MDkxNjYsImV4cCI6MjA4ODQ4NTE2Nn0.QdZCFdzuCOTcxPYnWP_gM-1rC1sjgmRc92xg8tkxmAc';
 
 function sbKey(svc) { return svc ? process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY : SB_ANON; }
@@ -53,6 +63,10 @@ export default async function handler(req, res) {
   res.setHeader('Access-Control-Allow-Methods', 'GET,POST,PATCH,DELETE,OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') return res.status(200).end();
+
+  if (!(await backendReachable())) {
+    return res.status(503).json({ error: 'Account backend unavailable' });
+  }
 
   const authHeader = req.headers.authorization || '';
   const userJwt = authHeader.replace('Bearer ', '');
