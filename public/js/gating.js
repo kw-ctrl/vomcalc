@@ -14,6 +14,7 @@ import {
     listReports,
     saveReport,
     signInWithEmail,
+    signInWithGoogle,
     signUpWithEmail,
     signOut,
     syncServerSession,
@@ -31,6 +32,7 @@ import {
     startCheckout as startStripeCheckout,
     openBillingPortal as openStripePortal,
     badge as accessBadge,
+    googleEnabled as googleSsoAvailable,
     onChange as onAccessChange,
 } from './entitlements.js';
 
@@ -187,6 +189,29 @@ async function refreshAccess() {
     billingSummaryCache = null;
     applyGating(authState.subscription);
     updateHeaderAuth(authState);
+    renderGoogleSso();
+}
+
+/**
+ * Show "Continue with Google" only when the provider is actually configured on the project,
+ * so a dead button can never appear in front of a user. Safe to call repeatedly.
+ */
+function renderGoogleSso() {
+    const slot = document.getElementById('authGoogleSlot');
+    if (!slot) return;
+    slot.style.display = googleSsoAvailable() ? 'block' : 'none';
+    const btn = document.getElementById('authGoogle');
+    if (!btn || btn.dataset.wired === '1') return;
+    btn.dataset.wired = '1';
+    btn.addEventListener('click', async () => {
+        const status = document.getElementById('authStatus');
+        if (status) { status.style.color = '#9ca3af'; status.textContent = 'Opening Google...'; }
+        const { error } = await signInWithGoogle();
+        if (error && status) {
+            status.style.color = '#f87171';
+            status.textContent = error.message || 'Could not start Google sign-in.';
+        }
+    });
 }
 
 // ════════════════════════════════════════════════

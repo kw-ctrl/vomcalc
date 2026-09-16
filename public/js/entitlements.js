@@ -18,6 +18,7 @@ let state = {
   expiresAt: null,
   gateEnabled: false,   // server flag: when false the tool is free for everyone
   backendReady: false,
+  googleEnabled: false, // social login actually configured on the project
   email: null,
 };
 
@@ -28,6 +29,7 @@ export function isSignedIn() { return !!state.signedIn; }
 export function isPremium() { return PREMIUM.has(state.level); }
 export function gateEnabled() { return !!state.gateEnabled; }
 export function backendReady() { return !!state.backendReady; }
+export function googleEnabled() { return !!state.googleEnabled; }
 
 /** Should premium sections be locked right now? */
 export function shouldLock() {

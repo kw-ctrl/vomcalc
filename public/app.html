@@ -1115,6 +1115,21 @@
             <h2 class="text-xl font-bold text-white" id="authTitle">Create your account</h2>
             <p class="text-sm text-gray-400 mt-1">Sign in to access your analyses.</p>
             <div class="mt-5">
+                <!-- Google SSO — rendered by gating.js only when the provider is actually
+                     configured, so a dead button can never appear. -->
+                <div id="authGoogleSlot" style="display:none">
+                    <button type="button" id="authGoogle"
+                            class="w-full px-4 py-2.5 text-sm font-semibold rounded-lg border border-surface-border text-white hover:border-gray-500 transition flex items-center justify-center gap-2"
+                            style="background:#141414">
+                        <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M23.5 12.3c0-.9-.1-1.5-.2-2.2H12v4.1h6.5c-.1 1.1-.8 2.7-2.4 3.8l3.7 2.9c2.2-2 3.7-5 3.7-8.6z"/><path fill="#34A853" d="M12 24c3.2 0 5.9-1.1 7.9-2.9l-3.7-2.9c-1 .7-2.4 1.2-4.2 1.2-3.2 0-5.9-2.1-6.9-5l-3.8 2.9C3.3 21.3 7.3 24 12 24z"/><path fill="#FBBC05" d="M5.1 14.4c-.2-.7-.4-1.5-.4-2.4s.1-1.6.4-2.4L1.3 6.7C.5 8.3 0 10.1 0 12s.5 3.7 1.3 5.3l3.8-2.9z"/><path fill="#EA4335" d="M12 4.8c1.8 0 3.4.6 4.6 1.7l3.3-3.3C17.9 1.2 15.2 0 12 0 7.3 0 3.3 2.7 1.3 6.7l3.8 2.9C6.1 6.9 8.8 4.8 12 4.8z"/></svg>
+                        Continue with Google
+                    </button>
+                    <div style="display:flex;align-items:center;gap:10px;margin:14px 0">
+                        <span style="flex:1;height:1px;background:#2a2a2a"></span>
+                        <span style="font-size:11px;color:#6b7280">or</span>
+                        <span style="flex:1;height:1px;background:#2a2a2a"></span>
+                    </div>
+                </div>
                 <input type="email" id="authEmail" placeholder="Email" class="field-input text-base py-2.5 w-full" autocomplete="email">
                 <input type="password" id="authPassword" placeholder="Password" class="field-input text-base py-2.5 w-full mt-2" autocomplete="current-password">
                 <!-- Confirm password — shown only in reset mode -->

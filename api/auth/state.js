@@ -8,6 +8,20 @@ import {
   pushToVaultCRM, gateEnabled, configured, logEvent, json, preflight, sb,
 } from '../_shared/access.js';
 
+/**
+ * Which social logins are switched on for this project. Supabase exposes it publicly
+ * (/auth/v1/settings), so the UI can show a Google button the moment the provider is
+ * enabled and never show a dead one. Cached briefly: it changes only when we configure it.
+ */
+let providersCache = { at: 0, google: false };
+async function externalProviders() {
+  if (Date.now() - providersCache.at < 60_000) return providersCache;
+  const r = await sb('/auth/v1/settings', { key: process.env.SUPABASE_ANON_KEY || undefined });
+  const google = Boolean(r.data?.external?.google);
+  providersCache = { at: Date.now(), google };
+  return providersCache;
+}
+
 export const config = { maxDuration: 15 };
 
 export default async function handler(req, res) {
@@ -20,6 +34,7 @@ export default async function handler(req, res) {
   const user = await getUser(token);
 
   if (!user) {
+    const providers = configured() ? await externalProviders() : { google: false };
     return json(res, 200, {
       signedIn: false,
       level: 'anonymous',
@@ -27,6 +42,7 @@ export default async function handler(req, res) {
       expiresAt: null,
       gateEnabled: gateEnabled(),
       backendReady: configured(),
+      googleEnabled: providers.google,
     });
   }
 
@@ -73,6 +89,7 @@ export default async function handler(req, res) {
     expiresAt: access.expiresAt,
     gateEnabled: gateEnabled(),
     backendReady: true,
+    googleEnabled: (await externalProviders()).google,
     trialCode: account?.trial_code || null,
     subscriptionStatus: account?.subscription_status || null,
     plan: account?.plan || null,

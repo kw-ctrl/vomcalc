@@ -149,6 +149,21 @@ export async function signInWithEmail(email, password) {
     return { error };
 }
 
+export async function signInWithGoogle(redirectTo) {
+    try {
+        const { error } = await getClient().auth.signInWithOAuth({
+            provider: 'google',
+            options: {
+                // Come back to the page they started from, same as the email flow.
+                redirectTo: redirectTo || (window.location.origin + window.location.pathname),
+            },
+        });
+        return { error };
+    } catch (err) {
+        return { error: err };
+    }
+}
+
 export async function signUpWithEmail(email, password) {
     const { error } = await getClient().auth.signUp({ email, password });
     return { error };
