@@ -2030,11 +2030,20 @@ function _localDealRecord(payload) {
     };
 }
 
+let _sessionBackendDown = false;  // set once a session lookup times out — avoids repeated hangs
+
 async function _getSession() {
+    if (_sessionBackendDown) return null;
     try {
         // auth.js exposes getBrowserSession()
-        const session = typeof getBrowserSession === 'function' ? await getBrowserSession() : null;
-        return session;
+        if (typeof getBrowserSession !== 'function') { _sessionBackendDown = true; return null; }
+        // Never let the UI block on an unreachable account backend: race a hard timeout.
+        const session = await Promise.race([
+            Promise.resolve().then(() => getBrowserSession()).catch(() => null),
+            new Promise(resolve => setTimeout(() => resolve('__timeout__'), 4000)),
+        ]);
+        if (session === '__timeout__') { _sessionBackendDown = true; return null; }
+        return session || null;
     } catch { return null; }
 }
 
@@ -2062,15 +2071,18 @@ function closeSaveDeal() {
 }
 
 async function loadDealsForVariantPicker() {
+    const sel = document.getElementById('variantParentId');
+    const render = (deals) => {
+        if (!sel) return;
+        _allDeals = Array.isArray(deals) ? deals : [];
+        sel.innerHTML = _allDeals.map(d => `<option value="${d.id}">${d.name || d.title || d.property_address || 'Untitled'}</option>`).join('');
+    };
     const session = await _getSession();
-    if (!session) return;
+    if (!session) { render(_localDealsRead()); return; }
     try {
         const r = await fetch('/api/deals', { headers: { Authorization: `Bearer ${session.access_token}` } });
-        const deals = await r.json();
-        _allDeals = Array.isArray(deals) ? deals : [];
-        const sel = document.getElementById('variantParentId');
-        sel.innerHTML = _allDeals.map(d => `<option value="${d.id}">${d.name || d.title || d.property_address}</option>`).join('');
-    } catch {}
+        render(await r.json());
+    } catch { render(_localDealsRead()); }
 }
 
 document.getElementById('saveAsVariant')?.addEventListener('change', function() {
@@ -2202,22 +2214,23 @@ function closeMyDeals() {
 
 async function refreshDealsList() {
     const container = document.getElementById('dealsListContainer');
-    container.innerHTML = '<p style="color:#6b7280;font-size:13px;text-align:center;padding:20px">Loading...</p>';
-    const session = await _getSession();
 
-    if (!session) {
-        // No account backend → show deals saved in this browser
-        _dealsAreLocal = true;
-        _allDeals = _localDealsRead();
+    // Render browser-local deals IMMEDIATELY so the panel never blocks on the network.
+    _dealsAreLocal = true;
+    _allDeals = _localDealsRead();
+    if (_allDeals.length) {
         filterDeals();
-        if (_allDeals.length) {
-            const banner = document.createElement('p');
-            banner.style.cssText = 'color:#9ca3af;font-size:11px;margin:0 0 10px';
-            banner.textContent = 'Saved in this browser on this device.';
-            container.prepend(banner);
-        }
-        return;
+        const banner = document.createElement('p');
+        banner.style.cssText = 'color:#9ca3af;font-size:11px;margin:0 0 10px';
+        banner.textContent = 'Saved in this browser on this device.';
+        container.prepend(banner);
+    } else {
+        container.innerHTML = '<p style="color:#6b7280;font-size:13px;text-align:center;padding:30px">No deals saved yet. Analyze a deal and click Save Deal.</p>';
     }
+
+    // Then upgrade to the account's deals if an account backend answers.
+    const session = await _getSession();
+    if (!session) return;
 
     _dealsAreLocal = false;
     try {
@@ -2225,7 +2238,11 @@ async function refreshDealsList() {
         _allDeals = await r.json();
         filterDeals();
     } catch (err) {
-        container.innerHTML = `<p style="color:#f87171;font-size:13px;text-align:center;padding:20px">Error: ${err.message}</p>`;
+        // Keep the local list rendered; surface the server problem without wiping it.
+        const note = document.createElement('p');
+        note.style.cssText = 'color:#f87171;font-size:11px;margin:0 0 10px';
+        note.textContent = 'Could not reach saved deals: ' + err.message;
+        container.prepend(note);
     }
 }
 
@@ -2826,4 +2843,7 @@ Object.assign(window, {
   // Furnishing estimates — referenced by inline oninput/onchange in app.html
   updateFurnishEstimate,
   syncFurnishComputed,
+  // Referenced by inline onclick in the generated deals list
+  deleteDeal,
+  saveVariantOf,
 });

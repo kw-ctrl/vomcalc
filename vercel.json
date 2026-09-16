@@ -1,7 +1,8 @@
 {
   "rewrites": [
     { "source": "/", "destination": "/landing.html" },
-    { "source": "/app", "destination": "/app.html" }
+    { "source": "/app", "destination": "/app.html" },
+    { "source": "/favicon.ico", "destination": "/logo.png" }
   ],
   "headers": [
     {
