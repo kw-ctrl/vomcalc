@@ -1621,6 +1621,65 @@ function populateFromListing(data) {
     }
 }
 
+/**
+ * Pull REAL market data for an address (or a listing link) and fill the revenue fields.
+ *
+ * /api/lookup resolves the address — from the URL path where possible, so a Zillow link
+ * works even though Zillow blocks server-side fetching — then returns estimated revenue,
+ * ADR and occupancy from actual operating listings nearby.
+ */
+async function applyMarketData(query) {
+    try {
+        const r = await fetch('/api/lookup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query }),
+        });
+        const d = await r.json().catch(() => ({}));
+        if (!r.ok) return { error: d.error || 'No market data for that property.', needsAddress: !!d.needsAddress };
+
+        const e = d.estimate || {};
+        const n = (d.comps && d.comps.stats && d.comps.stats.count) || e.compsAnalyzed || 0;
+
+        // Order matters: this form keeps ONE authoritative figure and derives the other, so
+        // occupancy is set first (it's an input), then revenue is made authoritative and ADR
+        // is derived from it. ADR is then written to show the real market rate without
+        // re-deriving, so all three fields display actual market values rather than a
+        // number that ping-ponged between handlers.
+        if (e.occupancy) {
+            const occ = Math.round(e.occupancy);
+            const occEl = document.getElementById('occupancyRate');
+            const occSlider = document.getElementById('occupancyRateSlider');
+            if (occEl) occEl.value = occ;
+            if (occSlider) occSlider.value = occ;
+            if (typeof onOccupancyChange === 'function') onOccupancyChange();
+        }
+        if (e.annualRevenue) {
+            setCurrencyVal('annualRevenueInput', Math.round(e.annualRevenue));
+            if (typeof onAnnualRevenueChange === 'function') onAnnualRevenueChange();
+        }
+        if (e.adr) {
+            const adrEl = document.getElementById('adr');
+            if (adrEl) adrEl.value = Math.round(e.adr);   // display only — no handler, no re-derive
+        }
+
+        window.__vomMarketData = d;
+        if (typeof recalc === 'function') recalc();
+
+        const bits = [];
+        if (e.annualRevenue) bits.push('$' + Math.round(e.annualRevenue).toLocaleString() + '/yr revenue');
+        if (e.adr) bits.push('$' + Math.round(e.adr) + ' ADR');
+        if (e.occupancy) bits.push(Math.round(e.occupancy) + '% occupancy');
+        showFetchStatus(
+            `\u2713 Real market data for ${d.address}: ${bits.join(', ')} \u2014 from ${n} actual listings nearby${d.cached ? ' (cached)' : ''}.`,
+            'success'
+        );
+        return d;
+    } catch {
+        return { error: 'Could not reach the market data service.' };
+    }
+}
+
 async function fetchListingData() {
     const urlInput = document.getElementById('listingUrl');
     const btn = document.getElementById('fetchListingBtn');
@@ -1661,9 +1720,18 @@ async function fetchListingData() {
         }
     }
 
-    // Warn upfront for Zillow — server-side fetch is always blocked by PerimeterX
-    if (hostname === 'zillow.com' || hostname === 'www.zillow.com') {
-        showFetchStatus('Zillow blocks automated imports. Search the same address on redfin.com and paste that URL — or enter details manually.', 'error');
+    // Zillow blocks page fetching, but the ADDRESS sits in the URL — so resolve the property
+    // from the link itself and pull real market data, rather than turning the user away.
+    if (hostname === 'zillow.com' || hostname.endsWith('.zillow.com')) {
+        btn.disabled = true;
+        showFetchStatus('Reading the address from that Zillow link\u2026', 'loading');
+        const market = await applyMarketData(url);
+        btn.disabled = false;
+        if (market && market.error) {
+            showFetchStatus(market.needsAddress
+                ? 'I could not read an address from that Zillow link. Paste the property address and it will work.'
+                : market.error, 'error');
+        }
         return;
     }
 
@@ -1704,7 +1772,11 @@ async function fetchListingData() {
         populateFromListing(data);
         const gotSomething = data.price || data.listedPrice || data.address || data.squareFeet;
         if (gotSomething) {
-            showFetchStatus('✓ Listing imported — review and fill any highlighted fields.', 'success');
+            // The import gives the price/beds/sqft; the market data gives the revenue side.
+            const market = await applyMarketData(resolvedUrl);
+            if (!market || market.error) {
+                showFetchStatus('✓ Listing imported — review and fill any highlighted fields.', 'success');
+            }
         } else {
             showFetchStatus('Could not extract data from that listing (site may block automated access). Try the 📄 document upload, or enter details manually.', 'error');
         }
@@ -1912,6 +1984,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Auth & gating
     initGating();
+
+    // Landing-page handoff: /app?address=… arrives when someone ran a lookup on the front
+    // door and clicked through. Prefill the field and pull the same real market data.
+    try {
+        const arriving = new URLSearchParams(window.location.search).get('address');
+        if (arriving) {
+            setTimeout(async () => {
+                const urlField = document.getElementById('listingUrl');
+                if (urlField) urlField.value = arriving;
+                showFetchStatus('Loading real market data for ' + arriving + '\u2026', 'loading');
+                const market = await applyMarketData(arriving);
+                if (market && market.error) showFetchStatus(market.error, 'error');
+                if (window.history?.replaceState) history.replaceState(null, '', window.location.pathname);
+            }, 600);
+        }
+    } catch { /* a malformed query string must never block the app */ }
 
     // Deep links for code hand-outs: /app?code=YOUTUBE14 or /app#redeem
     // (used from YouTube descriptions and IG DMs so the field is already filled in)

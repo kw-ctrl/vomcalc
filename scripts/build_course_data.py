@@ -156,6 +156,16 @@ def hhmmss(s):
     return f"{s // 3600}:{(s % 3600) // 60:02d}:{s % 60:02d}"
 
 
+def load_clips():
+    """Clip URLs built by ~/.hermes/scripts/ev_clip_pipeline.py, keyed by "label|startSec"."""
+    d = load(f"{STATE}/ev_clips.json", {"clips": {}}).get("clips", {})
+    out = {}
+    for k, c in d.items():
+        if c.get("status") == "ok" and c.get("url"):
+            out[k] = {"url": c["url"], "dur": c.get("dur"), "bytes": c.get("bytes")}
+    return out
+
+
 def watch_url(drive_id, start_sec):
     if not drive_id:
         return None
@@ -221,7 +231,7 @@ def curate(lessons, modules, cap_per_module):
 
 
 def build_course(course_id, title, subtitle, blurb, modules, mined, worklist, index, cap, tax_only=False,
-                 tax_from_other=None):
+                 tax_from_other=None, clips=None):
     """mined: list of {label, lessons[]}  ->  a course document for the portal."""
     meta = {c["label"]: c for c in worklist.get("calls", [])}
     pool = []
@@ -250,9 +260,14 @@ def build_course(course_id, title, subtitle, blurb, modules, mined, worklist, in
                 "guest": e.get("guest"),
                 "driveId": did,
                 "startSec": L.get("start_sec"),
+                "endSec": L.get("end_sec"),
                 "at": hhmmss(L.get("start_sec")),
                 "watch": watch_url(did, L.get("start_sec")),
             }
+            if L.get("start_sec") is not None:
+                cl = (clips or {}).get(f"{base_label}|{int(L['start_sec'])}")
+                if cl:
+                    L["_source"]["clip"] = cl
             pool.append(L)
 
     kept, dropped = curate(pool, modules, cap)
@@ -344,10 +359,11 @@ def main():
 
     tax_modules = tax.get("modules") or {}
 
+    clips = load_clips()
     airbnb = build_course(
         "airbnb", "The Airbnb Playbook",
         "Buy, launch and run short-term rentals — in lifecycle order",
-        AIRBNB_BLURB, AIRBNB_MODULES, ab.get("calls", []), ab_wl, index, cap=12)
+        AIRBNB_BLURB, AIRBNB_MODULES, ab.get("calls", []), ab_wl, index, cap=12, clips=clips)
 
     # The tax course draws on BOTH passes: its own tax worklist, plus the tax-anchored
     # lessons the Airbnb pass extracted (Section 179, cost seg, REP, the lazy 1031).
@@ -355,11 +371,11 @@ def main():
         "tax", "The Tax Playbook",
         "Turn the portfolio into a tax machine — depreciation, cost seg, REP, entities, year-end",
         TAX_BLURB, tax_modules or {"0": "Tax is the fourth lever"}, tax.get("calls", []), tax_wl,
-        index, cap=11, tax_only=True)
+        index, cap=11, tax_only=True, clips=clips)
     extra = build_course(
         "tax", "The Tax Playbook (from the Airbnb archive)", "", "",
         tax_modules or {"0": "Tax is the fourth lever"}, ab.get("calls", []), ab_wl, index,
-        cap=40, tax_only=True)
+        cap=40, tax_only=True, clips=clips)
 
     # merge the two tax pools, then curate again so the combined set stays tight
     def carry(les, module_n):

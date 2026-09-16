@@ -91,6 +91,49 @@ with sync_playwright() as p:
         page.screenshot(path=f"{SHOTS}/4-lesson-open.png")
     step("a lesson expands with its rule and a source recording link", lesson_expands_with_source)
 
+    def clips_play_inline():
+        """The lesson videos must be OUR clips (blob storage), and they must actually play —
+        not just exist. A Drive link would be a regression: Kassidy asked for embedded sections."""
+        n = page.evaluate("() => document.querySelectorAll('video.clip').length")
+        assert n > 0, "no embedded lesson video on the page at all"
+        assert page.locator(".lesson video.clip[src^='https://']").count() == n, \
+            "a clip is not served over https"
+        drives = page.evaluate(
+            "() => [...document.querySelectorAll('video.clip')].filter(v => v.src.includes('drive.google.com')).length")
+        assert drives == 0, f"{drives} video element(s) still point at Drive"
+
+        # open the FIRST lesson that actually has a clip, and screenshot it — evidence must show
+        # the player, not a lesson that legitimately has none yet
+        opened = page.evaluate("""() => {
+            const v = document.querySelector('video.clip');
+            const lesson = v.closest('.lesson');
+            lesson.classList.add('open');
+            const btn = lesson.querySelector('button');
+            if (btn) btn.setAttribute('aria-expanded', 'true');
+            lesson.scrollIntoView({ block: 'center' });
+            return lesson.querySelector('h3').innerText;
+        }""")
+        page.wait_for_timeout(500)
+
+        page.wait_for_function(
+            "() => { const v = document.querySelector('video.clip'); return v && (v.readyState >= 1 || v.error); }",
+            timeout=25000)
+        info = page.evaluate("""() => { const v = document.querySelector('video.clip');
+            return { readyState: v.readyState, w: v.videoWidth, h: v.videoHeight,
+                     err: v.error ? v.error.message : null, src: v.currentSrc.slice(0, 90) }; }""")
+        assert not info["err"], f"video error: {info['err']}"
+        assert info["w"] > 0 and info["h"] > 0, f"no video dimensions: {info}"
+
+        # and it must actually advance (real playback, not a poster)
+        page.evaluate("""() => { const v = document.querySelector('video.clip');
+            v.muted = true; v.play().catch(() => {}); }""")
+        page.wait_for_timeout(3000)
+        played = page.evaluate("() => document.querySelector('video.clip').currentTime")
+        assert played > 0.2, f"video did not play (currentTime={played})"
+        page.screenshot(path=f"{SHOTS}/7-clip-embed.png")
+        print(f"       playing inline from {info['src']} — lesson: {opened[:60]}")
+    step("lesson video clips are embedded from our host and actually play", clips_play_inline)
+
     def course_switcher_works():
         page.wait_for_selector("#switcher .card", timeout=8000)
         assert page.locator("#switcher .card").count() >= 2, "switcher cards missing"
@@ -110,13 +153,19 @@ with sync_playwright() as p:
 
     def partners_page():
         page.goto(BASE.replace("/members/", "/members/affiliates.html"))
-        page.wait_for_selector("table.dir tbody tr", timeout=15000)
-        rows = page.locator("table.dir tbody tr").count()
-        assert rows >= 15, f"only {rows} partner rows"
-        assert page.locator(".course-card").count() >= 3, "affiliate program cards missing"
-        assert "Somerled" in page.inner_text("#affs")
+        page.wait_for_selector(".res-item.vendor", timeout=15000)
+        rows = page.locator(".res-item.vendor").count()
+        assert rows >= 20, f"only {rows} vendor rows"
+        cards = page.locator("#affs .course-card").count()
+        assert cards >= 6, f"only {cards} partner programme cards"
+        text = page.inner_text("#content")
+        for expected in ("Somerled", "Karlton Dennis", "KBKG", "Madison SPECS", "Tarantino CPA",
+                         "Cell Brokerage", "Hospitable", "Turno", "PriceLabs"):
+            assert expected.lower() in text.lower(), f"partners page is missing {expected}"
+        # a credit term must only appear where one is agreed, and it must be visible
+        assert page.locator(".benefit").count() >= 2, "no member-credit blocks rendered"
         page.screenshot(path=f"{SHOTS}/6-partners.png", full_page=True)
-    step("partner directory and affiliate programs render", partners_page)
+    step("partner directory and affiliate programmes render", partners_page)
 
     def signed_in_state_shows():
         who = page.inner_text("#who")

@@ -24,6 +24,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -39,6 +40,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -54,6 +56,7 @@ const airbnb = {
       "guest": "Raj Chida",
       "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
      },
@@ -69,8 +72,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
       "startSec": 965.5,
+      "endSec": 1011.7,
       "at": "0:16:05",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=965"
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=965",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-965-ab8ijiU3DrFahmCdMufMFTtWiEDqZl.mp4",
+       "dur": 150,
+       "bytes": 13752928
+      }
      },
      "alsoIn": []
     },
@@ -84,8 +93,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
       "startSec": 1262.4,
+      "endSec": 1305.9,
       "at": "0:21:02",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1262"
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1262",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-1262-vlsFEMxKJ8Fiugmt8xWYv49UaxYckk.mp4",
+       "dur": 150,
+       "bytes": 14662935
+      }
      },
      "alsoIn": []
     },
@@ -99,8 +114,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb",
       "startSec": 5953.0,
+      "endSec": 5995.5,
       "at": "1:39:13",
-      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=5953"
+      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=5953",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-2-sep-17-2025-velocity-of-money-and-trading-up-5953-MG10BJ3o6MxqwUm5XFzQZmoVPskCEt.mp4",
+       "dur": 150,
+       "bytes": 1830910
+      }
      },
      "alsoIn": []
     },
@@ -114,6 +135,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -129,8 +151,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
       "startSec": 940.9,
+      "endSec": 982.9,
       "at": "0:15:40",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=940"
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=940",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-940-uamOYvGM1cTeFHR8zsqKL0cAGWvMdV.mp4",
+       "dur": 150,
+       "bytes": 9545877
+      }
      },
      "alsoIn": []
     },
@@ -144,6 +172,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -159,6 +188,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -174,6 +204,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -189,6 +220,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -211,8 +243,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb",
       "startSec": 706.0,
+      "endSec": 776.0,
       "at": "0:11:46",
-      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=706"
+      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=706",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-2-sep-17-2025-velocity-of-money-and-trading-up-706-TYx5Ubz6kMTTvqnO6FNMQTt6ksLBgW.mp4",
+       "dur": 150,
+       "bytes": 5916196
+      }
      },
      "alsoIn": []
     },
@@ -226,6 +264,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -241,8 +280,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
       "startSec": 1750.8,
+      "endSec": 1793.0,
       "at": "0:29:10",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=1750"
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=1750",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-1750-sID3AjHNvB1xYxnJ08wcQgNLCxWPPt.mp4",
+       "dur": 150,
+       "bytes": 7664496
+      }
      },
      "alsoIn": []
     },
@@ -256,6 +301,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -271,6 +317,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -286,6 +333,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -301,6 +349,7 @@ const airbnb = {
       "guest": "Raj Chida",
       "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
      },
@@ -316,6 +365,7 @@ const airbnb = {
       "guest": "Patryk Swietek",
       "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
      },
@@ -331,6 +381,7 @@ const airbnb = {
       "guest": "Zoey Berghoff",
       "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view"
      },
@@ -346,6 +397,7 @@ const airbnb = {
       "guest": "Zoey Berghoff",
       "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view"
      },
@@ -361,8 +413,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb",
       "startSec": 5451.6,
+      "endSec": 5495.9,
       "at": "1:30:51",
-      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=5451"
+      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=5451",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-2-sep-17-2025-velocity-of-money-and-trading-up-5451-gOGImeJQCe43naXUzdhrR405GC3lm3.mp4",
+       "dur": 150,
+       "bytes": 4818813
+      }
      },
      "alsoIn": []
     },
@@ -376,6 +434,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -398,8 +457,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
       "startSec": 1997.7,
+      "endSec": 2040.2,
       "at": "0:33:17",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1997"
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1997",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-1997-oBc6sA3FFDuHP5703w6H8gITBLXK25.mp4",
+       "dur": 150,
+       "bytes": 13277384
+      }
      },
      "alsoIn": []
     },
@@ -413,6 +478,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -428,6 +494,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -443,6 +510,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -458,6 +526,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -473,6 +542,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -488,6 +558,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -503,6 +574,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -518,6 +590,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -533,6 +606,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -548,6 +622,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -563,6 +638,7 @@ const airbnb = {
       "guest": "Raj Chida",
       "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
      },
@@ -585,6 +661,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -600,6 +677,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -615,6 +693,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -630,8 +709,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
       "startSec": 4455.7,
+      "endSec": 4502.3,
       "at": "1:14:15",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455"
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4455-jKWXBex3A17wYT2dQBihOJIBJngncK.mp4",
+       "dur": 150,
+       "bytes": 8091112
+      }
      },
      "alsoIn": []
     },
@@ -645,6 +730,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -660,6 +746,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -675,6 +762,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -696,6 +784,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -711,6 +800,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -726,6 +816,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -741,6 +832,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -756,6 +848,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -778,6 +871,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -793,6 +887,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -808,6 +903,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -823,6 +919,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -838,6 +935,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -853,6 +951,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -868,6 +967,7 @@ const airbnb = {
       "guest": "Stella Han",
       "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
      },
@@ -883,6 +983,7 @@ const airbnb = {
       "guest": "Stella Han",
       "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
      },
@@ -898,6 +999,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -913,6 +1015,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -928,6 +1031,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -943,6 +1047,7 @@ const airbnb = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -965,6 +1070,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -980,6 +1086,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -995,6 +1102,7 @@ const airbnb = {
       "guest": "Stella Han",
       "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
      },
@@ -1010,6 +1118,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1025,6 +1134,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1040,6 +1150,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -1055,6 +1166,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
      },
@@ -1070,6 +1182,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -1085,8 +1198,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
       "startSec": 6861.6,
+      "endSec": 6905.4,
       "at": "1:54:21",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=6861"
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=6861",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-6861-LG5c2STv1zOtTFSFTOvdYTd5gUGoye.mp4",
+       "dur": 150,
+       "bytes": 7011484
+      }
      },
      "alsoIn": []
     },
@@ -1100,6 +1219,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -1115,6 +1235,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -1130,6 +1251,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E/view"
      },
@@ -1152,6 +1274,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1167,6 +1290,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1182,6 +1306,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1197,6 +1322,7 @@ const airbnb = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -1212,6 +1338,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1227,6 +1354,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1242,6 +1370,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1257,6 +1386,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1272,6 +1402,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1287,6 +1418,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1302,6 +1434,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1317,6 +1450,7 @@ const airbnb = {
       "guest": "Patryk Swietek",
       "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
      },
@@ -1339,6 +1473,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -1354,8 +1489,14 @@ const airbnb = {
       "guest": null,
       "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
       "startSec": 3770.6,
+      "endSec": 3816.0,
       "at": "1:02:50",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770"
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-3770-6qzbuTbjFsi3VodRtXwff8DvGWNQK5.mp4",
+       "dur": 150,
+       "bytes": 12131584
+      }
      },
      "alsoIn": []
     },
@@ -1369,6 +1510,7 @@ const airbnb = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -1384,6 +1526,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1399,6 +1542,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1414,6 +1558,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1429,6 +1574,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1444,6 +1590,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1459,6 +1606,7 @@ const airbnb = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1474,6 +1622,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -1489,6 +1638,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -1504,6 +1654,7 @@ const airbnb = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },

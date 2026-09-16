@@ -5,7 +5,7 @@
  * exist, or live tool URLs) — no placeholders, no invented codes.
  */
 import { requireMember } from '../_shared/members.js';
-import { resources, partners, affiliatePrograms } from '../_shared/library.js';
+import { resources, partnerGroups, affiliatePrograms } from '../_shared/library.js';
 
 export default async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
@@ -18,5 +18,5 @@ export default async function handler(req, res) {
   const member = requireMember(req, res);
   if (!member) return;
 
-  return res.status(200).json({ resources, partners, affiliatePrograms });
+  return res.status(200).json({ resources, partnerGroups, affiliatePrograms });
 }

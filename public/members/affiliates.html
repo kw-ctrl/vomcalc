@@ -14,57 +14,76 @@
   <div style="margin:32px 0 8px">
     <span class="pill">Member deals</span>
     <h1 style="margin-top:14px">Partners &amp; affiliates</h1>
-    <p class="lede">The vendors the community actually uses — and where Escape Velocity members get a
-    referral credit for using them.</p>
+    <p class="lede">Every partner programme, and the vendors the community actually uses — CPAs and
+    tax strategists, cost segregation firms, designers, lenders, insurance, management and legal.</p>
+    <p class="muted">Referral credits are paid to Escape Velocity and shared back with the member who
+    referred. Confirm the rate with Seven before you quote anyone a number.</p>
   </div>
 
-  <h2>EV partner programs</h2>
-  <p class="muted" style="margin-top:-6px">Status is exact: “live” means the referral route is written down and
-  working today.</p>
+  <h2 style="margin-top:30px">Partner programmes</h2>
+  <p class="muted" style="margin-top:-6px">
+    <span class="pill">live</span> the EV referral route works today ·
+    <span class="pill grey">open</span> a public programme you can join for your own tracked link ·
+    <span class="pill grey">gated</span> qualifying requirements apply
+  </p>
   <div id="affs" class="grid two"></div>
 
-  <h2>Vendor directory</h2>
-  <p class="muted" style="margin-top:-6px">Mirrored from the community’s Preferred Vendors sheet.
-  <span id="count"></span></p>
-  <div class="card" style="padding:6px 10px;overflow-x:auto">
-    <table class="dir" id="dir">
-      <thead><tr><th>Category</th><th>Who</th><th>Where</th><th>Contact</th><th>Notes</th></tr></thead>
-      <tbody></tbody>
-    </table>
-  </div>
-  <p class="muted">Referral credits are paid to Escape Velocity and shared back with the member who referred.
-  Ask Kassidy before quoting a member rate.</p>
+  <h2 style="margin-top:40px">Vendor directory</h2>
+  <p class="muted" style="margin-top:-6px" id="vcount"></p>
+  <div id="dir"></div>
 </div>
 
 <script src="/members/members.js"></script>
 <script>
+function contactBits(v) {
+  const bits = [];
+  if (v.location) bits.push(esc(v.location));
+  if (v.email) bits.push(`<a href="mailto:${esc(v.email)}">${esc(v.email)}</a>`);
+  if (v.phone) bits.push(esc(v.phone));
+  if (v.contact) bits.push(esc(v.contact));
+  if (v.url) bits.push(`<a href="${esc(v.url)}" target="_blank" rel="noopener">website ↗</a>`);
+  if (v.consult) bits.push(`<a href="${esc(v.consult)}" target="_blank" rel="noopener">book a consultation ↗</a>`);
+  return bits.join(' · ');
+}
+
+function vendorRow(v, category) {
+  return `<div class="res-item vendor">
+    <div class="kind">${esc((category || '').split(/[ &]/)[0].slice(0, 9))}</div>
+    <div style="flex:1">
+      <div class="vname">${esc(v.name)}</div>
+      ${v.what ? `<div class="vwhat">${esc(v.what)}</div>` : ''}
+      <div class="vmeta">${contactBits(v)}</div>
+      ${v.benefit ? `<div class="benefit"><b>EV member credit</b> ${esc(v.benefit)}</div>` : ''}
+      ${v.note ? `<div class="vmeta">${esc(v.note)}</div>` : ''}
+    </div>
+  </div>`;
+}
+
 withGate(async () => {
-  const { partners, affiliatePrograms } = await memberGet('/api/members/resources');
+  const { partnerGroups, affiliatePrograms } = await memberGet('/api/members/resources');
 
   document.querySelector('#affs').innerHTML = affiliatePrograms.map((a) => `
     <div class="course-card">
       <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
         <h3 style="font-size:18px">${esc(a.name)}</h3>
-        <span class="pill ${a.status === 'live' ? '' : 'grey'}">${a.status === 'live' ? 'live' : 'program'}</span>
+        <span class="pill ${a.status === 'live' ? '' : 'grey'}">${esc(a.status)}</span>
       </div>
       <p class="muted" style="margin:0">${esc(a.what)}</p>
       <p style="color:var(--ink-2);margin:0;font-size:14px">${esc(a.terms)}</p>
       <a class="btn ${a.status === 'live' ? '' : 'ghost'}" style="align-self:flex-start"
-         href="${esc(a.url)}" target="_blank" rel="noopener">
-        ${a.status === 'live' ? 'Register the referral →' : 'Program details →'}
-      </a>
-      ${a.status === 'live' ? '' : '<span class="muted">EV referral link is being attached — use this page’s link once it lands.</span>'}
+         href="${esc(a.url)}" target="_blank" rel="noopener">${esc(a.action || 'Program details')} →</a>
     </div>`).join('');
 
-  document.querySelector('#dir tbody').innerHTML = partners.map((p) => `
-    <tr>
-      <td class="muted">${esc(p.category)}</td>
-      <td><b>${esc(p.name)}</b>${p.url ? `<br><a href="${esc(p.url)}" target="_blank" rel="noopener">website</a>` : ''}</td>
-      <td class="muted">${esc(p.location || '')}</td>
-      <td>${p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a><br>` : ''}${p.phone ? esc(p.phone) : ''}</td>
-      <td class="muted">${esc(p.note || '')}</td>
-    </tr>`).join('');
-  document.querySelector('#count').textContent = partners.length + ' contacts';
+  document.querySelector('#dir').innerHTML = partnerGroups.map((g) => `
+    <section class="res-group">
+      <h2 style="margin-bottom:4px">${esc(g.group)}</h2>
+      ${g.note ? `<p class="muted" style="margin:0 0 12px">${esc(g.note)}</p>` : ''}
+      ${g.items.map((v) => vendorRow(v, g.group)).join('')}
+    </section>`).join('');
+
+  const total = partnerGroups.reduce((n, g) => n + g.items.length, 0);
+  document.querySelector('#vcount').textContent =
+    `${total} vendors across ${partnerGroups.length} categories. Credit terms shown only where one is actually agreed.`;
 });
 </script>
 </body>

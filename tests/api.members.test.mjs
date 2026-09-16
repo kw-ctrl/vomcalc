@@ -132,8 +132,22 @@ await t('resources return real Drive links and the partner directory', async () 
     assert.match(it.url, /^https:\/\//, `bad url for ${it.title}`);
     assert.ok(!/example\.com|TODO|PLACEHOLDER/i.test(it.url), `placeholder url in ${it.title}`);
   }
-  assert.ok(r.out.body.partners.length >= 15, 'partner directory looks empty');
-  assert.ok(r.out.body.affiliatePrograms.length >= 3);
+  assert.ok(r.out.body.partnerGroups.length >= 6, 'partner categories look thin');
+  const vendors = r.out.body.partnerGroups.reduce((n, g) => n + g.items.length, 0);
+  assert.ok(vendors >= 20, `vendor directory looks empty (${vendors})`);
+  for (const g of r.out.body.partnerGroups) {
+    assert.ok(g.group && g.items.length, `empty partner group: ${g.group}`);
+    for (const v of g.items) {
+      assert.ok(v.name, `vendor without a name in ${g.group}`);
+      if (v.url) assert.match(v.url, /^https:\/\//, `bad url for ${v.name}`);
+      if (v.email) assert.match(v.email, /@/, `bad email for ${v.name}`);
+    }
+  }
+  assert.ok(r.out.body.affiliatePrograms.length >= 6);
+  for (const a of r.out.body.affiliatePrograms) {
+    assert.match(a.url, /^https:\/\//, `bad program url for ${a.name}`);
+    assert.ok(['live', 'open', 'gated'].includes(a.status), `bad status for ${a.name}: ${a.status}`);
+  }
 });
 
 await t('sign-out clears the cookie', async () => {

@@ -24,20 +24,29 @@ const courseId = new URLSearchParams(location.search).get('c') || 'airbnb';
 function lessonHTML(L, i) {
   const s = L.source || {};
   const watch = s.watch
-    ? `<a href="${esc(s.watch)}" target="_blank" rel="noopener">▶ Watch${s.at ? ' at ' + esc(s.at) : ''}</a>`
+    ? `<a href="${esc(s.watch)}" target="_blank" rel="noopener">▶ Open the full call${s.at ? ' at ' + esc(s.at) : ''}</a>`
     : '';
   const also = (L.alsoIn || []).filter((a) => a.watch).slice(0, 3)
     .map((a) => `<a href="${esc(a.watch)}" target="_blank" rel="noopener">${esc(a.label)}${a.at ? ' @ ' + esc(a.at) : ''}</a>`)
     .join(' · ');
+  const clip = s.clip && s.clip.url;
+  const player = clip
+    ? `<video class="clip" controls playsinline preload="metadata" poster="/members/clip-poster.jpg"
+         src="${esc(clip)}"></video>
+       <div class="clipnote">This section of the call${s.at ? ' — starts at ' + esc(s.at) : ''}${s.guest ? ' · guest: ' + esc(s.guest) : ''}</div>`
+    : (s.startSec != null
+        ? `<div class="clipnote">Video clip for this lesson is still being cut${s.at ? ' (starts at ' + esc(s.at) + ')' : ''} — use the link below for now.</div>`
+        : '');
   return `<div class="lesson" id="l${i}">
     <button type="button" aria-expanded="false">
       <span class="caret">＋</span>
       <h3>${esc(L.title)}</h3>
-      <span class="muted">${esc(s.label || '')}${s.guest ? ' · guest: ' + esc(s.guest) : ''}${s.at ? ' · ' + esc(s.at) : ''}</span>
+      <span class="muted">${esc(s.label || '')}${s.at ? ' · ' + esc(s.at) : ''}</span>
     </button>
     <div class="body">
       <p style="color:var(--ink-2);margin:0 0 4px">${esc(L.teaches || '')}</p>
       ${L.rule ? `<div class="rule"><b>The rule</b>${esc(L.rule)}</div>` : ''}
+      ${player}
       <div class="src">
         ${watch}
         ${s.speaker && L.speaker && L.speaker !== 'Kassidy' ? `<span>Speaker: ${esc(L.speaker)}</span>` : ''}

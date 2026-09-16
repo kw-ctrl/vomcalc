@@ -11,6 +11,10 @@
       "destination": "/app.html"
     },
     {
+      "source": "/adu",
+      "destination": "/adu.html"
+    },
+    {
       "source": "/courses",
       "destination": "/members/index.html"
     },

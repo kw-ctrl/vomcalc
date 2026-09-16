@@ -113,6 +113,11 @@ p.lede { color: var(--ink-2); font-size: 16px; margin: 0 0 8px; }
 }
 .lesson .rule b { color: var(--lime); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; display: block; margin-bottom: 3px; }
 .lesson .src { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; font-size: 12.5px; color: var(--ink-3); }
+.lesson video.clip {
+  width: 100%; max-width: 720px; aspect-ratio: 16 / 9; display: block;
+  border-radius: 10px; border: 1px solid var(--line-2); background: #000; margin: 14px 0 6px;
+}
+.lesson .clipnote { font-size: 12.5px; color: var(--ink-3); margin-bottom: 12px; }
 .caret { float: right; color: var(--ink-3); font-size: 12px; }
 
 /* ── Gate ───────────────────────────────────────────────── */
@@ -139,6 +144,18 @@ p.lede { color: var(--ink-2); font-size: 16px; margin: 0 0 8px; }
 }
 .res-item a { font-weight: 600; }
 .res-item .note { color: var(--ink-3); font-size: 12.5px; }
+
+/* ── Vendor rows on the partners page ───────────────────── */
+.res-item.vendor { align-items: flex-start; }
+.res-item.vendor .kind { min-width: 58px; margin-top: 2px; }
+.vname { font-weight: 700; font-size: 14.5px; }
+.vwhat { color: var(--ink-2); font-size: 13.5px; margin-top: 2px; }
+.vmeta { color: var(--ink-3); font-size: 12.5px; margin-top: 4px; }
+.benefit {
+  margin-top: 8px; background: var(--lime-dim); border: 1px solid var(--lime-line);
+  border-radius: 9px; padding: 8px 11px; font-size: 12.5px; color: var(--ink);
+}
+.benefit b { color: var(--lime); text-transform: uppercase; font-size: 10.5px; letter-spacing: 0.07em; margin-right: 4px; }
 
 table.dir { width: 100%; border-collapse: collapse; font-size: 13.5px; }
 table.dir th {

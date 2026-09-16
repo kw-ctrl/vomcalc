@@ -78,36 +78,96 @@ export const resources = [
 ];
 
 /**
- * The vendor directory — mirrored from Kassidy's "Preferred Vendors" sheet. These are
- * businesses the community already works with; several give EV members a referral credit.
+ * The vendor directory — CPAs, cost segregation, designers, lenders, insurance, management,
+ * legal, branding. Mirrored from Kassidy's own "Preferred Vendors" sheet, plus the firms his
+ * Gmail shows he actually spoke to (Tarantino CPA), plus national cost-seg firms verified live
+ * on the open web. `benefit` carries a member credit ONLY where one is actually written down.
+ *
+ * Nothing here is invented: a vendor with no verified public site has no `url` (better an
+ * absent link than a wrong one — Tavola Group's old link resolved to an unrelated Canadian
+ * consultancy, so it was dropped).
  */
-export const partners = [
-  { category: 'CPA', name: 'The CPA Dude (Tony)', location: 'Nationwide', email: 'tony@thecpadude.com', note: 'STR-focused CPA.' },
-  { category: 'CPA', name: 'Tavola Group', location: 'Nationwide' },
-  { category: 'CPA', name: 'Karlton Dennis', location: 'Nationwide', note: 'STR loophole, forecasting, planning, trusts.' },
-  { category: 'Insurance', name: 'Amanda Smith — Cell Brokerage', location: 'Nationwide', email: 'amanda.smith@cellbrokerage.com', note: 'STR-specific property insurance and umbrellas.' },
-  { category: 'DSCR lender', name: 'Kevin', location: 'Nationwide', phone: '310-689-8172', email: 'kevin@investorpropertyloan.com' },
-  { category: 'DSCR lender', name: 'Kenny Simpson', location: 'Nationwide', phone: '619-302-2020', email: 'kenny@simpson-team.com' },
-  { category: 'DSCR lender', name: 'Alex Bekesa', location: 'Nationwide', phone: '(818) 606-8823' },
-  { category: 'DSCR lender', name: 'Jonathan Yoo', location: 'Nationwide', phone: '(213) 507-9050' },
-  { category: 'Interior design', name: 'Somerled Designs — Maggie Mruk', location: 'Nationwide', email: 'maggie@somerleddesigns.com', url: 'https://www.somerleddesigns.com', note: '$500 virtual design / $1,000 design+PM referral credit per paid contract, paid monthly on paid-in-full. Register the referral under Escape Velocity first.' },
-  { category: 'Interior design', name: 'Funkit Interiors', location: 'Texas+' },
-  { category: 'Interior design', name: 'Reclamation Studio', location: 'Texas+' },
-  { category: 'Interior design', name: 'Sarah Glidewell', location: 'Michigan' },
-  { category: 'Interior design', name: 'Ishita Interiors', location: 'South+' },
-  { category: 'STR management', name: 'Federico Zimerman — Blackbird Hospitality', location: 'Nationwide', url: 'https://blackbirdhm.com/', note: 'Also does revenue management.' },
-  { category: 'STR management', name: 'Billy — Elevate Homes', location: 'San Diego', phone: '949-682-6833' },
-  { category: 'Legal', name: 'Mick Harris — Tonkon Torp', location: 'Real estate attorney', phone: '(503) 802-5765 direct · (503) 889-6636 cell', email: 'mick.harris@tonkon.com' },
-  { category: 'Legal', name: 'Bethany LaFlam', location: 'SEC lawyer' },
-  { category: 'Branding', name: 'Weber Co' },
-  { category: 'Branding', name: 'Caro Design Studios' },
-  { category: 'Social', name: 'Nate Vietz — Content House' },
-  { category: 'Social', name: 'Ben Wolff — Oasi' },
+export const partnerGroups = [
+  {
+    group: 'CPAs & tax strategists',
+    note: 'Who to call before you close, not after. Cost segregation, bonus depreciation, entity structure.',
+    items: [
+      { name: 'Karlton Dennis — Tax Alchemy', what: 'Tax strategist; the STR loophole, forecasting, planning, trusts.', location: 'Nationwide', url: 'https://karltondennis.com/', consult: 'https://www.taxalchemy.com/consultation-survey', note: 'Author of “The Short-Term Rental Rule”.' },
+      { name: 'The CPA Dude (Tony)', what: 'Tax savings system for real estate investors: entity setup, bookkeeping, planning, and discounted cost segregation studies.', location: 'Nationwide (all 50 states)', email: 'tony@thecpadude.com', url: 'https://thecpadude.com/' },
+      { name: 'Tarantino CPA LLC — Charles “CJ” Tarantino, CPA, MST', what: 'Boutique firm for real estate investors (STR, LTR, multifamily, syndications): multi-entity structure, multi-state planning, cost segregation, bonus depreciation, asset protection.', location: 'Roswell, GA — serving nationally', url: 'https://tarantino-cpa.com', note: 'Kassidy has been in their intake/discovery process since 2026. CJ teaches this material on podcasts — worth a guest slot.' },
+      { name: 'Tavola Group', what: 'CPA firm on the EV vendor list.', location: 'Nationwide', note: 'No verified public website — ask Seven for the introduction.' },
+      { name: 'AZ Does Taxes', what: 'Kassidy’s own tax preparer for the Arizona filings.', location: 'Arizona / remote', url: 'https://azdoestaxes.com/', email: 'az@azdoestaxes.com' },
+    ],
+  },
+  {
+    group: 'Cost segregation',
+    note: 'A study has to be done in the first year the property is in service — these are the national firms. EV has no referral arrangement with any of them yet; your CPA can also commission the study.',
+    items: [
+      { name: 'KBKG', what: 'Tax consulting firm specialising in cost segregation, R&D credits, repair-vs-capitalisation reviews, §45L and §179D. Works with owners and their CPAs.', location: 'National', url: 'https://www.kbkg.com/', note: 'Claims $11B+ in tax benefits claimed.' },
+      { name: 'Madison SPECS', what: 'National cost segregation firm; engineers and CPAs nationwide. One of the oldest in the category.', location: 'HQ New Jersey — national', url: 'https://madisonspecs.com/', contact: 'info@madisonspecs.com · (888) 773-2773', note: 'Filed 5,232 studies in 2025.' },
+      { name: 'Engineered Tax Services', what: 'Licensed engineering firm; cost segregation, §179D energy deductions, R&D credits, incentive reports.', location: 'National', url: 'https://www.engineeredtaxservices.com/', note: '25+ years; the largest specialty tax consulting firm in the US.' },
+    ],
+  },
+  {
+    group: 'Interior design — STR specialists',
+    note: 'Designers who price against rental revenue, not taste.',
+    items: [
+      { name: 'Somerled Designs — Maggie Mruk', what: 'Strategy-led STR interior design and project management.', url: 'https://www.somerleddesigns.com', email: 'maggie@somerleddesigns.com', benefit: '$500 referral credit for a virtual design, $1,000 for design + project management, per paid contract. Register referrals under Escape Velocity first — first partner to refer gets the credit.' },
+      { name: 'Funkit Interiors', what: 'STR design studio (co-founder Rob Abasolo of Robuilt).', url: 'https://www.funkitinteriors.com/', benefit: '$500 off your design project for the client.', contact: 'bridgette@funkitinteriors.com' },
+      { name: 'Sarah Glidewell — Studio Host', what: 'Interior design plus a four-day on-site launch experience.', location: 'Michigan', url: 'https://www.studiohost.co/', note: 'Sarah has also taught raising money for STRs on an EV call.' },
+      { name: 'Reclamation Studio', what: 'STR interior design.', location: 'Texas +', note: 'No verified public website — ask Seven.' },
+      { name: 'Ishita Interiors', what: 'STR interior design.', location: 'South +', note: 'No verified public website — ask Seven.' },
+    ],
+  },
+  {
+    group: 'Lenders — DSCR & residential',
+    note: 'For properties that don’t qualify on your W-2. Get more than one quote.',
+    items: [
+      { name: 'Kevin — Investor Property Loan', what: 'DSCR lender.', phone: '310-689-8172', email: 'kevin@investorpropertyloan.com' },
+      { name: 'Kenny Simpson', what: 'DSCR lender, residential.', phone: '619-302-2020', email: 'kenny@simpson-team.com' },
+      { name: 'Alex Bekesa', what: 'DSCR lender, residential.', phone: '(818) 606-8823' },
+      { name: 'Jonathan Yoo', what: 'DSCR lender, residential.', phone: '(213) 507-9050' },
+    ],
+  },
+  {
+    group: 'Insurance',
+    note: 'Insurance first, LLC second — that is the order Kassidy teaches.',
+    items: [
+      { name: 'Amanda Smith — Cell Brokerage', what: 'Insurance broker; STR-specific property coverage and umbrella policies.', location: 'Nationwide', email: 'amanda.smith@cellbrokerage.com', url: 'https://www.cellbrokerage.com/' },
+    ],
+  },
+  {
+    group: 'STR management & revenue',
+    note: 'For when you stop self-managing — or want a second pair of eyes on your pricing.',
+    items: [
+      { name: 'Federico Zimerman — Blackbird Hospitality', what: 'STR management and revenue management.', location: 'Nationwide', url: 'https://blackbirdhm.com/' },
+      { name: 'Billy — Elevate Homes', what: 'STR management.', location: 'San Diego', phone: '949-682-6833' },
+    ],
+  },
+  {
+    group: 'Legal & entity',
+    items: [
+      { name: 'Mick Harris — Tonkon Torp', what: 'Real estate attorney.', phone: '(503) 802-5765 · (503) 889-6636', email: 'mick.harris@tonkon.com' },
+      { name: 'Bethany LaFlam', what: 'SEC lawyer — for raising money from investors.', location: 'Nationwide' },
+    ],
+  },
+  {
+    group: 'Branding, content & social',
+    items: [
+      { name: 'Weber Co', what: 'Branding.' },
+      { name: 'Caro Design Studios', what: 'Branding.' },
+      { name: 'Nate Vietz — Content House', what: 'Social media.' },
+      { name: 'Ben Wolff — Oasi', what: 'Social media.' },
+    ],
+  },
 ];
 
 /**
- * Affiliate / partner programs. `status` is honest about where each one actually is —
- * "live" only where the referral route is written down and reachable today.
+ * Affiliate / partner programs. Terms below are the published terms (verified September 2026,
+ * each link goes to the program page that states them). `status` says exactly where each one is:
+ *   live    — the EV referral route exists and works today
+ *   open    — a public program you can join and get your own tracked link
+ *   gated   — a partner programme with qualifying requirements
  */
 export const affiliatePrograms = [
   {
@@ -116,33 +176,62 @@ export const affiliatePrograms = [
     terms: '$500 referral credit for a virtual design, $1,000 for design + project management, per paid contract. Paid monthly on paid-in-full. Register the referral under Escape Velocity — first partner to refer gets the credit.',
     url: 'https://form.jotform.com/252193985491065?howDid=Referral&typeA19=Escape%20Velocity',
     status: 'live',
-  },
-  {
-    name: 'PriceLabs',
-    what: 'Dynamic pricing / revenue management.',
-    terms: 'Ambassador program pays 10% commission plus partner benefits. EV is signed up as an affiliate partner.',
-    url: 'https://hello.pricelabs.co/ambassadors/',
-    status: 'program — EV referral link to be attached here',
+    action: 'Register the referral',
   },
   {
     name: 'Hospitable',
-    what: 'STR PMS, messaging automation and the direct-booking site.',
-    terms: 'Hosts get a referral credit through Hospitable’s referral program.',
-    url: 'https://hospitable.com',
-    status: 'program — EV referral link to be attached here',
+    what: 'STR PMS — messaging automation, and the direct-booking site.',
+    terms: '$200 flat per qualified referral, no cap, no payout minimum; free-plan referrals count. The referred host gets 25% off for 3 months. Their older page still advertises 25% of the first 3 months — worth confirming which applies.',
+    url: 'https://affiliates.hospitable.com/',
+    status: 'open',
+    action: 'Join the programme',
   },
   {
     name: 'Turno',
-    what: 'Cleaning and turnover scheduling for STRs.',
-    terms: 'Payouts are routed to the Oxbow account.',
-    url: 'https://turno.com',
-    status: 'program — EV referral link to be attached here',
+    what: 'Cleaning and turnover scheduling.',
+    terms: '$150 one-time after the referred host completes 2 marketplace turnovers — or 20% of their subscription fee monthly for up to a year. 90-day cookie, PayPal within 3 business days.',
+    url: 'https://affiliates.turno.com/',
+    status: 'open',
+    action: 'Join the programme',
+  },
+  {
+    name: 'PriceLabs',
+    what: 'Dynamic pricing and revenue management.',
+    terms: '10% commission on the first 12 invoices of each referral (Dynamic Pricing, not Market Dashboard). Commissions are paid as PriceLabs credit and cashed out only above a $50 balance. New customers only. Their ambassador terms also allow paid content under a Statement of Work.',
+    url: 'https://hello.pricelabs.co/ambassadors/',
+    status: 'open',
+    action: 'Apply as ambassador',
+  },
+  {
+    name: 'Funkit Interiors',
+    what: 'STR design studio.',
+    terms: '$500 flat per referred project, paid once the client books, signs and completes. The client gets $500 off. Co-founded by Rob Abasolo (Robuilt).',
+    url: 'https://hi.funkitinteriors.com/registration',
+    status: 'open',
+    action: 'Get your referral link',
+  },
+  {
+    name: 'Lodgify',
+    what: 'Channel manager and PMS.',
+    terms: 'Up to 30% recurring commission for up to 12 months (20% / 25% / 30% by volume tier). Subscription must stay active 40 days; $200 minimum payout; paid ads are not allowed.',
+    url: 'https://www.lodgify.com/affiliates',
+    status: 'open',
+    action: 'Join the programme',
   },
   {
     name: 'Relay',
     what: 'Business banking — one account per LLC.',
-    terms: 'Partner payouts are routed to the RelayFi Oxbow account.',
-    url: 'https://relayfi.com',
-    status: 'program — EV referral link to be attached here',
+    terms: '$50–$300 per client onboarded, plus revenue share for 12 months on their revenue. Partner payouts are routed to the Relay account, and the agreement carries an exclusivity clause on similar finance partners.',
+    url: 'https://relayfi.com/advisor-partner-program/',
+    status: 'gated',
+    action: 'Partner programme details',
+  },
+  {
+    name: 'AirROI',
+    what: 'STR market data — the data source behind the VOM calculator.',
+    terms: 'No commission programme. Their Preferred Partner tier is API credits (up to 50% off), priority support and co-marketing, for partners who link back to them.',
+    url: 'https://www.airroi.com/api/pricing',
+    status: 'gated',
+    action: 'Partner details',
   },
 ];

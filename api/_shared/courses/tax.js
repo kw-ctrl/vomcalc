@@ -24,6 +24,7 @@ const tax = {
       "guest": null,
       "driveId": "1EmH6XLFrnplinXKpEd1lckR58hWHH_TM",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1EmH6XLFrnplinXKpEd1lckR58hWHH_TM/view"
      },
@@ -39,6 +40,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -54,6 +56,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -69,6 +72,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -84,6 +88,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -99,6 +104,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -114,6 +120,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -129,6 +136,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -144,6 +152,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -159,6 +168,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -174,6 +184,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -195,6 +206,7 @@ const tax = {
       "guest": null,
       "driveId": "1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH/view"
      },
@@ -217,6 +229,7 @@ const tax = {
       "guest": null,
       "driveId": "1EmH6XLFrnplinXKpEd1lckR58hWHH_TM",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1EmH6XLFrnplinXKpEd1lckR58hWHH_TM/view"
      },
@@ -232,6 +245,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -247,6 +261,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -262,6 +277,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -277,6 +293,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -292,6 +309,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -307,6 +325,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -322,6 +341,7 @@ const tax = {
       "guest": null,
       "driveId": "1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH/view"
      },
@@ -337,6 +357,7 @@ const tax = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -352,6 +373,7 @@ const tax = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -373,6 +395,7 @@ const tax = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -388,6 +411,7 @@ const tax = {
       "guest": "Sarah Glidewell",
       "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
      },
@@ -410,6 +434,7 @@ const tax = {
       "guest": null,
       "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
      },
@@ -425,6 +450,7 @@ const tax = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -440,6 +466,7 @@ const tax = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -455,6 +482,7 @@ const tax = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -470,6 +498,7 @@ const tax = {
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
      },
@@ -485,6 +514,7 @@ const tax = {
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
      },
@@ -500,6 +530,7 @@ const tax = {
       "guest": null,
       "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view"
      },
@@ -515,6 +546,7 @@ const tax = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -530,6 +562,7 @@ const tax = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -545,6 +578,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -560,6 +594,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -575,8 +610,14 @@ const tax = {
       "guest": "Katie Cline",
       "driveId": "1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI",
       "startSec": 6711.7,
+      "endSec": 6753.1,
       "at": "1:51:51",
-      "watch": "https://drive.google.com/file/d/1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI/view?t=6711"
+      "watch": "https://drive.google.com/file/d/1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI/view?t=6711",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-43-jul-8-2026-positioning-workshop-guest-katie-cl-6711-Q06dsOtt88ZZGrl3uFeNFlhsBuJwG0.mp4",
+       "dur": 150,
+       "bytes": 7674882
+      }
      },
      "alsoIn": []
     }
@@ -597,6 +638,7 @@ const tax = {
       "guest": null,
       "driveId": "1EmH6XLFrnplinXKpEd1lckR58hWHH_TM",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1EmH6XLFrnplinXKpEd1lckR58hWHH_TM/view"
      },
@@ -612,6 +654,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -627,6 +670,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -642,6 +686,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -657,6 +702,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -672,6 +718,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -687,6 +734,7 @@ const tax = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -702,6 +750,7 @@ const tax = {
       "guest": null,
       "driveId": "1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH/view"
      },
@@ -717,8 +766,14 @@ const tax = {
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
       "startSec": 4455.7,
+      "endSec": 4502.3,
       "at": "1:14:15",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455"
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4455-jKWXBex3A17wYT2dQBihOJIBJngncK.mp4",
+       "dur": 150,
+       "bytes": 8091112
+      }
      },
      "alsoIn": []
     },
@@ -732,6 +787,7 @@ const tax = {
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
@@ -747,6 +803,7 @@ const tax = {
       "guest": null,
       "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
      },
@@ -762,6 +819,7 @@ const tax = {
       "guest": "Patryk Swietek",
       "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
      },
@@ -784,6 +842,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -799,6 +858,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -814,6 +874,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -829,6 +890,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -851,6 +913,7 @@ const tax = {
       "guest": null,
       "driveId": "1EmH6XLFrnplinXKpEd1lckR58hWHH_TM",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1EmH6XLFrnplinXKpEd1lckR58hWHH_TM/view"
      },
@@ -866,6 +929,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -881,6 +945,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -896,6 +961,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -911,6 +977,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -926,6 +993,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -941,6 +1009,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -956,6 +1025,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -971,6 +1041,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -986,6 +1057,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -1001,6 +1073,7 @@ const tax = {
       "guest": null,
       "driveId": "1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1AyXDx1Owl3cwqsqxtDSEY2x6VhByFrBc/view"
      },
@@ -1016,6 +1089,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -1038,6 +1112,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1053,6 +1128,7 @@ const tax = {
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
      },
@@ -1068,6 +1144,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1083,6 +1160,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1098,6 +1176,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1113,6 +1192,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1128,6 +1208,7 @@ const tax = {
       "guest": null,
       "driveId": "188On_OSrTrYWOPgyS5exNr6IdoB_dlZe",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/188On_OSrTrYWOPgyS5exNr6IdoB_dlZe/view"
      },
@@ -1143,6 +1224,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1158,6 +1240,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1173,6 +1256,7 @@ const tax = {
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
      },
@@ -1188,6 +1272,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -1203,6 +1288,7 @@ const tax = {
       "guest": null,
       "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
      },
@@ -1225,6 +1311,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -1240,6 +1327,7 @@ const tax = {
       "guest": null,
       "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
      },
@@ -1255,6 +1343,7 @@ const tax = {
       "guest": null,
       "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
      },
@@ -1270,6 +1359,7 @@ const tax = {
       "guest": null,
       "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
      },
@@ -1285,8 +1375,14 @@ const tax = {
       "guest": null,
       "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
       "startSec": 3770.6,
+      "endSec": 3816.0,
       "at": "1:02:50",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770"
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-3770-6qzbuTbjFsi3VodRtXwff8DvGWNQK5.mp4",
+       "dur": 150,
+       "bytes": 12131584
+      }
      },
      "alsoIn": []
     },
@@ -1300,6 +1396,7 @@ const tax = {
       "guest": null,
       "driveId": null,
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": null
      },
@@ -1315,6 +1412,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1330,6 +1428,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1345,6 +1444,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1360,6 +1460,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1375,6 +1476,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },
@@ -1390,6 +1492,7 @@ const tax = {
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
       "startSec": null,
+      "endSec": null,
       "at": null,
       "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
      },

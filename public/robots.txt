@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# Gated product surfaces — accounts, courses and the deal data behind them.
+# These are login-walled and must never be indexed.
+Disallow: /app
+Disallow: /members
+Disallow: /courses
+Disallow: /api/
+
+# Crawl the marketing pages only.
+Sitemap: https://www.vomcalc.com/sitemap.xml
