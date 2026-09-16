@@ -335,7 +335,21 @@ async function updateHeaderAuth(authState) {
 
     if (!user) {
         isHeaderMenuOpen = false;
-        container.innerHTML = `<span class="text-xs px-3 py-1.5 rounded-full bg-emerald-600/15 text-emerald-400 border border-emerald-500/20 font-medium">Free Access</span>`;
+        // Even with the paid gate off, there has to be a way IN — otherwise no one can
+        // create an account and the email list never grows.
+        container.innerHTML = `
+            <div class="flex items-center gap-2">
+                <button type="button" id="headerFreePill"
+                        class="text-xs px-3 py-1.5 rounded-full bg-emerald-600/15 text-emerald-400 border border-emerald-500/20 font-medium cursor-default">Free Access</button>
+                <button type="button" id="headerSignIn"
+                        class="text-xs px-3 py-1.5 rounded-full border border-surface-border text-gray-300 hover:border-gray-500 hover:text-white transition">Sign In</button>
+            </div>
+        `;
+        container.querySelector('#headerSignIn')?.addEventListener('click', (event) => {
+            event.stopPropagation();
+            openModal('authModal');
+            setAuthMode('signin');
+        });
         return;
     }
 
@@ -1082,7 +1096,12 @@ async function handleMagicLink() {
             ({ error } = await signUpWithEmail(email, password));
             if (!error) {
                 captureEmailToCRM(email);
-                status.textContent = 'Account created! You now have full access.';
+                // Accurate either way: the project may or may not require email confirmation.
+                const authMod = await import('./auth.js');
+                const session = await authMod.getBrowserSession().catch(() => null);
+                status.textContent = session
+                    ? 'Account created — you have full access.'
+                    : 'Account created! Check your inbox to confirm, then sign in.';
                 status.className = 'text-sm mt-3 text-emerald-400';
                 btn.textContent = 'Done';
                 setTimeout(() => closeModal('authModal'), 1500);
@@ -1118,12 +1137,21 @@ async function handleMagicLink() {
 }
 
 function captureEmailToCRM(email) {
+    const clean = email.trim().toLowerCase();
+    // Our own marketing list first (works even if the vault CRM is down).
+    try {
+        fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: clean, source: 'vom-signup' }),
+        }).catch(() => {}); // silent fail — never block UX
+    } catch { /* ignore */ }
     try {
         fetch('https://vault.kassidywarren.com/api/subscribe', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                email: email.trim().toLowerCase(),
+                email: clean,
                 source: 'vom_calculator',
                 utm_source: 'vom-calculator',
                 utm_medium: 'tool',
