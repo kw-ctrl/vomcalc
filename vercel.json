@@ -11,6 +11,14 @@
       "destination": "/app.html"
     },
     {
+      "source": "/courses",
+      "destination": "/members/index.html"
+    },
+    {
+      "source": "/members",
+      "destination": "/members/index.html"
+    },
+    {
       "source": "/favicon.ico",
       "destination": "/logo.png"
     }

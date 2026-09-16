@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Partners &amp; affiliates — Escape Velocity</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/logo.png" type="image/png">
+<link rel="stylesheet" href="/members/members.css">
+</head>
+<body data-nav="Partners &amp; affiliates">
+
+<div id="content" class="wrap hidden">
+  <div style="margin:32px 0 8px">
+    <span class="pill">Member deals</span>
+    <h1 style="margin-top:14px">Partners &amp; affiliates</h1>
+    <p class="lede">The vendors the community actually uses — and where Escape Velocity members get a
+    referral credit for using them.</p>
+  </div>
+
+  <h2>EV partner programs</h2>
+  <p class="muted" style="margin-top:-6px">Status is exact: “live” means the referral route is written down and
+  working today.</p>
+  <div id="affs" class="grid two"></div>
+
+  <h2>Vendor directory</h2>
+  <p class="muted" style="margin-top:-6px">Mirrored from the community’s Preferred Vendors sheet.
+  <span id="count"></span></p>
+  <div class="card" style="padding:6px 10px;overflow-x:auto">
+    <table class="dir" id="dir">
+      <thead><tr><th>Category</th><th>Who</th><th>Where</th><th>Contact</th><th>Notes</th></tr></thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <p class="muted">Referral credits are paid to Escape Velocity and shared back with the member who referred.
+  Ask Kassidy before quoting a member rate.</p>
+</div>
+
+<script src="/members/members.js"></script>
+<script>
+withGate(async () => {
+  const { partners, affiliatePrograms } = await memberGet('/api/members/resources');
+
+  document.querySelector('#affs').innerHTML = affiliatePrograms.map((a) => `
+    <div class="course-card">
+      <div style="display:flex;justify-content:space-between;gap:10px;align-items:flex-start">
+        <h3 style="font-size:18px">${esc(a.name)}</h3>
+        <span class="pill ${a.status === 'live' ? '' : 'grey'}">${a.status === 'live' ? 'live' : 'program'}</span>
+      </div>
+      <p class="muted" style="margin:0">${esc(a.what)}</p>
+      <p style="color:var(--ink-2);margin:0;font-size:14px">${esc(a.terms)}</p>
+      <a class="btn ${a.status === 'live' ? '' : 'ghost'}" style="align-self:flex-start"
+         href="${esc(a.url)}" target="_blank" rel="noopener">
+        ${a.status === 'live' ? 'Register the referral →' : 'Program details →'}
+      </a>
+      ${a.status === 'live' ? '' : '<span class="muted">EV referral link is being attached — use this page’s link once it lands.</span>'}
+    </div>`).join('');
+
+  document.querySelector('#dir tbody').innerHTML = partners.map((p) => `
+    <tr>
+      <td class="muted">${esc(p.category)}</td>
+      <td><b>${esc(p.name)}</b>${p.url ? `<br><a href="${esc(p.url)}" target="_blank" rel="noopener">website</a>` : ''}</td>
+      <td class="muted">${esc(p.location || '')}</td>
+      <td>${p.email ? `<a href="mailto:${esc(p.email)}">${esc(p.email)}</a><br>` : ''}${p.phone ? esc(p.phone) : ''}</td>
+      <td class="muted">${esc(p.note || '')}</td>
+    </tr>`).join('');
+  document.querySelector('#count').textContent = partners.length + ' contacts';
+});
+</script>
+</body>
+</html>

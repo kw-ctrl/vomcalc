@@ -796,7 +796,7 @@ function renderSubscriptionActions(summary) {
                 <div class="subscription-plan-row ${summary.plan.key === 'monthly' ? 'subscription-plan-row-active' : ''}">
                     <div>
                         <p class="text-sm font-semibold text-white">Monthly</p>
-                        <p class="text-xs text-gray-500">$29 billed every month</p>
+                        <p class="text-xs text-gray-500">$20 billed every month</p>
                     </div>
                     <button
                         id="subscriptionMonthlyBtn"
@@ -809,7 +809,7 @@ function renderSubscriptionActions(summary) {
                 <div class="subscription-plan-row ${summary.plan.key === 'annual' ? 'subscription-plan-row-active' : ''}">
                     <div>
                         <p class="text-sm font-semibold text-white">Annual</p>
-                        <p class="text-xs text-gray-500">$199 billed yearly</p>
+                        <p class="text-xs text-gray-500">$150 billed yearly</p>
                     </div>
                     <button
                         id="subscriptionAnnualBtn"

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course — Escape Velocity</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/logo.png" type="image/png">
+<link rel="stylesheet" href="/members/members.css">
+</head>
+<body data-nav="Courses">
+
+<div id="content" class="wrap hidden">
+  <p style="margin:26px 0 0"><a href="/members/">← All courses</a></p>
+  <div id="head" style="margin:14px 0 22px"></div>
+  <div id="switcher" class="grid two" style="margin-bottom:24px"></div>
+  <div id="course"></div>
+</div>
+
+<script src="/members/members.js"></script>
+<script>
+const courseId = new URLSearchParams(location.search).get('c') || 'airbnb';
+
+function lessonHTML(L, i) {
+  const s = L.source || {};
+  const watch = s.watch
+    ? `<a href="${esc(s.watch)}" target="_blank" rel="noopener">▶ Watch${s.at ? ' at ' + esc(s.at) : ''}</a>`
+    : '';
+  const also = (L.alsoIn || []).filter((a) => a.watch).slice(0, 3)
+    .map((a) => `<a href="${esc(a.watch)}" target="_blank" rel="noopener">${esc(a.label)}${a.at ? ' @ ' + esc(a.at) : ''}</a>`)
+    .join(' · ');
+  return `<div class="lesson" id="l${i}">
+    <button type="button" aria-expanded="false">
+      <span class="caret">＋</span>
+      <h3>${esc(L.title)}</h3>
+      <span class="muted">${esc(s.label || '')}${s.guest ? ' · guest: ' + esc(s.guest) : ''}${s.at ? ' · ' + esc(s.at) : ''}</span>
+    </button>
+    <div class="body">
+      <p style="color:var(--ink-2);margin:0 0 4px">${esc(L.teaches || '')}</p>
+      ${L.rule ? `<div class="rule"><b>The rule</b>${esc(L.rule)}</div>` : ''}
+      <div class="src">
+        ${watch}
+        ${s.speaker && L.speaker && L.speaker !== 'Kassidy' ? `<span>Speaker: ${esc(L.speaker)}</span>` : ''}
+        ${also ? `<span>Also taught in: ${also}</span>` : ''}
+      </div>
+    </div>
+  </div>`;
+}
+
+function render(course) {
+  document.title = course.title + ' — Escape Velocity';
+  document.querySelector('#head').innerHTML = `
+    <span class="pill">${course.lessonCount} lessons · ${course.moduleCount} modules</span>
+    <h1 style="margin-top:14px">${esc(course.title)}</h1>
+    <p class="lede">${esc(course.subtitle)}</p>
+    <p class="muted">${esc(course.blurb)} Drawn from ${course.sourceCalls} recorded calls.</p>`;
+
+  document.querySelector('#course').innerHTML = course.modules.map((m) => `
+    <section class="module">
+      <div class="head"><span class="n">MODULE ${esc(m.n)}</span><h2>${esc(m.title)}</h2></div>
+      ${m.lessons.map(lessonHTML).join('')}
+    </section>`).join('');
+
+  document.querySelectorAll('.lesson > button').forEach((b) => {
+    b.addEventListener('click', () => {
+      const lesson = b.parentElement;
+      lesson.classList.toggle('open');
+      b.setAttribute('aria-expanded', lesson.classList.contains('open'));
+      b.querySelector('.caret').textContent = lesson.classList.contains('open') ? '－' : '＋';
+    });
+  });
+}
+
+withGate(async () => {
+  const { courses } = await memberGet('/api/members/content');
+  const { course } = await memberGet('/api/members/content?course=' + encodeURIComponent(courseId));
+  render(course);
+  document.querySelector('#switcher').innerHTML = courses.map((c) => `
+    <div class="card" style="${c.id === courseId ? 'border-color:var(--lime-line)' : ''}">
+      <h3>${esc(c.title)} <span class="muted">· ${c.lessonCount} lessons</span></h3>
+      <p class="muted" style="margin:2px 0 10px">${esc(c.subtitle)}</p>
+      ${c.id === courseId
+        ? '<span class="pill">You are here</span>'
+        : `<a class="btn ghost" href="/members/course.html?c=${encodeURIComponent(c.id)}">Switch to this course</a>`}
+    </div>`).join('');
+});
+</script>
+</body>
+</html>

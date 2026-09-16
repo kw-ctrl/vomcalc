@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Member area — Escape Velocity</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/logo.png" type="image/png">
+<link rel="stylesheet" href="/members/members.css">
+</head>
+<body data-nav="Courses">
+
+<div id="content" class="wrap hidden">
+  <div style="margin:32px 0 6px">
+    <span class="pill">Escape Velocity · member area</span>
+    <h1 style="margin-top:14px">The courses</h1>
+    <p class="lede">Built from the call archive — every lesson links back to the recording it came from, at the
+    minute it was taught. Work the deals in the VOM calculator while you go through them.</p>
+  </div>
+
+  <div id="courses" class="grid two"></div>
+
+  <h2>How to use this</h2>
+  <div class="grid three">
+    <div class="card">
+      <h3>1. Watch the lesson</h3>
+      <p class="muted">Each lesson opens the source call at the right timestamp. Five to twelve minutes, not ninety.</p>
+    </div>
+    <div class="card">
+      <h3>2. Apply the rule</h3>
+      <p class="muted">Every lesson carries the rule or number in plain language — that is the part to act on.</p>
+    </div>
+    <div class="card">
+      <h3>3. Underwrite it</h3>
+      <p class="muted">Then run the real deal through the <a href="https://www.vomcalc.com/app">VOM calculator</a>.</p>
+    </div>
+  </div>
+
+  <h2>Also in here</h2>
+  <div class="grid two">
+    <div class="card">
+      <h3><a href="/members/resources.html">Resources</a></h3>
+      <p class="muted">Call library, calculators, LOIs, lender lists, the 1031 guide, and the templates worth copying.</p>
+    </div>
+    <div class="card">
+      <h3><a href="/members/affiliates.html">Partners &amp; affiliates</a></h3>
+      <p class="muted">The vendors the community actually uses, and where EV members get a referral credit.</p>
+    </div>
+  </div>
+</div>
+
+<script src="/members/members.js"></script>
+<script>
+function card(c) {
+  const mods = c.modules.map((m) => `<li style="margin-bottom:3px">${esc(m.title)}
+      <span class="muted">— ${m.count} lessons</span></li>`).join('');
+  return `<div class="course-card">
+    <div>
+      <span class="pill">${c.lessonCount} lessons</span>
+      <h3 style="font-size:22px;margin:12px 0 4px">${esc(c.title)}</h3>
+      <p class="muted" style="margin:0">${esc(c.subtitle)}</p>
+    </div>
+    <p style="color:var(--ink-2);margin:0">${esc(c.blurb)}</p>
+    <div class="stats">
+      <span><b>${c.moduleCount}</b> modules</span>
+      <span><b>${c.lessonCount}</b> lessons</span>
+      <span><b>${c.sourceCalls}</b> source calls</span>
+    </div>
+    <details>
+      <summary class="muted" style="cursor:pointer">What's inside</summary>
+      <ul style="margin:10px 0 0;padding-left:18px;color:var(--ink-2);font-size:13.5px">${mods}</ul>
+    </details>
+    <a class="btn" style="align-self:flex-start" href="/members/course.html?c=${encodeURIComponent(c.id)}">Open course →</a>
+  </div>`;
+}
+
+withGate(async () => {
+  const { courses } = await memberGet('/api/members/content');
+  document.querySelector('#courses').innerHTML = courses.map(card).join('');
+});
+</script>
+</body>
+</html>

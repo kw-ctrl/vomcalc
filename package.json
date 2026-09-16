@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "test": "bash supabase/tests/run.sh",
-    "test:logic": "node supabase/tests/access.test.mjs"
+    "test:logic": "node supabase/tests/access.test.mjs",
+    "test:members": "node tests/members.test.mjs && node tests/api.members.test.mjs"
   },
   "dependencies": {
     "pg": "^8.11.0"

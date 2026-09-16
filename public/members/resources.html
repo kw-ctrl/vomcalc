@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Resources — Escape Velocity</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/logo.png" type="image/png">
+<link rel="stylesheet" href="/members/members.css">
+</head>
+<body data-nav="Resources">
+
+<div id="content" class="wrap-narrow hidden">
+  <div style="margin:32px 0 8px">
+    <span class="pill">Member library</span>
+    <h1 style="margin-top:14px">Resources</h1>
+    <p class="lede">Everything the community already has, in one place: the call library, the calculators,
+    the templates and the tax paperwork.</p>
+  </div>
+  <div id="res"></div>
+</div>
+
+<script src="/members/members.js"></script>
+<script>
+withGate(async () => {
+  const { resources } = await memberGet('/api/members/resources');
+  document.querySelector('#res').innerHTML = resources.map((g) => `
+    <section class="res-group">
+      <h2>${esc(g.group)}</h2>
+      ${g.note ? `<p class="muted" style="margin:-6px 0 12px">${esc(g.note)}</p>` : ''}
+      ${g.items.map((it) => `
+        <div class="res-item">
+          <span class="kind">${esc(it.kind)}</span>
+          <div>
+            <a href="${esc(it.url)}" target="_blank" rel="noopener">${esc(it.title)}</a>
+            ${it.note ? `<div class="note">${esc(it.note)}</div>` : ''}
+          </div>
+        </div>`).join('')}
+    </section>`).join('');
+});
+</script>
+</body>
+</html>
