@@ -11,7 +11,10 @@ Last updated: 16 Sep 2026
 | Live codes | `YOUTUBE14` (14 days, unlimited) · `ESCAPE-EV` (permanent, EV members) |
 | Admin token | in Vercel + `~/.hermes/vomcalc_env` (chmod 600) — governs `/api/admin/codes` |
 | Paid gate | **off** (`VOM_GATE_ENABLED` unset) |
+| Google SSO | **live** — enabled 16 Sep |
 | Watchdog | daily 6am keep-alive cron `c6c4925e88d9` |
+| Email list export | daily 7am → Drive, cron `5d0d473b8ba0` |
+| Owner access | kw@ + kassidywarren@gmail.com are `ev_member` (free forever) |
 
 ---
 
@@ -31,9 +34,14 @@ Last updated: 16 Sep 2026
 
 **Email list** — `subscribers` table. Captured the moment someone submits the signup form
 (not only once they confirm), with source + UTM. Every address also mirrors to your vault CRM.
-Export any time from the table; a Drive-sheet sync can be added if you want it in a spreadsheet.
 
-**Accounts** — Supabase auth (email + password). There's a Sign In button in the app header.
+A CSV copy lives in Drive (**Seven Outputs → VomCalc — Email List (latest).csv**) and is refreshed
+daily, kept as one file so the link never changes. Any email tool can import it. Run it on demand
+with `bash scripts/export-subscribers.sh`.
+
+**Accounts** — Supabase auth: email + password, **and Google sign-in** (a "Continue with Google"
+button appears in the sign-in modal automatically; the button only renders while the provider is
+actually configured, so a dead button can never show). There's a Sign In button in the app header.
 Signup is instant (no confirmation email round-trip) because Supabase's built-in sender is
 rate-limited to a trickle on free tier and would have silently failed under real traffic.
 A one-line change reverts that if you'd rather verify addresses.
@@ -84,13 +92,15 @@ Create the two prices, then re-run provisioning with `STRIPE_SECRET_KEY`,
 
 **A price.** Not chosen yet.
 
-**Google SSO.** ~2 minutes in console.cloud.google.com → Credentials → OAuth client ID →
-Web application → redirect URI `https://luaqzmyvgliljtiecojg.supabase.co/auth/v1/callback`.
-Send me the ID + secret (or re-run provisioning with `GOOGLE_CLIENT_ID`/`GOOGLE_CLIENT_SECRET`).
+**Google SSO — DONE.** OAuth client created and wired into Supabase. Verified by starting the real
+authorize handshake: Google returns its sign-in page rather than `redirect_uri_mismatch`, so the
+redirect URI is registered correctly. Credentials are stored in `~/.hermes/vomcalc_env`; to move to
+a different project, re-run provisioning with `GOOGLE_CLIENT_ID` / `GOOGLE_CLIENT_SECRET`.
 
-**Landing copy.** The page currently promises "free, full access". True today, misleading the
-moment the gate goes on. It needs to move to the code/trial story at the same time — worth
-writing together.
+**Landing copy.** No longer blocks the flip: each promise carries both versions, and
+`js/landing-gate.js` swaps them from the server's gate flag. While the gate is off the page renders
+byte-identically to before (verified by hash); flipping the gate changes the wording automatically.
+The authored copy is a draft — edit it in `public/landing.html` (`data-copy-gated="…"`).
 
 **Vault CRM mirror is failing.** `vault.kassidywarren.com/api/subscribe` returns HTTP 500 for a
 valid payload (reproducible with plain curl, so it's not the app). Their list isn't receiving
@@ -118,9 +128,16 @@ SUPABASE_ACCESS_TOKEN=*** bash scripts/provision.sh
 ## 6. Verification
 
 ```bash
-bash supabase/tests/run.sh        # 26 assertions against a throwaway Postgres
-bash scripts/e2e-live-test.sh     # real users + real codes against production, then cleans up
+bash supabase/tests/run.sh           # 26 assertions against a throwaway Postgres
+bash scripts/e2e-live-test.sh        # real users + real codes against production, then cleans up
+node scripts/webhook-live-test.mjs   # 17 assertions: signed Stripe events -> entitlements
 ```
+
+The webhook suite needs no Stripe key — it signs events with the deployment's own webhook secret
+and asserts the real handler, database and access rules: active → paid, past_due loses premium,
+canceled loses premium after the period, and tampered / wrong-secret / replayed payloads rejected.
+`scripts/local-webhook-debug.mjs` runs the same handler locally with console output visible when
+something needs isolating.
 
 Covers every tier, expiry, code stacking, single-use caps, EV permanence, Stripe signature
 rejection, an 8-way concurrency race on a 1-use code, the deal-store round-trip, the users
