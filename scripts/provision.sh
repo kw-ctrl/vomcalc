@@ -136,6 +136,11 @@ fi
 set_env() {
   local key="$1" value="$2"
   [ -n "$value" ] || return 0
+  # Strip surrounding whitespace/newlines. A secret written with `echo` picks up a trailing
+  # newline, and for a webhook signing secret that silently breaks every signature check —
+  # the endpoint looks wired up while rejecting every real event.
+  value="$(printf '%s' "$value" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+  [ -n "$value" ] || return 0
   # Remove then add, so re-runs don't stack duplicate values.
   vercel env rm "$key" production --yes >/dev/null 2>&1 || true
   printf '%s' "$value" | vercel env add "$key" production >/dev/null

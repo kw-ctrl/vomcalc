@@ -8,9 +8,33 @@ import { verifyWebhook, readRawBody, stripePost } from '../_shared/stripe.js';
 // Stripe signs the exact bytes — do not let anything parse the body first.
 export const config = { api: { bodyParser: false }, maxDuration: 20 };
 
-async function patchAccount(where, patch) {
-  const r = await sb(`/rest/v1/accounts?${where}`, { method: 'PATCH', body: { ...patch, updated_at: new Date().toISOString() } });
-  return r.ok;
+/**
+ * Write subscription state onto the user's access record.
+ *
+ * A PATCH alone is not enough: if the user paid before their access row existed (payment
+ * link, a dropped signup call, a webhook that arrives first) there is nothing to update and
+ * the update silently affects zero rows — a paying customer with no access. So: patch, and
+ * if nothing matched, insert.
+ */
+async function upsertAccount(userId, patch) {
+  if (!userId) return false;
+  const body = { ...patch, updated_at: new Date().toISOString() };
+
+  const r = await sb(`/rest/v1/accounts?user_id=eq.${userId}`, {
+    method: 'PATCH', prefer: 'return=representation', body,
+  });
+  if (r.ok && Array.isArray(r.data) && r.data.length > 0) return true;
+
+  const ins = await sb('/rest/v1/accounts', {
+    method: 'POST',
+    prefer: 'resolution=merge-duplicates,return=representation',
+    body: { user_id: userId, email: String(patch.email || '').toLowerCase(), ...body },
+  });
+  if (!ins.ok) {
+    console.error('[webhook] account upsert failed', ins.status, ins.data);
+    return false;
+  }
+  return true;
 }
 
 function planFromSubscription(sub) {
@@ -68,7 +92,8 @@ export default async function handler(req, res) {
           const r = await stripePost(`/subscriptions/${obj.subscription}`, {});
           sub = r.ok ? r.data : null;
         }
-        await patchAccount(`user_id=eq.${userId}`, {
+        await upsertAccount(userId, {
+          email: obj.customer_details?.email || obj.customer_email || obj.metadata?.email || null,
           stripe_customer_id: obj.customer || null,
           stripe_subscription_id: obj.subscription || null,
           subscription_status: sub?.status || 'active',
@@ -84,7 +109,8 @@ export default async function handler(req, res) {
       case 'customer.subscription.deleted': {
         const userId = await findUserIdFor({ userId: obj.metadata?.user_id, customerId: obj.customer });
         if (!userId) break;
-        await patchAccount(`user_id=eq.${userId}`, {
+        await upsertAccount(userId, {
+          email: obj.metadata?.email || null,
           stripe_subscription_id: obj.id,
           stripe_customer_id: obj.customer || null,
           subscription_status: obj.status,
@@ -97,7 +123,10 @@ export default async function handler(req, res) {
       case 'invoice.payment_failed': {
         const userId = await findUserIdFor({ customerId: obj.customer, email: obj.customer_email });
         if (!userId) break;
-        await patchAccount(`user_id=eq.${userId}`, { subscription_status: 'past_due' });
+        await upsertAccount(userId, {
+          email: obj.customer_email || null,
+          subscription_status: 'past_due',
+        });
         break;
       }
 

@@ -100,7 +100,7 @@ if [ -z "$WH_SECRET" ]; then
   ARGS=(-d "url=$WEBHOOK_URL")
   for e in "${EVENTS[@]}"; do ARGS+=(-d "enabled_events[]=$e"); done
   CREATED="$(spost /webhook_endpoints "${ARGS[@]}")"
-  WH_SECRET="$(echo "$CREATED" | jq -r '.secret // empty')"
+  WH_SECRET="$(echo "$CREATED" | jq -r '.secret // empty' | tr -d '[:space:]')"
   WH_ID="$(echo "$CREATED" | jq -r '.id // empty')"
   [ -n "$WH_SECRET" ] || { echo "✗ webhook creation failed: $CREATED" >&2; exit 1; }
   say "webhook: $WH_ID -> $WEBHOOK_URL"
@@ -109,9 +109,14 @@ fi
 # ── 4. Vercel env ────────────────────────────────────────────────────────────
 say "pushing Stripe env to Vercel"
 set_env() {
-  vercel env rm "$1" production --yes >/dev/null 2>&1 || true
-  printf '%s' "$2" | vercel env add "$1" production >/dev/null
-  echo "  ✓ $1"
+  # Trim: a stray trailing newline on a webhook signing secret makes every signature
+  # check fail silently, so the endpoint looks configured but rejects real events.
+  local key="$1" val
+  val="$(printf '%s' "$2" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+  [ -n "$val" ] || return 0
+  vercel env rm "$key" production --yes >/dev/null 2>&1 || true
+  printf '%s' "$val" | vercel env add "$key" production >/dev/null
+  echo "  ✓ $key"
 }
 set_env STRIPE_SECRET_KEY "$KEY"
 set_env STRIPE_MONTHLY_PRICE_ID "$MONTHLY_ID"

@@ -36,6 +36,8 @@ export default async function handler(req, res) {
     client_reference_id: user.id,
     'metadata[user_id]': user.id,
     'subscription_data[metadata][user_id]': user.id,
+    // carry the email through so the webhook can create the access row if none exists yet
+    ...(user.email ? { 'subscription_data[metadata][email]': user.email } : {}),
     allow_promotion_codes: true,
   };
   if (user.email) params.customer_email = user.email;
