@@ -1365,7 +1365,22 @@ function wireEvents() {
 
     // Auth modal
     document.getElementById('authSubmit')?.addEventListener('click', handleMagicLink);
+
+    // Delegated so the inline links can never end up with no listener (the switch link
+    // previously stayed dead: clicking "New here? Create a free account" did nothing
+    // because its direct listener never attached, while its sibling's did).
+    const authModal = document.getElementById('authModal');
+    authModal?.addEventListener('click', (event) => {
+        const el = event.target.closest('#authSwitchToSignUp, #authSwitchToSignIn, #authForgotLink, #authBackToSignIn');
+        if (!el) return;
+        event.preventDefault();
+        if (el.id === 'authSwitchToSignUp') { setAuthMode('signup'); return; }
+        if (el.id === 'authForgotLink') { setAuthMode('forgot'); return; }
+        setAuthMode('signin');   // 'switch to sign in' / 'back' links
+    });
+    // Keep the legacy direct bindings as a belt-and-braces fallback.
     document.getElementById('authSwitchToSignUp')?.addEventListener('click', () => setAuthMode('signup'));
+    document.getElementById('authSwitchToSignIn')?.addEventListener('click', () => setAuthMode('signin'));
     document.getElementById('authForgotLink')?.addEventListener('click', () => setAuthMode('forgot'));
     document.getElementById('authPassword')?.addEventListener('keydown', (e) => {
         if (e.key === 'Enter') handleMagicLink();
