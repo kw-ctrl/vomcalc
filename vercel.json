@@ -1,4 +1,6 @@
 {
+  "buildCommand": "node scripts/build-config.js",
+  "outputDirectory": "public",
   "rewrites": [
     {
       "source": "/",
