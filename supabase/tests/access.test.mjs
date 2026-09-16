@@ -7,7 +7,7 @@
  */
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
-import { verifyWebhook } from '../../lib/stripe.js';
+import { verifyWebhook } from '../../api/_shared/stripe.js';
 
 let passed = 0, failed = 0;
 const results = [];

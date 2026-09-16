@@ -6,7 +6,7 @@
 import {
   bearer, getUser, resolveAccess, ensureAccount, captureSubscriber,
   pushToVaultCRM, gateEnabled, configured, logEvent, json, preflight, sb,
-} from '../../lib/access.js';
+} from '../_shared/access.js';
 
 export const config = { maxDuration: 15 };
 

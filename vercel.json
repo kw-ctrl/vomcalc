@@ -1,14 +1,26 @@
 {
   "rewrites": [
-    { "source": "/", "destination": "/landing.html" },
-    { "source": "/app", "destination": "/app.html" },
-    { "source": "/favicon.ico", "destination": "/logo.png" }
+    {
+      "source": "/",
+      "destination": "/landing.html"
+    },
+    {
+      "source": "/app",
+      "destination": "/app.html"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/logo.png"
+    }
   ],
   "headers": [
     {
       "source": "/js/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-cache, no-store, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-cache, no-store, must-revalidate"
+        }
       ]
     }
   ]

@@ -2,8 +2,8 @@
  * POST /api/billing/webhook — Stripe → account state.
  * Signature is verified against the raw body; unverified calls are rejected.
  */
-import { sb, configured, logEvent, json } from '../../lib/access.js';
-import { verifyWebhook, readRawBody, stripePost } from '../../lib/stripe.js';
+import { sb, configured, logEvent, json } from '../_shared/access.js';
+import { verifyWebhook, readRawBody, stripePost } from '../_shared/stripe.js';
 
 // Stripe signs the exact bytes — do not let anything parse the body first.
 export const config = { api: { bodyParser: false }, maxDuration: 20 };

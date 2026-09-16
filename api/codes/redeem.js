@@ -7,7 +7,7 @@
  */
 import {
   bearer, getUser, rpc, resolveAccess, configured, logEvent, json, preflight,
-} from '../../lib/access.js';
+} from '../_shared/access.js';
 
 export const config = { maxDuration: 15 };
 

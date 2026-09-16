@@ -25,23 +25,29 @@ export function configured() {
   return Boolean(SB_URL && SERVICE_KEY && !/localhost/i.test(SB_URL));
 }
 
-/** Raw call against the Supabase REST/auth API using the service role. */
+/** Raw call against the Supabase REST/auth API using the service role.
+ *  Never throws: an unreachable backend comes back as { ok: false } so callers can
+ *  degrade to free-tier behaviour instead of 500-ing the whole request. */
 export async function sb(path, { method = 'GET', body, key = SERVICE_KEY, token, headers = {}, prefer } = {}) {
-  const res = await fetch(`${SB_URL}${path}`, {
-    method,
-    headers: {
-      apikey: key,
-      Authorization: `Bearer ${token || key}`,
-      'Content-Type': 'application/json',
-      ...(prefer ? { Prefer: prefer } : {}),
-      ...headers,
-    },
-    ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
-  });
-  const text = await res.text();
-  let data = null;
-  try { data = text ? JSON.parse(text) : null; } catch { data = text; }
-  return { ok: res.ok, status: res.status, data };
+  try {
+    const res = await fetch(`${SB_URL}${path}`, {
+      method,
+      headers: {
+        apikey: key,
+        Authorization: `Bearer ${token || key}`,
+        'Content-Type': 'application/json',
+        ...(prefer ? { Prefer: prefer } : {}),
+        ...headers,
+      },
+      ...(body !== undefined ? { body: JSON.stringify(body) } : {}),
+    });
+    const text = await res.text();
+    let data = null;
+    try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+    return { ok: res.ok, status: res.status, data };
+  } catch (err) {
+    return { ok: false, status: 0, data: null, error: String(err?.message || err) };
+  }
 }
 
 /** Call an RPC (the access functions live in the DB so the rules can't drift). */

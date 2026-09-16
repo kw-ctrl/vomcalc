@@ -1,8 +1,8 @@
 /**
  * POST /api/billing/portal — Stripe billing portal (update card, cancel, invoices).
  */
-import { bearer, getUser, ensureAccount, configured, json, preflight } from '../../lib/access.js';
-import { stripeReady, stripePost } from '../../lib/stripe.js';
+import { bearer, getUser, ensureAccount, configured, json, preflight } from '../_shared/access.js';
+import { stripeReady, stripePost } from '../_shared/stripe.js';
 
 export const config = { maxDuration: 20 };
 

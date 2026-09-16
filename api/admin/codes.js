@@ -10,7 +10,7 @@
  * Batch codes are single-use by construction (maxRedemptions = 1), which is what you
  * want for DM'd one-offs; a shared creator code is just one row with a high cap.
  */
-import { sb, configured, json } from '../../lib/access.js';
+import { sb, configured, json } from '../_shared/access.js';
 
 export const config = { maxDuration: 20 };
 

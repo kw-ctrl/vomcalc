@@ -4,8 +4,8 @@
  */
 import {
   bearer, getUser, ensureAccount, configured, logEvent, json, preflight, sb,
-} from '../../lib/access.js';
-import { stripeReady, stripePost, priceIdFor, isLiveMode } from '../../lib/stripe.js';
+} from '../_shared/access.js';
+import { stripeReady, stripePost, priceIdFor, isLiveMode } from '../_shared/stripe.js';
 
 export const config = { maxDuration: 20 };
 
