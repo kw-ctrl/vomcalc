@@ -120,7 +120,18 @@ api PATCH "/projects/$REF/config/auth" "$AUTH_CFG" >/dev/null && echo "  ✓ aut
 
 # ── 5. Vercel env ────────────────────────────────────────────────────────────
 say "pushing env vars to Vercel ($VERCEL_PROJECT, production)"
-ADMIN_TOKEN_VALUE="${ADMIN_TOKEN:-$(openssl rand -hex 24)}"
+# Reuse the existing admin token on re-runs, so a second pass (e.g. adding Stripe) does not
+# silently invalidate the token already in your hands.
+ADMIN_TOKEN_VALUE="${ADMIN_TOKEN:-}"
+if [ -z "$ADMIN_TOKEN_VALUE" ] && [ -f "$HOME/.hermes/vomcalc_env" ]; then
+  ADMIN_TOKEN_VALUE="$(grep -E '^ADMIN_TOKEN=' "$HOME/.hermes/vomcalc_env" | cut -d= -f2- || true)"
+fi
+if [ -z "$ADMIN_TOKEN_VALUE" ]; then
+  ADMIN_TOKEN_VALUE="$(openssl rand -hex 24)"
+  say "generated a new ADMIN_TOKEN"
+else
+  say "reusing the existing ADMIN_TOKEN"
+fi
 
 set_env() {
   local key="$1" value="$2"

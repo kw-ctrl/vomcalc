@@ -47,8 +47,11 @@ language sql stable as $$
 $$;
 SQL
 
-echo "· applying migration"
-"$PGBIN/psql" -h 127.0.0.1 -p "$PORT" -U postgres -d vomtest -v ON_ERROR_STOP=1 -q -f "$(dirname "$0")/../migrations/0001_init.sql"
+echo "· applying migrations"
+for f in "$(dirname "$0")"/../migrations/*.sql; do
+  echo "  · $(basename "$f")"
+  "$PGBIN/psql" -h 127.0.0.1 -p "$PORT" -U postgres -d vomtest -v ON_ERROR_STOP=1 -q -f "$f"
+done
 
 echo "· running tests"
 cd "$(dirname "$0")/../.."

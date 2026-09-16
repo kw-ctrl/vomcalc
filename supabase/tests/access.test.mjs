@@ -207,6 +207,43 @@ if (!DB) {
     assert.equal(a.expires_at, null);
   });
 
+  // ── Deal store (0002) ──────────────────────────────────────────────────────
+  await testAsync('creating an auth user auto-populates public.users (trigger)', async () => {
+    const u = await mkUser('triggered@example.com');
+    const r = await q(`select email from public.users where id = $1`, [u]);
+    assert.equal(r.rows.length, 1, 'public.users row was not created');
+    assert.equal(r.rows[0].email, 'triggered@example.com');
+  });
+
+  await testAsync('a deal saves and loads back with its snapshots intact', async () => {
+    const u = await mkUser('deals@example.com');
+    const inputs = { listedPrice: 850000, propertyType: 'str' };
+    const outputs = { totalScore: 87, equityMultiple: 2.13 };
+    const ins = await q(
+      `insert into public.reports (user_id, title, property_address, property_type, listed_price,
+                                   velocity_score, moic, irr, input_snapshot, result_snapshot)
+       values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) returning id`,
+      [u, 'Test Deal', '123 Test St', 'str', 850000, 87, 2.13, 0.184, inputs, outputs]
+    );
+    assert.ok(ins.rows[0].id, 'insert returned no id');
+
+    const back = await q(
+      `select title, input_snapshot, result_snapshot from public.reports where user_id = $1`, [u]
+    );
+    assert.equal(back.rows.length, 1);
+    assert.equal(back.rows[0].title, 'Test Deal');
+    assert.equal(back.rows[0].input_snapshot.listedPrice, 850000);
+    assert.equal(back.rows[0].result_snapshot.totalScore, 87);
+  });
+
+  await testAsync('deleting the auth user removes their deals (cascade)', async () => {
+    const u = await mkUser('cascade@example.com');
+    await q(`insert into public.reports (user_id, title) values ($1, 'Doomed')`, [u]);
+    await q(`delete from auth.users where id = $1`, [u]);
+    const left = await q(`select count(*)::int as n from public.reports where user_id = $1`, [u]);
+    assert.equal(left.rows[0].n, 0, 'deals survived the user deletion');
+  });
+
   await pool.end();
 }
 

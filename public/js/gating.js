@@ -1253,44 +1253,15 @@ function hideSaveNudge() {
     document.getElementById('saveNudge')?.classList.add('hidden');
 }
 
-export async function persistLatestReport(report) {
-    if (!currentAuthState?.user) {
-        // Auth disabled — silently skip save
-        return null;
-    }
-    hideSaveNudge();
-
-    let savePromise;
-    savePromise = (async () => {
-        try {
-            lastReportSaveError = '';
-            return await saveReport({
-                ...report,
-                listedPrice: sanitizeForStorage(report.listedPrice),
-                totalScore: sanitizeForStorage(report.totalScore),
-                moic: sanitizeForStorage(report.moic),
-                irr: sanitizeForStorage(report.irr),
-                inputs: sanitizeForStorage({
-                    formState: captureCurrentFormState(),
-                    calculated: report.inputs,
-                }),
-                // Re-opening a saved report only needs the saved form state; keep the stored
-                // results snapshot intentionally lean so save requests stay fast and reliable.
-                results: buildSavedResultsSnapshot(report),
-            });
-        } catch (err) {
-            lastReportSaveError = err.message || 'Unable to save report.';
-            console.error('[Reports] Save failed:', err);
-            return null;
-        } finally {
-            if (pendingReportSavePromise === savePromise) {
-                pendingReportSavePromise = null;
-            }
-        }
-    })();
-
-    pendingReportSavePromise = savePromise;
-    return await savePromise;
+/**
+ * Deals are saved explicitly, by the user, through "Save Deal" → /api/deals
+ * (app.js ownSaveDeal). This legacy hook used to auto-save every analysis to a
+ * `/reports` endpoint that no longer exists — it 404'd on every render once accounts
+ * were switched on, and duplicated the explicit save. Kept as a no-op so the app.js
+ * call site stays valid.
+ */
+export async function persistLatestReport(_report) {
+    return null;
 }
 
 function buildSavedResultsSnapshot(report) {
