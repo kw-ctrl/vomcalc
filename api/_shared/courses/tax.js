@@ -6,8 +6,8 @@ const tax = {
  "subtitle": "Depreciation, cost segregation, REP, entities and the year-end deadline",
  "blurb": "The tax side of the portfolio: depreciation, cost segregation, the real estate professional, entities and the year-end deadline — taught on Kassidy's own calls.",
  "moduleCount": 8,
- "lessonCount": 88,
- "sourceCalls": 21,
+ "lessonCount": 84,
+ "sourceCalls": 17,
  "modules": [
   {
    "n": "0",
@@ -95,18 +95,44 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Tax benefits can beat cash flow for W2 earners",
-     "teaches": "Why one Airbnb a year can return more than the cash flow it produces when you still have a W2 job.",
-     "rule": "If your tax bill is $100,000, buying one Airbnb a year can save and return roughly $100,000 — often double the ~$25,000/year of cash flow on a $2,000/month property. The tax benefit is worth more than the cash flow while you still have a W2, and the cash flow compounds.",
+     "title": "Prioritise tax and lifestyle over equity when you're a high-income W-2 earner",
+     "teaches": "How to choose your investment priority based on your personal situation, so you optimise the lever that actually moves your net worth.",
+     "rule": "If you're a high-income W-2 earner with kids who wants to quit your job, tax benefits should be your biggest priority because your biggest lever is tax, not time. If you're broke, cash flow is your number one priority. If you prioritise lifestyle, you may sacrifice some equity (e.g. buying turnkey instead of a 7-month renovation).",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
+      "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
       "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
+      "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
+      "startSec": 940.9,
+      "endSec": 982.9,
+      "at": "0:15:40",
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=940",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-940-uamOYvGM1cTeFHR8zsqKL0cAGWvMdV.mp4",
+       "dur": 150,
+       "bytes": 9545877
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "STR is the vehicle to run while you still have a W2",
+     "teaches": "Why short-term rentals beat other investment vehicles for someone still employed full-time.",
+     "rule": "There's not another option for an investment vehicle while you still have your W2 job, because STR is the only thing that will give you the tax savings. Invest in it heavily until you're out of your job.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 2835.5,
+      "endSec": 2876.7,
+      "at": "0:47:15",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=2835",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-2835-FicmtK6jpGR3NWW3dbFrtmK7BAMgSi.mp4",
+       "dur": 150,
+       "bytes": 5598879
+      }
      },
      "alsoIn": []
     },
@@ -195,22 +221,6 @@ const tax = {
        "at": null
       }
      ]
-    },
-    {
-     "title": "Self-employed pay both halves of self-employment tax",
-     "teaches": "Understanding why 1099 self-employed individuals are taxed more than W-2 employees.",
-     "rule": "As an employee, you pay 7.5% and the employer pays 7.5% of your taxes. As a self-employed 1099, you pay both halves, totaling 15%.",
-     "speaker": "Kassidy Warren",
-     "source": {
-      "label": "07 EV Call 16 - Dec 31 2025 - Year End and Listing Momentum",
-      "guest": null,
-      "driveId": "1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1in7aRZETqt36nXE2ciSUCnN9uU6aAuUH/view"
-     },
-     "alsoIn": []
     }
    ]
   },
@@ -402,18 +412,23 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Match the deal to your goals, not the market",
-     "teaches": "How to choose between cash flow and equity/tax plays based on your personal situation.",
-     "rule": "If you don't need cash flow because you have high W-2 income, buy something you can flip into a lot of equity with tax benefits rather than chasing cash flow — and look at your own backyard before assuming a saturated market like the Caribbean won't work.",
+     "title": "Don't let one upgrade hold up revenue",
+     "teaches": "A decision rule for cutting scope items that delay launch, so you stop bleeding revenue while you wait.",
+     "rule": "If a scope item is really going to extend the project, consider not doing it. Every day you're not in service you're losing revenue — it could be a thousand dollars a night on certain days. Ask whether the thing will ultimately create the revenue to justify the spend; toward the end of a project it probably won't.",
      "speaker": "Kassidy",
      "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
+      "guest": null,
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 5816.5,
+      "endSec": 5864.1,
+      "at": "1:36:56",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=5816",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-5816-B8LTycmHZRdSfBrhO0VNZIrZZGWY45.mp4",
+       "dur": 150,
+       "bytes": 7583872
+      }
      },
      "alsoIn": []
     }
@@ -422,24 +437,8 @@ const tax = {
   {
    "n": "2",
    "title": "Repairs, improvements and where renovation dollars really go",
-   "count": 12,
+   "count": 8,
    "lessons": [
-    {
-     "title": "The 30-day year-end playbook",
-     "teaches": "Members get a step-by-step 30-day plan to get a property under contract, close 30 days later, and get it in service 30 days after that to reduce this year's tax bill.",
-     "rule": "In 30 days: pick your market, visit it, get a realtor, get pre-approval, underwrite 20 properties a week, submit offers, and stay active in the chat. Then close 30 days later and get in service 30 days after that.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "07 EV Call - Sep 15 2026 - 30-Day Year-End Playbook",
-      "guest": null,
-      "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
-     },
-     "alsoIn": []
-    },
     {
      "title": "Improvements specifically for the rental unit add to cost basis",
      "teaches": "Renovation dollars spent specifically on the rented portion increase the depreciable cost basis.",
@@ -473,66 +472,18 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Know what you're investing for before you judge a deal",
-     "teaches": "Why a low cash-on-cash can still be a great deal if the equity or tax outcome is outsized.",
-     "rule": "The rules flex depending on what you're investing for. If your projected cash on cash is lower but your equity is way outsized, it can still be a good deal. If you're going to save $200,000 on your tax bill this year — money you'd otherwise have to pay — factor that in. But on a straight return basis, it's 2.5x on your money.",
+     "title": "Read the deal scorecard across four metrics",
+     "teaches": "How to interpret a deal score by breaking it into the four pillars the calculator grades, so you know exactly why a deal scores low or high.",
+     "rule": "Score a deal on four metrics: equity creation, speed of capital (IRR), tax efficiency, and cash on cash. A 60 score means one or more pillars are weak — check which bar is low before deciding.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
       "guest": null,
-      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
+      "driveId": null,
       "startSec": null,
       "endSec": null,
       "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Don't spend more improving a property than the value it adds",
-     "teaches": "The mistake that put many Airbnb owners underwater, and how to avoid it.",
-     "rule": "If you pour $300,000 into a property but the value only goes up $150,000, you're underwater by $150,000. Even a 30% cash on cash means roughly three years just to break even, and by then your tax savings are running out. Create equity in the property — don't just rely on cash flow.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
-      "guest": null,
-      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Don't include tax savings in your deal analysis",
-     "teaches": "Why you should keep tax benefits out of your underwriting and treat them as a bonus, not a return driver.",
-     "rule": "Never include tax savings in your return calculations. Tax savings are fun to look at but should not be part of the deal analysis because depreciation may be recaptured unless you 1031 exchange or hold long-term.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "07 EV Call 8 - Oct 29 2025 - ADU Velocity",
-      "guest": null,
-      "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Verify the listed square footage",
-     "teaches": "Listing square footage can be wrong, which throws off your revenue and depreciation math.",
-     "rule": "Verify the actual square footage before underwriting — a 750 sq ft 2-bedroom may not realistically do $100k.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
-      "guest": null,
-      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view"
+      "watch": null
      },
      "alsoIn": []
     },
@@ -585,9 +536,9 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Know your buy box: cash flow, equity, or tax benefits",
-     "teaches": "The three reasons to buy a short-term rental and how to decide which you're optimizing for.",
-     "rule": "When looking at deals, understand whether you're buying for cash flow, equity, or tax benefits, or a weighted version of all three.",
+     "title": "Match the deal to your investor profile",
+     "teaches": "Why the same deal can be a no for one investor and a yes for another, based on what they need it to do.",
+     "rule": "If you're a strict real estate investor and this is all you do, you either put more money down, get a lower purchase price, or walk away. If you have a good job and want tax benefits, breaking even or a little over means nothing comes out of your pocket — you effectively saved that cash.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -602,9 +553,9 @@ const tax = {
     },
     {
      "title": "Verify title transfer and permits in a partnership",
-     "teaches": "A partnership failure mode: managing partners responsible for title, permits and compliance may never actually do it, and you get shut down.",
-     "rule": "In a partnership, assign and verify that title gets transferred into the entity's name and that permits are good. In this deal the managing partners never transferred title, and they were fine until they got shut down.",
-     "speaker": "Kassidy",
+     "teaches": "In a multi-partner deal, someone must own the unglamorous compliance work or the whole deal can be shut down.",
+     "rule": "Assign one partner to confirm title is transferred into the entity's name and all permits are in place. Do not assume the managing partners did it.",
+     "speaker": "Katie Cline",
      "source": {
       "label": "01 EV Call 43 - Jul 8 2026 - Positioning Workshop (guest Katie Cline)",
       "guest": "Katie Cline",
@@ -758,70 +709,75 @@ const tax = {
     },
     {
      "title": "A 10-year loan kills cash flow and tax benefits",
-     "teaches": "Why a short amortization changes the deal profile and may not fit your buy box.",
-     "rule": "A 10-year term at 5.75% means a substantially higher mortgage, lower cash flow, and no tax benefits — you own it sooner but it doesn't fit a cash-flow box.",
+     "teaches": "Short amortization raises your mortgage, lowers cash flow, and removes depreciation tax benefits, so it may not fit your buy box.",
+     "rule": "A 10-year loan means a substantially higher mortgage, lower cash flow, and no tax benefits — it doesn't fit the standard buy box.",
      "speaker": "Kassidy",
      "source": {
       "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
-      "startSec": 4455.7,
-      "endSec": 4502.3,
-      "at": "1:14:15",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455",
+      "startSec": 4502.3,
+      "endSec": 4546.6,
+      "at": "1:15:02",
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4502",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4455-jKWXBex3A17wYT2dQBihOJIBJngncK.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4502-wg5R8m6hRK0foc8sFFVPRWcUmIoEwm.mp4",
        "dur": 150,
-       "bytes": 8091112
+       "bytes": 7659609
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Limit non-accredited investors to 35 in a 506 B offering",
-     "teaches": "Members learn the cap on non-accredited investors and how LLCs count toward that limit.",
-     "rule": "In a 506 B offering, you can take up to 35 non-accredited investors. If an LLC invests, each member is counted separately unless all members are accredited.",
-     "speaker": "Bethany",
-     "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Adjust your W-4 withholdings to fund your next STR",
-     "teaches": "How to keep the tax refund you expect from cost segregation and depreciation in your own bank account each month instead of lending it to the government interest-free, so you have capital ready to buy a short-term rental.",
-     "rule": "If you know you'll get a large refund (e.g. $50K from cost-seg and depreciation), refile your W-4 to reduce withholdings so you keep roughly $4K/month. Hold the money; if you buy the STR, use it; if you don't, you still have it to pay the tax you always owed.",
+     "title": "1031 exchange as an alternative to a cash-out refinance",
+     "teaches": "An option for owners whose existing debt payment can't go higher.",
+     "rule": "If a cash-out refinance would raise your payment beyond what you can carry, a 1031 exchange into another property is an alternative path to reposition your capital.",
      "speaker": "Kassidy",
      "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 2811.2,
+      "endSec": 2817.8,
+      "at": "0:46:51",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=2811",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-2811-bIcm4fLH5sOogQ7z7ALjMm9udoNWn7.mp4",
+       "dur": 150,
+       "bytes": 9267192
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Buy management companies at 2–3x and roll them into a 6x collective",
-     "teaches": "A roll-up play: acquire small STR management books cheaply, add value, and re-rate the combined entity.",
-     "rule": "Buy management companies with ~25–30 units for 2–3x, then roll them into a larger collective where the combined company is worth ~6x — you pick them up at 3x and they're worth 6x instantly, plus you add value through better pricing, operations and management.",
-     "speaker": "Patryk Swietek",
+     "title": "REP lets you cost segregate and bonus depreciate any real estate",
+     "teaches": "As a real estate professional you can buy any type of real estate, cost-segregate it, and bonus depreciate it without meeting the STR loophole rules.",
+     "rule": "As a real estate professional you don't have to satisfy the short-term rental loophole rules of 7-day minimum stay and 100 hours on the one property.",
+     "speaker": "Kassidy Warren",
      "source": {
-      "label": "06 EV Call 39 - Jun 10 2026 - The First 10 Minutes (guest Patryk Swietek)",
-      "guest": "Patryk Swietek",
-      "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
+      "label": "00 EV Call - Sep 04 2026 - Friday Call (moved)",
+      "guest": null,
+      "driveId": "1EmH6XLFrnplinXKpEd1lckR58hWHH_TM",
       "startSec": null,
       "endSec": null,
       "at": null,
-      "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
+      "watch": "https://drive.google.com/file/d/1EmH6XLFrnplinXKpEd1lckR58hWHH_TM/view"
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Short-term rental active business rules",
+     "teaches": "The criteria that make a short-term rental an active business for tax purposes, allowing depreciation to offset W-2 income.",
+     "rule": "Transient occupancy: average stay of seven days or less; you must be the primary operator, spending at least 100 hours and more than any other individual; the property must be in service before year-end (advertising and available, not necessarily a stay).",
+     "speaker": "Kassidy Warren",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
      },
      "alsoIn": []
     }
@@ -1080,18 +1036,23 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Turn Instant Book on and build protections around it",
-     "teaches": "How to get Airbnb promoting you while still screening risky guests.",
-     "rule": "You absolutely have to have Instant Book on. Protect yourself with: automated follow-up messaging after booking that asks a question (cancel without penalty within 24 hours if they don't respond within ~12 hours and you feel uncomfortable), require ID/identity verification, set guest requirements, and a two-night minimum.",
+     "title": "Search your own listing like a guest would",
+     "teaches": "How to audit your own listing's visibility and photo order from the guest's point of view.",
+     "rule": "Search your area for your listing. If it is not in your top five results, your photos and ranking need work — the hero photo should be one of the first images guests see when scrolling.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
+      "label": "05 EV Call 9 - Nov 5 2025 - Listing Optimization",
       "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
+      "driveId": "1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E",
+      "startSec": 3002.2,
+      "endSec": 3043.9,
+      "at": "0:50:02",
+      "watch": "https://drive.google.com/file/d/1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E/view?t=3002",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/05-ev-call-9-nov-5-2025-listing-optimization-3002-VfZ9rVizIEcPMESylzmh1gGfm7ExUi.mp4",
+       "dur": 150,
+       "bytes": 4897274
+      }
      },
      "alsoIn": []
     }
@@ -1279,18 +1240,23 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "Pay contractors by traceable method, not cash",
-     "teaches": "Members learn to keep a paper trail for every contractor payment so expenses are legally deductible and defensible in an audit.",
-     "rule": "Pay all contractors by check or traceable digital payment so you have a paper trail; if you take a deduction you should have sent them a 1099.",
+     "title": "Mid-term rentals can replace income with less work",
+     "teaches": "How to use mid-term rentals to reduce workload while keeping income and depreciation benefits.",
+     "rule": "If you hit 700 hours in real estate in a year you can qualify for REP status; then you can switch a property to mid- or long-term and make close to the same amount with way less work, while still taking depreciation on a mid-term.",
      "speaker": "Kassidy",
      "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
+      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
       "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
+      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
+      "startSec": 6231.9,
+      "endSec": 6280.9,
+      "at": "1:43:51",
+      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view?t=6231",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/05-office-hours-15-dec-18-2025-launch-and-feed-the-beast-6231-dhDoRsom3n5DVISWiUvRGhgSCb1nOc.mp4",
+       "dur": 150,
+       "bytes": 6358469
+      }
      },
      "alsoIn": []
     }
@@ -1350,46 +1316,9 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "The lazy 1031: stay under the capital gains threshold",
-     "teaches": "Members learn how to avoid federal capital gains tax by keeping reportable income below the threshold in a year they sell appreciated assets.",
-     "rule": "If you get your reported AGI below roughly $92K (married), you pay no federal capital gains tax — so sell assets early in the year and buy STRs to push income down.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "07 EV Call 14 - Dec 8 2025 - Tax Leverage Hierarchy",
-      "guest": null,
-      "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use the 7-day rule for STR tax treatment",
-     "teaches": "To qualify as a short-term rental for tax purposes, the average guest stay must be 7 days or less.",
-     "rule": "The average nightly stay must be 7 days or less to qualify as a short-term rental for tax purposes. This is easy to maintain as long as you're not using it as a midterm rental.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "00 EV Call 1 - Sep 10 2025 - Velocity of Money",
-      "guest": null,
-      "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
-      "startSec": 3770.6,
-      "endSec": 3816.0,
-      "at": "1:02:50",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770",
-      "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-3770-6qzbuTbjFsi3VodRtXwff8DvGWNQK5.mp4",
-       "dur": 150,
-       "bytes": 12131584
-      }
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Estimate tax savings at 20-30% of purchase price",
-     "teaches": "A quick conservative rule for projecting first-year tax write-offs.",
-     "rule": "Tax savings from a short-term rental are roughly 20-30% of the purchase price, depending on your income. On a $1M property that's $200K-$300K of write-off against W2 income.",
+     "title": "Estimate tax savings as 20-30% of purchase price",
+     "teaches": "A quick conservative rule of thumb for how much tax write-off an STR purchase generates, so you can size the deal against your active income.",
+     "rule": "Tax savings from a property are roughly 20-30% of the purchase price. On a $1M property, expect a $200K-$300K write-off, conservatively. Base it on your W2/active income to know how much you need to offset.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -1403,98 +1332,170 @@ const tax = {
      "alsoIn": []
     },
     {
-     "title": "1031 exchange to avoid depreciation recapture tax",
-     "teaches": "Members learn that selling without a 1031 exchange triggers depreciation recapture taxed as ordinary income, which can exceed the cash received from the sale.",
-     "rule": "If you sell a short-term rental without a 1031 exchange, all depreciation taken is recaptured and taxed at your ordinary income rate. Example: $400,000 depreciation at 32% = $120,000 tax, which can be more than the $100,000 cash you receive from the sale.",
+     "title": "Use a 1031 exchange to defer taxes and depreciation recapture",
+     "teaches": "Members learn that selling an Airbnb without a 1031 exchange triggers depreciation recapture taxed as ordinary income, and how a 1031 avoids it.",
+     "rule": "When you sell, all depreciation taken is recaptured as ordinary income. Example: $400k depreciation on a $500k property could create a $120k tax bill at 32% even if you only net $100k cash. A 1031 exchange defers both capital gains and depreciation recapture.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 3057.6,
+      "endSec": 3106.6,
+      "at": "0:50:57",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3057",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3057-nxDl0PP5vn2CrIM57P7IFbyYR0xisR.mp4",
+       "dur": 150,
+       "bytes": 8610664
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "1031 from residential to commercial is cleaner",
-     "teaches": "Members learn why 1031 exchanging into a commercial property like a hotel is easier than residential-to-residential because you control the closing timeline.",
-     "rule": "With commercial property, you have a PSA and a known closing date (often 90 days), so you can list and sell your property within the 45-day identification window. Residential-to-residential 1031s are harder because buyers won't wait for your sale.",
+     "title": "Meet the 45-day and 180-day 1031 deadlines",
+     "teaches": "Members learn the strict timelines for a 1031 exchange and why residential-to-residential exchanges are harder than commercial.",
+     "rule": "After closing the sale, you have 45 days to identify a replacement property and 180 days total to close. Residential sellers are often unwilling to wait, making commercial properties (like hotels) easier because they typically take 90 days to close and you control the timeline via the PSA.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 3234.6,
+      "endSec": 3282.3,
+      "at": "0:53:54",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3234",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3234-BWdjRKGu5Ih8EWswVsWfSMDGvYUGIF.mp4",
+       "dur": 150,
+       "bytes": 10092018
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Use a 1031 to trade up and build equity",
-     "teaches": "Members learn how repeated 1031 exchanges can turn small equity into large equity over time.",
-     "rule": "Trade up from residential to commercial properties using 1031 exchanges to defer taxes and boost value. Example: a $65,000 HELOC on a primary residence was used to buy land, which was sold and 1031 exchanged into a property now worth $800,000 in equity.",
+     "title": "Trade up from residential to commercial with a 1031",
+     "teaches": "Members learn the strategy of using a 1031 exchange to move from a residential Airbnb into a larger commercial property to boost value.",
+     "rule": "Sell a residential rental and 1031 into a commercial property (e.g., hotel) where you can force appreciation and increase equity. This is how you 'trade up' in real estate.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 3331.8,
+      "endSec": 3375.1,
+      "at": "0:55:31",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3331",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3331-3hwOMaFPpwUCNgDTStDBF526IEGC77.mp4",
+       "dur": 150,
+       "bytes": 9961415
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Use the lazy 1031 to wipe out depreciation recapture",
-     "teaches": "If you sell a property and fail or skip a formal 1031, you can still offset the depreciation recapture by buying another property in the same calendar year.",
-     "rule": "The lazy 1031: sell a property, then buy enough property to offset all your income including the depreciation recapture, all within the same calendar year (Jan 1 to Dec 31). No 45-day identification window applies.",
+     "title": "The Lazy 1031: Offset Depreciation Recapture Without the 45-Day Rule",
+     "teaches": "How to avoid paying tax on depreciation recapture by buying another property in the same calendar year, even if you missed the formal 1031 exchange deadline.",
+     "rule": "If you sell a property and have depreciation recapture (e.g., $400k), you can buy another investment property and put it in service before December 31st of the same year to offset that recapture. This is called the 'lazy 1031' and does not require the 45-day identification or 180-day closing rules of a formal 1031 exchange.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 3400.1,
+      "endSec": 3446.6,
+      "at": "0:56:40",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3400",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3400-jGZusN3KNT9xAFTzICaa9MbFFm14UC.mp4",
+       "dur": 150,
+       "bytes": 10071801
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "A 1031 is more efficient than the lazy 1031",
-     "teaches": "Why the formal 1031 beats the lazy 1031 even though the lazy 1031 is easier.",
-     "rule": "With a 1031 the recapture just disappears and you get a whole new set of depreciation and cost segregation on the new property. With the lazy 1031 you must spend some of the new property's depreciation just to cover the recapture from the property you sold, so it is less efficient.",
+     "title": "Lazy 1031 vs. Formal 1031: Efficiency and Tax Impact",
+     "teaches": "Why a formal 1031 exchange is more tax-efficient than the lazy 1031, and how to calculate the difference.",
+     "rule": "A formal 1031 exchange defers all capital gains and depreciation recapture, and the new property's depreciation can offset other income. With a lazy 1031, the new property's depreciation must first offset the depreciation recapture from the sold property, leaving less to offset other income. Example: $400k recapture + $500k other income = $900k total income. With 1031, the $400k disappears and $50",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 3583.3,
+      "endSec": 3629.5,
+      "at": "0:59:43",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3583",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3583-5DJ1O5mOVMELfIAoMzMrgiNu3orEMU.mp4",
+       "dur": 150,
+       "bytes": 11785055
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "1031 into your future dream home",
-     "teaches": "A strategy to move investment property equity into a personal residence tax-deferred.",
-     "rule": "1031 investment property into a home you want to live in, rent it out for at least two years operating it as a real investment (advertise it, make money on it), then move in. Longer than two years is better.",
+     "title": "Using 1031 to Acquire Land for Future Development",
+     "teaches": "How to use a 1031 exchange to buy land, even though land is not depreciable, and potentially convert it to a primary residence later.",
+     "rule": "You can 1031 exchange from a short-term rental or hotel into land, but you will not get depreciation on the land. This can be useful if you plan to develop the land (e.g., build a resort) or eventually build a primary residence on it after holding it as an investment property.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 4035.0,
+      "endSec": 4082.7,
+      "at": "1:07:15",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=4035",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-4035-rvzd6bgWVf731gDkNxHj4mtPXhuRp8.mp4",
+       "dur": 150,
+       "bytes": 9684598
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Lazy 1031: Same Calendar Year, No 45-Day Rule",
+     "teaches": "The timing rules for a lazy 1031 versus a formal 1031 exchange.",
+     "rule": "For a lazy 1031, you must buy the replacement property and put it in service between January 1 and December 31 of the same calendar year as the sale. There is no 45-day identification period or 180-day closing deadline like in a formal 1031 exchange.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3583.3,
+      "endSec": 3629.5,
+      "at": "0:59:43",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3583",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3583-5DJ1O5mOVMELfIAoMzMrgiNu3orEMU.mp4",
+       "dur": 150,
+       "bytes": 11785055
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Lazy 1031: Buy Enough Property to Offset All Income",
+     "teaches": "How to size the replacement property in a lazy 1031 to fully offset depreciation recapture and other income.",
+     "rule": "Add up all your income including depreciation recapture, then buy enough property (or properties) to offset that total. The replacement property may need to be twice as expensive or have enough depreciation to cover the recapture and other income. You can buy multiple properties in a lazy 1031.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3867.1,
+      "endSec": 3917.4,
+      "at": "1:04:27",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3867",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3867-jqcna5oA6gzCKqYFp1weKnOCG9m9uu.mp4",
+       "dur": 150,
+       "bytes": 10491268
+      }
      },
      "alsoIn": []
     }

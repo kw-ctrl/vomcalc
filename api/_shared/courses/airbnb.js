@@ -7,7 +7,7 @@ const airbnb = {
  "blurb": "Buy, launch and run short-term rentals, in lifecycle order. Built from the Escape Velocity call archive — every lesson links to the recording it came from.",
  "moduleCount": 8,
  "lessonCount": 96,
- "sourceCalls": 20,
+ "sourceCalls": 21,
  "modules": [
   {
    "n": "0",
@@ -15,56 +15,8 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Refinance early to double your money every 2–3 years",
-     "teaches": "Members learn the velocity strategy: pull equity out early via refinance, keep the property, and redeploy the capital into the next deal.",
-     "rule": "If you can refinance in year 1, 2, or 3, you likely double your money or more. You still own the property, so you can repeat the process every 2–3 years instead of waiting 10 years.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Tax benefits can beat cash flow for W2 earners",
-     "teaches": "Why one Airbnb a year can return more than the cash flow it produces when you still have a W2 job.",
-     "rule": "If your tax bill is $100,000, buying one Airbnb a year can save and return roughly $100,000 — often double the ~$25,000/year of cash flow on a $2,000/month property. The tax benefit is worth more than the cash flow while you still have a W2, and the cash flow compounds.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Airbnb is the fastest path to financial freedom for W2 earners",
-     "teaches": "Why Kassidy steers high-earning W2 members toward short-term rentals rather than small business acquisitions.",
-     "rule": "For most people starting out, creating financial freedom through Airbnbs is the fastest way — small business buyers often take a year and 15 LOIs to close one deal, and many end up buying themselves another job.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "03 EV Call 33 - Apr 14 2026 - Infinite Return BRRRR (guest Raj Chida)",
-      "guest": "Raj Chida",
-      "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Equity is worth more than cash flow",
-     "teaches": "Prioritize equity build-up over short-term cash flow when evaluating deals.",
+     "title": "Equity is 10x more valuable than cash flow",
+     "teaches": "Members learn to prioritize equity building over immediate cash flow when evaluating deals.",
      "rule": "The equity is like 10 times more valuable than the cash flow.",
      "speaker": "Kassidy",
      "source": {
@@ -84,9 +36,51 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Airbnb is not dead — buy the right type",
-     "teaches": "Ignore hype about Airbnb being dead; focus on unique stays or family compounds that still thrive.",
-     "rule": "The two Airbnbs that will live on are unique stays (potato, tree houses) and family compound style (15-20+ people with amenities like putt putt, outdoor movie theater).",
+     "title": "Prioritise tax and lifestyle over equity when you're a high-income W-2 earner",
+     "teaches": "How to choose your investment priority based on your personal situation, so you optimise the lever that actually moves your net worth.",
+     "rule": "If you're a high-income W-2 earner with kids who wants to quit your job, tax benefits should be your biggest priority because your biggest lever is tax, not time. If you're broke, cash flow is your number one priority. If you prioritise lifestyle, you may sacrifice some equity (e.g. buying turnkey instead of a 7-month renovation).",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
+      "guest": null,
+      "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
+      "startSec": 940.9,
+      "endSec": 982.9,
+      "at": "0:15:40",
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=940",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-940-uamOYvGM1cTeFHR8zsqKL0cAGWvMdV.mp4",
+       "dur": 150,
+       "bytes": 9545877
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "STR is the vehicle to run while you still have a W2",
+     "teaches": "Why short-term rentals beat other investment vehicles for someone still employed full-time.",
+     "rule": "There's not another option for an investment vehicle while you still have your W2 job, because STR is the only thing that will give you the tax savings. Invest in it heavily until you're out of your job.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 2835.5,
+      "endSec": 2876.7,
+      "at": "0:47:15",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=2835",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-2835-FicmtK6jpGR3NWW3dbFrtmK7BAMgSi.mp4",
+       "dur": 150,
+       "bytes": 5598879
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Airbnb is not dead: focus on unique stays or family compounds",
+     "teaches": "Members learn which types of short-term rentals will survive and thrive, so they can position their investments accordingly.",
+     "rule": "The two types of Airbnbs that will live on are unique stays (e.g., potato, treehouses) and family compound style properties that sleep 15-20+ people with amenities like putt-putt and outdoor movie theaters.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV Call 1 - Sep 10 2025 - Velocity of Money",
@@ -106,8 +100,8 @@ const airbnb = {
     },
     {
      "title": "The core STR model: short stays, high occupancy, above-market ADR",
-     "teaches": "The baseline operating model for a short-term rental: target short stays, strong occupancy and above-average daily rates for the market.",
-     "rule": "Target 2-3 night stays, ~70% occupancy, and above-average ADR for the market.",
+     "teaches": "The baseline operating model for a short-term rental that makes the numbers work.",
+     "rule": "Target two-night to three-night stays, 70% occupancy, and an average daily rate above the market average.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV Call 2 - Sep 17 2025 - Velocity of Money and Trading Up",
@@ -126,9 +120,9 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Leverage plus forced appreciation is how you create wealth",
-     "teaches": "The math behind why real estate builds wealth faster than stocks: you control a large asset with little cash, and any value you add goes straight to your equity.",
-     "rule": "If you put 10% down on a $100,000 property ($10,000) and then spend $10,000 on renovations to increase value to $160,000, the $60,000 equity growth goes straight into your pocket.",
+     "title": "Forced appreciation plus leverage is how you build wealth",
+     "teaches": "The member sees the math of how a small down payment plus renovations creates large equity gains.",
+     "rule": "Leverage plus forced appreciation creates wealth. Example: $10k down on a $100k property, $10k in renovations, property worth $160k, so $60k of equity goes into your pocket.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -142,87 +136,128 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Prioritize tax and lifestyle before equity",
-     "teaches": "How to rank the four ways real estate pays you based on your personal situation so you pick the right deals.",
-     "rule": "If you are a high-income W-2 earner with kids who wants to quit your job, tax benefits should be your biggest priority because your biggest lever is the tax benefit, not time. If you are broke, cash flow is your number one priority. Prioritizing lifestyle may mean sacrificing some equity (e.g. buying turnkey instead of a 7-month renovation).",
+     "title": "IRR vs ROI: why speed of money matters",
+     "teaches": "Members learn the difference between ROI (total return) and IRR (annualized speed of return), and why the same multiple is worth more if you get it back faster.",
+     "rule": "ROI is total cash returned divided by cash invested; IRR is the annualized compound rate of growth. The standard benchmark for a deal is a 15% IRR. A 100% IRR means you get all your money back in one year.",
      "speaker": "Kassidy",
      "source": {
-      "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
-      "guest": null,
-      "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
-      "startSec": 940.9,
-      "endSec": 982.9,
-      "at": "0:15:40",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=940",
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 991.0,
+      "endSec": 1040.1,
+      "at": "0:16:31",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=991",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-940-uamOYvGM1cTeFHR8zsqKL0cAGWvMdV.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-991-A9q7TkvYZLkqiX17DXRDvPPYhleG89.mp4",
        "dur": 150,
-       "bytes": 9545877
+       "bytes": 9382528
       }
      },
      "alsoIn": []
     },
     {
-     "title": "IRR measures the speed of your money, not just the size",
-     "teaches": "The core distinction between ROI and IRR, and why velocity of money is the real metric.",
-     "rule": "IRR (internal rate of return) is the compound rate of growth of your money over time. A 1000% ROI over 100 years is worse than a 50% return over 5 years. The standard benchmark for a deal is 15% IRR.",
+     "title": "Cash on cash is the simple payback metric",
+     "teaches": "Members get a quick mental shortcut: cash on cash tells you how many years to get your initial investment back.",
+     "rule": "Cash on cash is an annual metric. A 10% cash on cash means it takes 10 years to get your initial investment back.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 1114.4,
+      "endSec": 1161.8,
+      "at": "0:18:34",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=1114",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-1114-0aMx7NBHciCTzBeNDUry9NYblSecIM.mp4",
+       "dur": 150,
+       "bytes": 9669745
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Cash on cash is the simple annual metric",
-     "teaches": "How to quickly translate a cash-on-cash return into a payback period.",
-     "rule": "Cash on cash is an annual metric: a 10% cash on cash means it takes 10 years to get your initial investment back. IRR, by contrast, accounts for the time your money is invested.",
+     "title": "Shorten your hold period to double your IRR",
+     "teaches": "Members see how cutting the hold period while keeping the same multiple dramatically increases IRR, so velocity of money beats a long slow hold.",
+     "rule": "If you triple your money over 10 years that's roughly a 10 IRR; triple it in half the time (5 years) and the IRR doubles to about 20. Cutting the hold period in half turns a 3x into roughly a 2.5x but still doubles the IRR.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 1237.2,
+      "endSec": 1285.8,
+      "at": "0:20:37",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=1237",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-1237-nnhdQfSg7o9wPZlQrVLObVldZYTmJ5.mp4",
+       "dur": 150,
+       "bytes": 10176542
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Hold period changes your IRR",
-     "teaches": "Why the same return over different hold periods produces a different IRR.",
-     "rule": "The same total return produces a different IRR depending on the hold period. Tripling your money over 10 years is a much lower IRR than tripling it over 5 years.",
+     "title": "Early years drag IRR down before cash flow catches up",
+     "teaches": "Members understand why the first few years of an STR show negative or low IRR and why the back half of a hold is mostly cash flow that adds little velocity.",
+     "rule": "In the first ~4 years you carry renovation, operations, startup and supply costs, so IRR can be negative (e.g. -100%) and only climbs slowly as cash flow builds. The last five years of a 10-year hold are mostly cash flow and don't add much to the velocity of money.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 1321.4,
+      "endSec": 1368.0,
+      "at": "0:22:01",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=1321",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-1321-0hVKUrYW6qNJQ9vtGUfanpMAHhc8XQ.mp4",
+       "dur": 150,
+       "bytes": 9328378
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "IRR measures the speed of your money, not just the total return",
-     "teaches": "Members learn that IRR is a velocity metric: the faster you get your capital back, the higher the IRR, even if the total multiple is the same.",
-     "rule": "Tripling your money in 10 years is roughly a 10% IRR; tripling it in 5 years is roughly a 20% IRR. Cutting the hold period in half doubles the IRR if the multiple stays the same.",
+     "title": "Downtown Portland's collapse shows why appraised values lie",
+     "teaches": "A real-world example of how pro forma and appraised values can evaporate, reinforcing the case for controllable assets.",
+     "rule": "Downtown Portland real estate was valued at $3B pre-COVID and is now $990M — a third of its value. Pro formas and appraised values can collapse; leveraged office owners will lose everything.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
       "guest": "Brian Pate",
       "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
+      "startSec": 5209.3,
+      "endSec": 5259.1,
+      "at": "1:26:49",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=5209",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-5209-oCVYTRL28IyTVieRgO2XEK4Ph6R0cg.mp4",
+       "dur": 150,
+       "bytes": 8842373
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Invest for equity, not just cash flow",
+     "teaches": "Why equity multiple matters and how forced appreciation separates good Airbnb investments from bad ones.",
+     "rule": "Invest for equity. If you pour $300,000 into a property but the value only goes up $150,000, you destroyed value even if it cash flows. Track equity multiple so you know you're creating additional value, not just cash flow.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
+      "guest": null,
+      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
+      "startSec": 921.5,
+      "endSec": 963.4,
+      "at": "0:15:21",
+      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view?t=921",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-49-aug-26-2026-three-20-percent-rules-921-KVFNafReKAkkHbhACHb9Ysz6LbtVW6.mp4",
+       "dur": 150,
+       "bytes": 3493122
+      }
      },
      "alsoIn": []
     }
@@ -234,30 +269,30 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Set a 30-day contract goal",
-     "teaches": "The community's target for getting members under contract quickly.",
-     "rule": "The goal for everyone in the community is to get under contracts within 30 days.",
+     "title": "Get under contract on a property within 30 days",
+     "teaches": "Members are pushed to take immediate action toward acquiring their first or next short-term rental.",
+     "rule": "In the next 30 days, you're going to be under contract on something.",
      "speaker": "Kassidy",
      "source": {
-      "label": "00 EV Call 2 - Sep 17 2025 - Velocity of Money and Trading Up",
+      "label": "00 EV Call 1 - Sep 10 2025 - Velocity of Money",
       "guest": null,
-      "driveId": "1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb",
-      "startSec": 706.0,
-      "endSec": 776.0,
-      "at": "0:11:46",
-      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=706",
+      "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
+      "startSec": 1997.7,
+      "endSec": 2040.2,
+      "at": "0:33:17",
+      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1997",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-2-sep-17-2025-velocity-of-money-and-trading-up-706-TYx5Ubz6kMTTvqnO6FNMQTt6ksLBgW.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-1997-oBc6sA3FFDuHP5703w6H8gITBLXK25.mp4",
        "dur": 150,
-       "bytes": 5916196
+       "bytes": 13277384
       }
      },
      "alsoIn": []
     },
     {
      "title": "Look at 20-40 properties before you buy one",
-     "teaches": "The volume of on-the-ground property tours it takes to find a deal that actually meets your criteria.",
-     "rule": "In Cleveland, Aaron looked at at least 20-25 properties and only one met the criteria. In Tucson, they looked at roughly 40 properties over three days before finding the right one. Block out a whole day (or multiple days) with your realtor and go see everything.",
+     "teaches": "The volume of on-the-ground touring it takes to find the one property that actually meets your criteria.",
+     "rule": "In Cleveland, Erin looked at at least 20-25 properties on her own and the one they bought was the only one that met their criteria. In Tucson they looked at roughly 40 properties over three days. Block out the whole day with your realtor and drive the neighborhoods.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -271,9 +306,9 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "The 20% rule for revenue to price",
-     "teaches": "A quick screen to check whether a market and price point can support your revenue target.",
-     "rule": "20% of the purchase price needs to be gross revenue. A $750,000 house needs to gross $150,000. Look for properties in that market already making $150,000 or more and study what they are doing so you can apply it.",
+     "title": "The 20% rule for revenue to purchase price",
+     "teaches": "A quick screen to check whether a market and price point can support your revenue target before you go deeper.",
+     "rule": "20% of the purchase price needs to be gross revenue. A $750,000 house needs to produce $150,000 in gross revenue. Look for properties in that market already making $150,000 or more and study what they're doing.",
      "speaker": "Kassidy",
      "source": {
       "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
@@ -292,142 +327,147 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Use the 20% rule to screen a deal fast",
-     "teaches": "A quick screen to check whether a property's revenue can support its price before you go deeper.",
-     "rule": "The 20% rule: the property must generate 20% of the purchase price in annual revenue. A $300,000 property needs $60,000/year in revenue to pass.",
+     "title": "The 20% revenue rule",
+     "teaches": "The napkin-math screen that tells you whether a property's short-term rental revenue justifies the purchase price.",
+     "rule": "Revenue must be at least 20% of purchase price. A $500,000 property needs to bring in $100,000 in revenue.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "The 20% rule sets your revenue target from list price",
-     "teaches": "How to quickly screen whether a listing price can support a short-term rental before you dig into the P&L.",
-     "rule": "Gross revenue must be roughly 20% of the purchase price — a $629K listing needs about $120K in gross revenue to work.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
+      "label": "07 EV Call - Sep 15 2026 - 30-Day Year-End Playbook",
       "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "RV parks require living on site under 20 acres",
-     "teaches": "Why small RV parks and campgrounds often force you to live on site, making them a poor fit for many investors.",
-     "rule": "If a campground is less than 20 acres, you likely cannot afford to outsource management at the beginning and will have to manage it yourself, often living on site. Anything above 20 acres gets scooped up by bigger players.",
-     "speaker": "Sarah Glidewell",
-     "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Avoid hood Section 8 and focus on nicer neighborhoods",
-     "teaches": "Members learn that the money in most markets is in nicer neighborhoods and to avoid hood Section 8 deals.",
-     "rule": "The money is in the nicer neighborhoods. Don't touch hood Section 8 — you don't know the business plan or how to make money there.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "03 EV Call 33 - Apr 14 2026 - Infinite Return BRRRR (guest Raj Chida)",
-      "guest": "Raj Chida",
-      "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Target 25–30 unit management companies where the owner is still the operator",
-     "teaches": "The sweet spot for acquiring a management business: big enough to have contracts, small enough that the owner is burnt out.",
-     "rule": "Look for management companies around 25–30 units — that's where the seller is still the operator doing the servicing, isn't investing in growth, and is getting burnt out, which is the best opportunity.",
-     "speaker": "Patryk Swietek",
-     "source": {
-      "label": "06 EV Call 39 - Jun 10 2026 - The First 10 Minutes (guest Patryk Swietek)",
-      "guest": "Patryk Swietek",
-      "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Two homes on one property can hit $250–300K a year",
-     "teaches": "How a main house plus ADU guest house can be run as one or two STR listings.",
-     "rule": "A main house (3 bed/2 bath, ~1,600 sq ft) plus an ADU guest house (~1,000 sq ft) on one property can rent as one listing or two, producing $250–300K a year on a ~$1M all-in investment.",
-     "speaker": "Zoey Berghoff",
-     "source": {
-      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
-      "guest": "Zoey Berghoff",
-      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Target the 2-bed 2-bath that nobody else offers",
-     "teaches": "A specific wedge: the 2/2 is under-served because the market is either hotels or big luxury homes.",
-     "rule": "Buy 2-bed 2-bath properties designed for couples, honeymoons and getaways — in her market the only alternatives are a hotel or a basement ADU, so a luxury 2/2 commands high rates with far less wear and tear than a 6-7 person home.",
-     "speaker": "Zoey Berghoff",
-     "source": {
-      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
-      "guest": "Zoey Berghoff",
-      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Don't rely on AirDNA averages—analyze top comps",
-     "teaches": "How to use AirDNA data correctly to avoid underestimating revenue.",
-     "rule": "AirDNA averages bundle the whole market and can be misleading. Look at the top-performing comps directly and pick the ones you believe you can match. Kassidy's properties are 5xing the AirDNA average.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "00 EV Call 2 - Sep 17 2025 - Velocity of Money and Trading Up",
-      "guest": null,
-      "driveId": "1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb",
-      "startSec": 5451.6,
-      "endSec": 5495.9,
-      "at": "1:30:51",
-      "watch": "https://drive.google.com/file/d/1oIMpiHYjdyfBwF8r1phUen5pjbpz8kSb/view?t=5451",
+      "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
+      "startSec": 635.1,
+      "endSec": 680.1,
+      "at": "0:10:35",
+      "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view?t=635",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-2-sep-17-2025-velocity-of-money-and-trading-up-5451-gOGImeJQCe43naXUzdhrR405GC3lm3.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-sep-15-2026-30-day-year-end-playbook-635-HloqRL8tYRcn6Id3DbfWdsVgEbz004.mp4",
        "dur": 150,
-       "bytes": 4818813
+       "bytes": 7477220
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Use permits and supply constraints to pick a strong market",
-     "teaches": "A market with capped permits and high demand creates high margins and strong revenue for short-term rentals.",
-     "rule": "Look for markets with permit caps and high visitor demand. On Orcas Island, there are only 230 permits and they are not issuing more, yet way more than 230 people visit every day, making it a high-dollar, high-value, high-margin market.",
+     "title": "Avoid common property sizes like 3 bed 2 bath",
+     "teaches": "Three-bed, two-bath homes are a very common size and may face more competition; consider unique configurations like two-bed, two-bath luxury homes for couples.",
+     "rule": "Avoid buying 3 bed 2 bath homes because they are a really common size; instead, target unique configurations like 2 bed 2 bath luxury homes.",
+     "speaker": "Zoey Berghoff",
+     "source": {
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 4660.4,
+      "endSec": 4698.1,
+      "at": "1:17:40",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=4660",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-4660-V0nfW7Yc96MCfdFYHVE3RGa7VUJh7m.mp4",
+       "dur": 150,
+       "bytes": 10225067
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Permit caps create high-margin STR markets",
+     "teaches": "The member learns to look for markets with permit caps and high visitor demand as a signal of strong STR performance.",
+     "rule": "Look for markets with a limited number of permits and high visitor demand. Example: Orcas Island has only 230 permits and is not issuing more, creating a high-dollar, high-value, high-margin market.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Thin data can signal an underserved market",
+     "teaches": "How to read a market with few listings as an opportunity rather than a red flag.",
+     "rule": "When a market like Reno has very few listings for a five-guest search across the next six months, it means people with money want to go there but don't see what they want, so they book a hotel instead. The data doesn't support what's actually possible — no competition means you might do $130k.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Invest where the state protects homeowners",
+     "teaches": "Why state-level regulation is a market selection criterion, not an afterthought.",
+     "rule": "Arizona passed legislation protecting homeowners from cities and municipalities telling you what you can do with your property, so you can keep scaling in Tucson, Scottsdale and Yuma without worrying. Sacramento caps you at 180 days a year unless owner-occupied, which kills the deal if you can't be owner-occupied.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Heavily regulated markets are a moat if you'll jump the hoops",
+     "teaches": "How permit requirements and caps can work in your favor by keeping competition out.",
+     "rule": "In heavily regulated markets like San Diego, permits are capped at 1,000 listings and most people won't go through the hoops to get one. If you can jump through the hoops, you get a leg up because demand is there and supply is capped. But if demand isn't there — like Sacramento — the regulation is just a red flag.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Run the Airbnb market research filter method",
+     "teaches": "A repeatable way to find the distinguishing amenities in a market by filtering Airbnb search results.",
+     "rule": "On Airbnb, search the market with flexible weekend dates, set guests to two, then filter by amenities one at a time; if a filter like hot tub cuts over a thousand listings down to 121, that amenity is required.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use the hot tub filter to prove an amenity is mandatory",
+     "teaches": "How to read the Airbnb filter counts to decide which amenity you must add.",
+     "rule": "In Phoenix, over a thousand listings host two guests; adding the hot tub filter drops it to 121, meaning over 90% of listings disappear, so you 100% need a hot tub.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Stack filters to find your real competition",
+     "teaches": "How combining amenity filters reveals how few direct competitors you actually have.",
+     "rule": "If you allow pets and have a hot tub, you're only competing against 62 other listings in the entire Phoenix metro area.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -448,30 +488,30 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Get under contract within 30 days",
-     "teaches": "Set a hard deadline to get a property under contract to force action.",
-     "rule": "In the next 30 days, you're going to be under contract on something.",
+     "title": "Avoid the dangerous $2M price point",
+     "teaches": "Why a mid-tier price point traps you in 'what can we afford' thinking instead of buying a property that performs.",
+     "rule": "The $2M price point is dangerous unless there is huge upside — it forces you into affordability-driven decisions rather than value-driven ones.",
      "speaker": "Kassidy",
      "source": {
-      "label": "00 EV Call 1 - Sep 10 2025 - Velocity of Money",
+      "label": "07 EV Call 14 - Dec 8 2025 - Tax Leverage Hierarchy",
       "guest": null,
-      "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
-      "startSec": 1997.7,
-      "endSec": 2040.2,
-      "at": "0:33:17",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=1997",
+      "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
+      "startSec": 855.0,
+      "endSec": 897.0,
+      "at": "0:14:15",
+      "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view?t=855",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-1997-oBc6sA3FFDuHP5703w6H8gITBLXK25.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-14-dec-8-2025-tax-leverage-hierarchy-855-gbnWrhXrmCAzgRioNqV3jPw6w7cDVT.mp4",
        "dur": 150,
-       "bytes": 13277384
+       "bytes": 9519779
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Underwrite with the 2.5x equity multiple",
-     "teaches": "What the 2.5x equity multiple means and how to calculate it for a short-term rental.",
-     "rule": "Equity multiple is total return (forced appreciation + cash flow over 5 years, excluding tax benefits) divided by total cash in (down payment + furnishing + renovations). Target 2.5x or more. Example: if you put in $100k, you want $250k back.",
+     "title": "The 2.5x equity multiple",
+     "teaches": "What the equity multiple means and how to calculate it so you can screen a deal in one number.",
+     "rule": "Equity multiple is not a multiple of purchase price. It is your total return (forced appreciation plus cash flow over five years; some people add tax benefits, Kassidy does not) divided by the cash you put in (down payment, furnishing, renovations). Target 2.5x or more. Example: $100K all-in cash must return $250K.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -485,9 +525,9 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Minimum 15% cash on cash return",
-     "teaches": "How to use cash on cash to measure annual cash flow return and set a minimum threshold.",
-     "rule": "Cash on cash = annual cash flow divided by total cash in. Minimum 15% unless equity growth is massive. Example: $33,000 annual cash flow on $100,000 invested is 33% cash on cash, paying back your investment in 3 years.",
+     "title": "Cash on cash minimum of 15%",
+     "teaches": "How to read cash on cash and the minimum threshold to accept, plus when you can bend it.",
+     "rule": "Cash on cash is annual cash flow divided by your all-in cash in. 50% cash on cash pays back your investment in two years; 30% pays back in three years; 33% cash on cash on $100K in means $33K a year. Minimum cash on cash is 15%, unless you're forcing massive appreciation — then cash on cash can suffer. If you're not growing equity, it better be a cash flow monster.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -501,9 +541,9 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Target 20% IRR for speed of capital",
-     "teaches": "What IRR measures and the target for short-term rental underwriting.",
-     "rule": "IRR (internal rate of return) measures how quickly you get your return. Target 20% IRR, which means your 2.5x equity multiple happens in about 5 years.",
+     "title": "IRR is the speed metric — target 20%",
+     "teaches": "What IRR measures and the target that ties your 2.5x to a five-year timeline.",
+     "rule": "IRR (internal rate of return) is the velocity of money — how quickly you get your return. A 2.5x could happen over one, five or ten years; IRR tells you the speed. Target a 20% IRR, which means your 2.5x happens in about five years. The three underwriting targets are 2.5x equity multiple, 15% cash on cash minimum, and 20% IRR.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -517,130 +557,170 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "The OG 20% rule: revenue must be 20% of purchase price",
-     "teaches": "The quick napkin-math screen to run before you buy any Airbnb: annual revenue should be at least 20% of the purchase price.",
-     "rule": "Annual revenue must be at least 20% of the purchase price. A $500,000 property needs to bring in at least $100,000 in revenue. As purchase price goes higher, fixed costs don't rise as much, so you can flex down to about 15% at the most — but stick to 20% as your quick math.",
+     "title": "The 20% rule screen",
+     "teaches": "How to quickly test whether a property's revenue justifies its price before going further.",
+     "rule": "The 20% rule: the property must generate 20% of the purchase price in annual revenue. A $300,000 property needs $60,000/year in revenue.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 391.5,
+      "endSec": 441.5,
+      "at": "0:06:31",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=391",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-391-mROICPkuN1F42OpreJWCVTai8oWmvr.mp4",
+       "dur": 150,
+       "bytes": 7632126
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Sensitivity analysis for 2.5x return",
+     "teaches": "How to use sensitivity analysis to find the ADR and occupancy needed to hit a target return.",
+     "rule": "If you're trying to get a 2.5x return, run a sensitivity analysis on ADR and occupancy to see what you need to hit your numbers.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
+      "guest": null,
+      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
+      "startSec": 6552.6,
+      "endSec": 6601.2,
+      "at": "1:49:12",
+      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view?t=6552",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-23-feb-18-2026-velocity-scorecard-6552-DePup08eE4cLF8b1PLhB8Nlo0pxEGb.mp4",
+       "dur": 150,
+       "bytes": 5836097
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "The OG 20% rule: screen deals on projected top-line revenue",
+     "teaches": "How to quickly screen whether an Airbnb candidate is worth pursuing using the original 20% rule from John Bianchi.",
+     "rule": "When looking at a potential Airbnb, the projected top-line revenue should be roughly 20% of the purchase price. Use it as quick math to filter deals before going deeper.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
+      "startSec": 368.1,
+      "endSec": 412.8,
+      "at": "0:06:08",
+      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view?t=368",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-49-aug-26-2026-three-20-percent-rules-368-3PHyItUeSZ5CTUlAfWoB33wVGEI6Zv.mp4",
+       "dur": 150,
+       "bytes": 4433353
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "The 20% cash on cash rule",
-     "teaches": "How to set a floor for the cash-flow return on your all-in initial investment.",
-     "rule": "Cash flow divided by your all-in initial investment (down payment, furnishings, renovations, setup, and any hard money loan costs or fees) must be at least 20%. On a $150,000 all-in investment you need at least $30,000 a year in cash flow — meaning five years to get your money back on cash flow alone, not counting appreciation, debt paydown or a refinance.",
+     "title": "The second 20% rule: 20% cash-on-cash return",
+     "teaches": "The cash-on-cash return threshold to hold a deal to when underwriting an Airbnb.",
+     "rule": "Target a 20% cash-on-cash return. If your projected cash-on-cash is lower than 20%, the deal doesn't clear the bar.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
+      "startSec": 523.5,
+      "endSec": 568.3,
+      "at": "0:08:43",
+      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view?t=523",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-49-aug-26-2026-three-20-percent-rules-523-IxSo8ucfXrYPYUBSbb78ASgId239yg.mp4",
+       "dur": 150,
+       "bytes": 4118410
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "The 20% IRR rule and why you assume a five-year hold",
-     "teaches": "How to measure the speed of your return, not just the size of it, using IRR.",
-     "rule": "Add up all your cash flow, appreciation, debt paydown and tax benefits, assume a five-year hold, and the IRR needs to be 20%. Five years is the assumption because that's usually when your tax benefits run out and around when you might refinance. Stretch the hold to 10 years and the IRR will drop even though you're still earning a return.",
+     "title": "The third 20% rule: 20% IRR",
+     "teaches": "How to use IRR as the third 20% screen so you're not just chasing cash flow.",
+     "rule": "Aim for a 20% IRR. If you double your money in a year that's great, but the floor is 20% IRR on the investment.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
+      "startSec": 673.5,
+      "endSec": 715.5,
+      "at": "0:11:13",
+      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view?t=673",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-49-aug-26-2026-three-20-percent-rules-673-DgaOxKi8Hmit33QXwzRMPnuYMzajGg.mp4",
+       "dur": 150,
+       "bytes": 4089761
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "The bonus rule: 2.5x equity multiple",
-     "teaches": "The single number that tells you whether you more than doubled your money over the hold.",
-     "rule": "Your equity multiple needs to be 2.5x. Take everything you got over five years — cash flow, appreciation, a cash-out refi, debt paydown, tax savings — and it must be 2.5 times your initial investment. Put in $150,000 and you need $375,000 back. You want to more than double your money in five years.",
+     "title": "Pick two metrics: the OG 20% rule and equity multiple",
+     "teaches": "Which two underwriting metrics to anchor on if you only track a couple.",
+     "rule": "If you had to pick two metrics, pick the OG 20% rule (initial screen) and equity multiple. Make sure you're near 20% top-line revenue and that over time you more than double your money (2.5x equity multiple).",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
       "guest": null,
       "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
+      "startSec": 891.7,
+      "endSec": 936.6,
+      "at": "0:14:51",
+      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view?t=891",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-49-aug-26-2026-three-20-percent-rules-891-XgFjdqZ3VWwiBVcvCsMQRft7uB2EHR.mp4",
+       "dur": 150,
+       "bytes": 3452154
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "A real example of ignoring the 20% rule",
-     "teaches": "A cautionary case study of buying on your own skills instead of the data.",
-     "rule": "The Atlas (would-be island property) was bought for $835,000 — exactly what it was worth — and the data said $100,000 in revenue. They banked on their own skills instead of the 20% rule, hit just under $100,000 every year, and the market was oversaturated and reliant on waterfront to drive revenue. It never cash flowed, so they're selling it to take the equity elsewhere.",
+     "title": "The $100K revenue rule on a ~$550K purchase",
+     "teaches": "The revenue screen Kassidy applies to a purchase price before believing a deal works.",
+     "rule": "On a property listed at $565K (likely closing near $530K), you want to be hitting $100K in revenue to justify that price. Check whether you can actually generate $100K on that property — comps in the area at $300-400 a night, booked out for the summer, support it. Two-bedroom properties in Tucson do $100K+.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
       "guest": null,
-      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 6223.4,
+      "endSec": 6266.5,
+      "at": "1:43:43",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=6223",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-6223-SbD9tRlcXZrmefb59olMlQ1bS5ezwl.mp4",
+       "dur": 150,
+       "bytes": 7045430
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "The 20% rule is flexible at higher price points",
-     "teaches": "How to adjust the revenue screen for more expensive properties.",
-     "rule": "As purchase price goes up, the revenue percentage can flex down because fixed costs don't rise as much with a higher-priced property. Their Orcas Island property was bought for $880,000 and does $150,000 — just under 20% — and they also use it personally for a month a year. Fifteen percent is the floor at the most.",
+     "title": "Use a 9 cap to back into value and renovation budget",
+     "teaches": "How to underwrite an STR acquisition by dividing NOI by a cap rate to find value, then testing what renovation spend creates.",
+     "rule": "Divide NOI by the cap rate to get value. At a 9 cap, a property doing 252 NOI is worth about 2.8M. If you can push gross revenue to 850 and spend 500K on renovation, the property is worth 3.7M — so the 500K spend creates the equity.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
+      "label": "06 EV Call 34 - Apr 22 2026 - The Permit Game",
       "guest": null,
-      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "The OG 20% rule: 20% cash on cash, 20% IRR, 2.5x equity multiple",
-     "teaches": "The three-number screen Kassidy uses to judge whether a deal is worth doing.",
-     "rule": "OG 20% rule: 20% cash on cash, 20% IRR, and 2.5x equity multiple.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 49 - Aug 26 2026 - Three 20 Percent Rules",
-      "guest": null,
-      "driveId": "1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1KUpjAEvBJZxsYE2hKApv5xURjAPuphhY/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "The 20% rule is about cash flow and flexes with purchase price",
-     "teaches": "Members learn how the 20% rule works and why it can drop to 17-18% on higher-priced properties.",
-     "rule": "The 20% rule is really about cash flow. As purchase prices get higher, the percentage can be less (18%, 17%) because fixed costs like utilities don't scale exponentially.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "03 EV Call 33 - Apr 14 2026 - Infinite Return BRRRR (guest Raj Chida)",
-      "guest": "Raj Chida",
-      "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view"
+      "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
+      "startSec": 1208.7,
+      "endSec": 1255.7,
+      "at": "0:20:08",
+      "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view?t=1208",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-34-apr-22-2026-the-permit-game-1208-JnXZJvAWjol0nQO1lTMe8MYSSOquol.mp4",
+       "dur": 150,
+       "bytes": 6604574
+      }
      },
      "alsoIn": []
     }
@@ -652,26 +732,10 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Use 401k cash for down payment proof of funds",
-     "teaches": "A practical funding tactic when you don't have cash in your bank account but have funds in a 401k.",
-     "rule": "If you need proof of funds for a down payment, you can show your 401k account balance if it has enough to cover more than the down payment.",
+     "title": "Use the 401k for proof of funds on a down payment",
+     "teaches": "The member learns a practical workaround when they don't have cash in their checking account for a down payment.",
+     "rule": "If you don't have the cash in your account for a down payment, you can show your 401k account as proof of funds if it has enough to cover the down payment.",
      "speaker": "Kassidy",
-     "source": {
-      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
-      "guest": null,
-      "driveId": null,
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": null
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use vacation rental loan for 10% down",
-     "teaches": "How to structure financing with a vacation rental loan to keep more cash and maximize leverage.",
-     "rule": "If the property is 50+ miles from your home, you can use a vacation rental loan with 10% down instead of 20%, keeping more cash for reserves and emergencies.",
-     "speaker": "Bobby",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
       "guest": null,
@@ -686,7 +750,7 @@ const airbnb = {
     {
      "title": "Avoid PMI by putting 20% down",
      "teaches": "The tradeoff between putting less down and paying PMI, and when it makes sense to put more down.",
-     "rule": "If you put under 20% down on a vacation/second home loan, you must pay PMI, which can be quoted very high; sometimes putting an extra 10% down to avoid PMI is the better tradeoff.",
+     "rule": "If you put under 20% down on a vacation/second home loan, you must pay PMI, which can be quoted very high. Sometimes putting an extra 10% down to avoid PMI is the better tradeoff.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -701,156 +765,191 @@ const airbnb = {
     },
     {
      "title": "A 10-year loan kills cash flow and tax benefits",
-     "teaches": "Why a short amortization changes the deal profile and may not fit your buy box.",
-     "rule": "A 10-year term at 5.75% means a substantially higher mortgage, lower cash flow, and no tax benefits — you own it sooner but it doesn't fit a cash-flow box.",
+     "teaches": "Short amortization raises your mortgage, lowers cash flow, and removes depreciation tax benefits, so it may not fit your buy box.",
+     "rule": "A 10-year loan means a substantially higher mortgage, lower cash flow, and no tax benefits — it doesn't fit the standard buy box.",
      "speaker": "Kassidy",
      "source": {
       "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
       "guest": null,
       "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
-      "startSec": 4455.7,
-      "endSec": 4502.3,
-      "at": "1:14:15",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4455",
+      "startSec": 4502.3,
+      "endSec": 4546.6,
+      "at": "1:15:02",
+      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=4502",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4455-jKWXBex3A17wYT2dQBihOJIBJngncK.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-4502-wg5R8m6hRK0foc8sFFVPRWcUmIoEwm.mp4",
        "dur": 150,
-       "bytes": 8091112
+       "bytes": 7659609
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Choose between Reg D 506 B and 506 C exemptions",
-     "teaches": "Members learn the two primary SEC exemptions used by real estate investors and how to decide which one applies.",
-     "rule": "99.9% of real estate deals use Reg D 506 B or 506 C. The choice depends on who your investors are and how you will reach them.",
-     "speaker": "Bethany",
+     "title": "Lender LTV and the 35% cash gap",
+     "teaches": "How to calculate the cash needed when a lender provides 65% LTV.",
+     "rule": "Lenders typically give 65% loan-to-value, so you need 35% of the purchase price in cash plus renovation costs.",
+     "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
       "guest": null,
       "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Limit non-accredited investors to 35 in a 506 B offering",
-     "teaches": "Members learn the cap on non-accredited investors and how LLCs count toward that limit.",
-     "rule": "In a 506 B offering, you can take up to 35 non-accredited investors. If an LLC invests, each member is counted separately unless all members are accredited.",
-     "speaker": "Bethany",
-     "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Avoid general solicitation in a 506 B offering",
-     "teaches": "Members learn what constitutes general solicitation and how it disqualifies a 506 B offering.",
-     "rule": "In a 506 B offering, you cannot generally solicit or advertise, including mass emails, social media posts, or networking events, unless you have a substantial pre-existing relationship with every investor.",
-     "speaker": "Bethany",
-     "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
-     },
-     "alsoIn": [
-      {
-       "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-       "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view",
-       "at": null
+      "startSec": 5998.0,
+      "endSec": 6042.4,
+      "at": "1:39:58",
+      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view?t=5998",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-23-feb-18-2026-velocity-scorecard-5998-mrMvqdVgKBWextMuHmYuvDGuy5VrCt.mp4",
+       "dur": 150,
+       "bytes": 9254679
       }
-     ]
-    },
-    {
-     "title": "Verify accredited status reasonably in 506 B",
-     "teaches": "Members learn that in a 506 B offering, they can rely on an investor's self-certification of accredited status unless they have reason to doubt it.",
-     "rule": "In a 506 B offering, you do not need to verify accredited status; you can rely on the investor checking the box, unless you have reason to believe otherwise.",
-     "speaker": "Bethany",
-     "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
      },
      "alsoIn": []
     },
     {
-     "title": "Use 506(c) to advertise but only with accredited investors",
-     "teaches": "The trade-off of using 506(c): you can generally solicit but must verify all investors are accredited.",
-     "rule": "Under 506(c), you can advertise and generally solicit, but every investor must be accredited (income >$200k or net worth >$1M excluding primary residence).",
-     "speaker": "Kassidy",
+     "title": "Ask investors for the max that still hits a 10% cash-on-cash return",
+     "teaches": "How to size the capital ask for a short-term rental project while protecting investor returns.",
+     "rule": "Ask investors for the maximum amount that still allows them to receive a 10% cash-on-cash return in a worst-case scenario, then use that capital for design and amenities.",
+     "speaker": "Sarah Glidewell",
      "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
+      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
+      "guest": "Sarah Glidewell",
+      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
+      "startSec": 1383.7,
+      "endSec": 1430.3,
+      "at": "0:23:03",
+      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view?t=1383",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/03-ev-call-19-jan-21-2026-raising-money-for-strs-guest-sarah-1383-7yrhX9BliqBseaeJIyyzTPZbxQvQ9G.mp4",
+       "dur": 150,
+       "bytes": 8865974
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Use 506(c) with a subscription agreement for small raises",
-     "teaches": "Gives a cheaper compliance path for a small raise instead of paying for a full PPM.",
-     "rule": "If a full PPM at $15,000 doesn't make sense for a $250,000 raise, either make the investors active or make sure they're accredited, verify them as accredited, and treat it as a 506(c). Put high-level risk disclosures in the subscription agreement — the document where they agree to give you the money — instead of doing a whole PPM. Don't make a bunch of statements before they come in that you have ",
+     "title": "Dome house deal: 3.6x equity multiple with only 82k cash in",
+     "teaches": "A concrete example of using hard money and a refinance to create a large equity multiple with minimal cash.",
+     "rule": "Buy at 625k, put 10% down (~7.5-8k) on a hard money renovation loan, total project cost 800k, ARV 1.1M; bring only 82k cash, create 300k equity, and forecast 150-200k gross revenue (75-110k cash flow).",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
+      "label": "03 EV Call 33 - Apr 14 2026 - Infinite Return BRRRR (guest Raj Chida)",
+      "guest": "Raj Chida",
+      "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
+      "startSec": 803.1,
+      "endSec": 847.1,
+      "at": "0:13:23",
+      "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view?t=803",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/03-ev-call-33-apr-14-2026-infinite-return-brrrr-guest-raj-ch-803-VWTPNfuBwlwqxdC1HrZb8GTndIhsm6.mp4",
+       "dur": 150,
+       "bytes": 3728765
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Set a $50k minimum raise floor",
-     "teaches": "What minimum investment to advertise when raising money for a deal.",
-     "rule": "Advertise a minimum of $50k. You can take lower from friends and family if needed, but if people are testing you as a first-time operator, your advertised minimum sets the tone.",
+     "title": "Put renovations on 0% APR cards — but only if you have the cash",
+     "teaches": "Paying cash for renovations ties up your liquidity and can halt a project when an emergency hits. Using 0% cards preserves cash reserves.",
+     "rule": "Never put a renovation on a 0% APR credit card unless you have the cash to cover it. Don't pay for renovations in cash — use 0% interest cards or points cards so you keep cash for emergencies like a $5,000 collapsed pipe.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
-      "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 3114.3,
+      "endSec": 3159.3,
+      "at": "0:51:54",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=3114",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-3114-VwWIwMXDVx4iXgsR84b3jl09J5pE6m.mp4",
+       "dur": 150,
+       "bytes": 3227849
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "How to structure investor equity splits for a 2.5x return",
-     "teaches": "Members learn how to determine the equity split with investors by targeting a 2.5x equity multiple over five years, and how to calculate the split based on cash flow and appreciation.",
-     "rule": "Aim for a 2.5x equity multiple for investors over five years. Typically, investors get 50-80% of equity, and you keep 20-50%, depending on how much they invest. Split cash flow based on equity percentage (e.g., 50/50 split means $500 each from $1000 leftover).",
+     "title": "Understand the payback period on 0% APR cards",
+     "teaches": "How to use 0% APR credit cards like a HELOC for short-term funding.",
+     "rule": "If you understand the appraised value after the project, you can be confident you'll pay off the 0% APR or HELOC before interest kicks in. Know the payback period.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 3339.6,
+      "endSec": 3382.9,
+      "at": "0:55:39",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=3339",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-3339-IbB6wYWkpK141rcx6Y9apEkVkDcFxM.mp4",
+       "dur": 150,
+       "bytes": 3242183
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Leverage is how you buy high-priced assets for a fraction of the price",
+     "teaches": "The member learns to evaluate leverage by comparing down payment percentages and opportunity cost, not just interest rate.",
+     "rule": "Leverage is debt. Compare 10% down vs 40% down and look at the opportunity cost of your cash. Interest rate is just a line item on a spreadsheet that adds to the cost of debt.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
       "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
+      "driveId": null,
       "startSec": null,
       "endSec": null,
       "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Own equity without putting in your own money",
+     "teaches": "How to accelerate ownership by structuring deals so you get equity without a cash down payment, and how to weigh the effort that requires.",
+     "rule": "The ultimate form of leverage is owning a piece of an asset without putting your own money in. Weigh what it costs you in effort: raising money, managing construction, doing the work. Free equity is the ultimate leverage; buying outright is high leverage; investing as an LP is lower leverage (roughly 1 to 3 vs 1 to 5) and a higher cost of equity.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use vacation rental loans for higher leverage",
+     "teaches": "Why and when to use a vacation rental loan to put less down and keep cash reserves.",
+     "rule": "If the property is 50+ miles from your home, you can use a vacation rental loan and put only 10% down instead of 20%, keeping more cash for reserves and emergencies.",
+     "speaker": "Bobby",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Don't put more cash down just to improve cash flow",
+     "teaches": "Why putting extra cash down to boost cash flow is often a poor use of capital.",
+     "rule": "Putting an extra 5% down (e.g., $25k on a $500k purchase) to create an extra $5k of cash flow takes five years to get that money back. Instead, focus on growing revenue, optimizing renovations for impact, or changing your debt structure (e.g., seller financing).",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
      },
      "alsoIn": []
     }
@@ -862,57 +961,93 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Budget $35–$50 per square foot for STR design",
-     "teaches": "Members learn the minimum design budget per square foot that justifies a full design and furnishing production, so they don't underfund a project and end up disappointed.",
-     "rule": "If a client isn't spending $35–$50 per square foot on designing their property, it's a no from the get-go — the budget won't justify the production and the end result will disappoint.",
-     "speaker": "Sarah Glidewell",
+     "title": "Spend $3,000 on the backyard, not $50-60k",
+     "teaches": "The right budget band for an outdoor amenity package in a market that doesn't demand a full build-out.",
+     "rule": "Don't invest $50,000-$60,000 in the backyard — it won't be worth it. Throw $3,000 at it with a whack load of things people can do (chairs, seating, games) and you'll have something most others in the market don't have.",
+     "speaker": "Kassidy",
      "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 4157.8,
+      "endSec": 4200.2,
+      "at": "1:09:17",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=4157",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-4157-H14xFnq3hvIA8Ep3BJjfIlXNwRv77f.mp4",
+       "dur": 150,
+       "bytes": 6849138
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Use 3D renders to manage guests during a renovation",
-     "teaches": "Members learn how to keep existing bookings calm when buying an underperforming Airbnb and renovating it, by sharing realistic renders with guests ahead of arrival.",
-     "rule": "When you buy an existing Airbnb with reservations already on the books and renovate it, send guests realistic 3D renderings of the finished property and tell them what to expect, rather than waiting until days before arrival to explain the change.",
-     "speaker": "Sarah Glidewell",
+     "title": "Buy sleeper sofas from Apt2B with the most durable fabric",
+     "teaches": "A specific vendor and spec for a comfortable, durable sleeper sofa that guests will actually sleep on.",
+     "rule": "Buy sleeper sofas from Apt2B, choose the most durable fabric, and upgrade to the nicer mattress option.",
+     "speaker": "Erin",
      "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
+      "guest": null,
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 2587.2,
+      "endSec": 2636.3,
+      "at": "0:43:07",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=2587",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-2587-xTFZZGzCp4JmEjyOy6t9lfIaIAgG43.mp4",
+       "dur": 150,
+       "bytes": 3467204
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Use 5.25 inch baseboards for a finished look",
-     "teaches": "Baseboard sizing for a polished finish.",
-     "rule": "Use 5.25 inch speed base if not doing square stock; 4 inch base is acceptable but 5.25 looks better.",
+     "title": "Update a dated kitchen for $5K, not $30K",
+     "teaches": "How to make an old kitchen usable and thoughtful on a small budget instead of a full gut renovation.",
+     "rule": "On an 1880s cabin kitchen, a full new kitchen wasn't possible, so the move was to update it for about $5,000 to make it usable and thoughtful with a little design, rather than spending $30,000. Draw the line on spend where the structure doesn't justify it — that cabin had no foundation, so a $100,000 renovation didn't make sense.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
+      "guest": null,
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 5862.2,
+      "endSec": 5912.2,
+      "at": "1:37:42",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=5862",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-5862-tKtiRhIahzjrumZFU3tdx97s4Hf6tA.mp4",
+       "dur": 150,
+       "bytes": 7593361
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Click-lock floating vinyl at 6mm minimum",
+     "teaches": "The flooring spec to use in an STR renovation.",
+     "rule": "Click-lock floating vinyl is usually the preferred flooring. Use at least a 6 millimeter thickness.",
      "speaker": "Kassidy",
      "source": {
       "label": "06 EV Call 34 - Apr 22 2026 - The Permit Game",
       "guest": null,
       "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
+      "startSec": 2176.8,
+      "endSec": 2222.4,
+      "at": "0:36:16",
+      "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view?t=2176",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-34-apr-22-2026-the-permit-game-2176-RyJHCvCbDUsptAdkaku5OVbQBQF6cr.mp4",
+       "dur": 150,
+       "bytes": 5855800
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Add a jacuzzi for fast payback",
-     "teaches": "A high-ROI amenity to add to a short-term rental.",
-     "rule": "A new jacuzzi costs about $5K and pays for itself in under a year through higher revenue; add the jacuzzi first, then layer on a cold plunge and sauna.",
+     "title": "Add a jacuzzi to lift revenue and pay it back fast",
+     "teaches": "A specific amenity upgrade that raises nightly revenue and pays for itself quickly on a small STR.",
+     "rule": "A brand-new jacuzzi costs about $5K and pays for itself in under a year through higher revenue. Add the jacuzzi first, then layer on a cold plunge and sauna as you go.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -926,9 +1061,9 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Add a hot tub and sauna to boost revenue",
-     "teaches": "How to use high-ROI amenities like a hot tub and sauna to increase bookings and revenue on a small STR.",
-     "rule": "A $5,000 hot tub can pay for itself in under a year; budget about $20k for the hot tub, $15k for a sauna, and $10k for labor/setup, and add amenities like a jacuzzi first, then sauna.",
+     "title": "Add a hot tub and sauna to boost revenue fast",
+     "teaches": "How to use high-ROI amenities like a hot tub and sauna to increase bookings and revenue, with specific cost and payback numbers.",
+     "rule": "A brand-new $5k hot tub can pay for itself in under a year; budget roughly $20k for the hot tub, $15k for a sauna, and $10k for labor/setup. Buy a nicer smaller sauna (e.g., SaunaLife ~$5k) rather than a cheap one.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -942,114 +1077,128 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "Use a hero listing as your design and photo benchmark",
-     "teaches": "How to identify a 'hero listing' and use it as the standard for your own design and photography.",
-     "rule": "Find a hero listing with 90+ reviews, thoughtful non-cookie-cutter design, and photos with depth and low-angle wide shots; use it as your benchmark for your own listing.",
+     "title": "Build an optimization list with a dollar figure",
+     "teaches": "How to budget the design/furnish spend as a defined line item tied to a revenue target.",
+     "rule": "Write an optimization list: 'I'm going to have to spend $100,000 to optimize this listing and then it will hit the revenue numbers I'm trying to hit.'",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 2660.9,
+      "endSec": 2702.5,
+      "at": "0:44:20",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=2660",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-2660-G4WnRMSSbM7lUthujLNuBA3b1ntpyD.mp4",
+       "dur": 150,
+       "bytes": 7060002
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Wellness amenities can drive outsized revenue",
+     "teaches": "How to use wellness amenities to differentiate your STR and justify higher revenue.",
+     "rule": "Install saunas, cold plunges, hot tubs, red light therapy, and theragun in your BnB to serve a wellness-focused avatar; budget around $3k for a sauna and $3k for a cold plunge, and spend more on hot tubs (e.g., Master Spas) for reliability.",
+     "speaker": "Sarah Glidewell",
+     "source": {
+      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
+      "guest": "Sarah Glidewell",
+      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
+      "startSec": 1184.7,
+      "endSec": 1229.7,
+      "at": "0:19:44",
+      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view?t=1184",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/03-ev-call-19-jan-21-2026-raising-money-for-strs-guest-sarah-1184-1HbDkGWDL5J6nrSB9QMbvWw70EwRsq.mp4",
+       "dur": 150,
+       "bytes": 9710907
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Build a headboard shelf for a small bedroom",
+     "teaches": "A simple design upgrade to make a small bedroom more functional and appealing.",
+     "rule": "Build a headboard that spans the wall as a 6-8 inch shelf with a built-in cubby for laptops or decor.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "03 EV Call 33 - Apr 14 2026 - Infinite Return BRRRR (guest Raj Chida)",
+      "guest": "Raj Chida",
+      "driveId": "16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB",
+      "startSec": 84.8,
+      "endSec": 134.1,
+      "at": "0:01:24",
+      "watch": "https://drive.google.com/file/d/16ILFYih2Br8ElvqXRa7_dApnDk3_tnpB/view?t=84",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/03-ev-call-33-apr-14-2026-infinite-return-brrrr-guest-raj-ch-84-H9xziVIdvBhjYRAXNcal9KO2J5n9Uj.mp4",
+       "dur": 150,
+       "bytes": 10403135
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Source doors and windows from salvage yards",
+     "teaches": "A budget hack for getting character pieces like solid wood doors at a fraction of retail cost.",
+     "rule": "Buy doors and windows from a salvage/resale yard. A gorgeous solid wood door can cost about $50; a full door swap installed runs roughly $250-$300.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
       "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 1598.5,
+      "endSec": 1648.3,
+      "at": "0:26:38",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=1598",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-1598-ZwXJQ3mp07nPLxv8Rrvn798kqlGmiA.mp4",
+       "dur": 150,
+       "bytes": 3895750
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Designers always come in over budget—negotiate to a hard cap",
-     "teaches": "How to handle designer and GC budgets so you don't overpay for furnishing and renovation.",
-     "rule": "Expect every designer to come in over budget. Take over the budget, combine all line items into a master budget, increase your initial budget by 70% if needed, then set a hard cap and require the designer to fit everything within it. Cut non-essential items like garage renovations or accent walls in every room; limit them to hero shots and main areas.",
+     "title": "Renovation spend can double your equity and cashflow",
+     "teaches": "How a well-executed renovation and furnishing package can create immediate equity and strong cashflow.",
+     "rule": "On a $460k property, spending $80k on renovation and furnishings created about $90k of equity and a mortgage under $2k/month, with annual operating costs around $30k.",
+     "speaker": "Erin",
+     "source": {
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
+      "guest": null,
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 2195.9,
+      "endSec": 2240.5,
+      "at": "0:36:35",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=2195",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-2195-lpWbodEARHGPVfs7GDQ9BKTy6rj5j7.mp4",
+       "dur": 150,
+       "bytes": 3523575
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Add indoor-outdoor access for warm-climate Airbnbs",
+     "teaches": "A high-ROI renovation move for vacation rentals in warm climates: replace a small window with a large slider to the pool/patio.",
+     "rule": "In a warm climate, guests want indoor-outdoor access. Replacing a tiny window with a three-panel slider to the pool completely changed the guest experience and adds resale value. Cost: about $5,000 for the door plus $3,500 for install, under $10,000 all-in including the steel lintel.",
      "speaker": "Kassidy",
      "source": {
-      "label": "03 EV Call 18 - Jan 15 2026 - Fractional Funding (guest Stella Han)",
-      "guest": "Stella Han",
-      "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Run natural gas to fire pits to avoid propane tank hassles",
-     "teaches": "Why spending extra on a natural gas line for a fire pit improves guest experience and reduces maintenance.",
-     "rule": "If you're installing a fire pit, pay the extra ~$2,000 to run natural gas instead of using propane. It eliminates swapping tanks, avoids running out mid-stay, and removes the eyesore of a propane tank. Small details like this matter at high nightly rates.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "03 EV Call 18 - Jan 15 2026 - Fractional Funding (guest Stella Han)",
-      "guest": "Stella Han",
-      "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Budget for wellness amenities: cheap vs. premium",
-     "teaches": "Concrete cost ranges so members can decide how far to go on wellness amenities and what a premium build actually costs.",
-     "rule": "You can check the wellness box for under $10k (sauna ~$3k, cold plunge ~$3k), but a premium wellness package runs $55–60k: sauna $25–30k, hot tub ~$10k, cold plunge $10–12k, plus stairs, lighting and the full experience build-out.",
-     "speaker": "Sarah Glidewell",
-     "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Spend more than the next B&B over to win the market",
-     "teaches": "The spend philosophy behind outperforming competing short-term rentals.",
-     "rule": "If you can be profitable spending $30,000 on a property but have $100,000 available, put in the $100,000 — outspending the next B&B over is what produces the result and the proof.",
-     "speaker": "Sarah Glidewell",
-     "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Wellness amenities are a spend that doesn't add equity but drives rate",
-     "teaches": "Why investors who question amenity spend are the wrong investors, and how amenities pay back through rate and longevity.",
-     "rule": "Expect to spend on wellness amenities (e.g. $65,000 in a backyard) that don't add to property equity — they buy nightly rate, guest quality and longevity, so only take capital that won't fight you on it.",
-     "speaker": "Sarah Glidewell",
-     "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Say no to clients with insufficient design budget",
-     "teaches": "Why you should turn down design clients whose budget won't cover the full production, to avoid disappointing results.",
-     "rule": "If a client has a budget like $100,000 for a full design and outfit, it's not enough to justify the entire production and the end result will disappoint. Say no before they say no to you.",
-     "speaker": "Sarah Glidewell",
-     "source": {
-      "label": "03 EV Call 19 - Jan 21 2026 - Raising Money for STRs (guest Sarah Glidewell)",
-      "guest": "Sarah Glidewell",
-      "driveId": "1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1sv9cPnv1dcNYiCLvBY1bAcH01WG3NkN8/view"
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
+      "guest": null,
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 3277.7,
+      "endSec": 3324.2,
+      "at": "0:54:37",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=3277",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-3277-z6pKXTMBgvkzoh9Bdi3ADe7jdRmWPy.mp4",
+       "dur": 150,
+       "bytes": 3653884
+      }
      },
      "alsoIn": []
     }
@@ -1061,199 +1210,254 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Write a listing that gets 10x the impressions and clicks",
-     "teaches": "Why listing quality is both marketing and SEO, and what it earns you in Airbnb's algorithm.",
-     "rule": "Set up your listing so people click and book and don't leave — that is marketing and search engine optimization at once. Kassidy's listings get 10x the impressions and clicks of anyone else in the market, which keeps Airbnb promoting them at the top of the list.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Check the 20% new listing discount to get promoted",
-     "teaches": "How to use Airbnb's new listing promotion to boost visibility and get your first bookings.",
-     "rule": "When launching, check the box for 20% off the first three bookings to get promoted to the top of search; block high-season or holiday dates or raise rates on those dates to avoid discounting them.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "The 20% first-bookings discount and five-star reviews",
-     "teaches": "Your first three bookings determine your search ranking. Protect them.",
-     "rule": "Check the box for the 20% discount on your first three bookings every time. Keep standard pricing and let the discount do the work. Getting five-star reviews on those first three bookings is the most important thing for your search ability.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "03 EV Call 18 - Jan 15 2026 - Fractional Funding (guest Stella Han)",
-      "guest": "Stella Han",
-      "driveId": "15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/15jUOBQzPbrS5SuDqX8RxFTn3aKBu3Ahc/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Check the 20% discount for first three bookings on launch",
-     "teaches": "How to get initial bookings and reviews quickly by enabling Airbnb's new listing promotion.",
-     "rule": "When launching, check the box to give a 20% discount to the first three people to book; this puts you at the top of search and guarantees three quick bookings.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Get bookings and 5-star reviews as fast as possible",
-     "teaches": "The importance of early bookings and reviews for Airbnb's algorithm and long-term success.",
-     "rule": "The most important thing at launch is to get bookings and 5-star reviews as quickly as possible; don't worry about making all your money in month one.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Get live by June 15 to capture July 4th",
-     "teaches": "Members learn the deadline math for summer season: launch by mid-June to capture the July 4th booking window.",
-     "rule": "Get the property live within 30 to 60 days, and by June 15 at the latest, so you can capture the July 4th booking.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 34 - Apr 22 2026 - The Permit Game",
-      "guest": null,
-      "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Airbnb direct booking links cut fees to 6%",
-     "teaches": "Airbnb now gives each property a direct booking link with a 6% fee instead of the standard 15%, and you can still collect emails and retarget guests back to that link.",
-     "rule": "Share your property's Airbnb direct booking link. Fees drop from 15% to 6% (you still pay 6% for background check and license upload via Hospitable). If you don't want true direct booking, collect emails and retarget them to the Airbnb link.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "07 EV Call - Sep 15 2026 - 30-Day Year-End Playbook",
-      "guest": null,
-      "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Check the 20% first-three-bookings discount at launch",
-     "teaches": "The launch setting that pushes your listing up Airbnb's rankings.",
-     "rule": "When you launch, check the box for the 20% discount to your first three bookings — it pushes you to the top of Airbnb rankings.",
+     "title": "Airbnb shifted its host fee from 3% to ~16%",
+     "teaches": "What changed in Airbnb's fee structure and how to respond as a host.",
+     "rule": "As of this month Airbnb moved the fee from ~3% to ~16% onto the host; the guest-facing price looks the same, so hosts must raise prices to absorb it.",
      "speaker": "Kassidy",
      "source": {
       "label": "07 EV Call 8 - Oct 29 2025 - ADU Velocity",
       "guest": null,
       "driveId": "1IBSkQMG1pWkdqSBELz4drvHAOacHylmO",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Be conservative when adding a resort fee",
-     "teaches": "How to model ancillary revenue without overstating it.",
-     "rule": "If you add a resort fee, model it very conservatively — e.g. $25/night times rooms times 30 nights at a 50% reduction.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "01 EV Call 29 - Mar 25 2026 - Market Selection",
-      "guest": null,
-      "driveId": "1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3",
-      "startSec": 6861.6,
-      "endSec": 6905.4,
-      "at": "1:54:21",
-      "watch": "https://drive.google.com/file/d/1Gb6E1l4pjrjsV_ym9N4dS2NGcx7OQZP3/view?t=6861",
+      "startSec": 4782.0,
+      "endSec": 4822.9,
+      "at": "1:19:42",
+      "watch": "https://drive.google.com/file/d/1IBSkQMG1pWkdqSBELz4drvHAOacHylmO/view?t=4782",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-29-mar-25-2026-market-selection-6861-LG5c2STv1zOtTFSFTOvdYTd5gUGoye.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-8-oct-29-2025-adu-velocity-4782-PrwtSqht91T5mmrDEsycwLeYOMDlBw.mp4",
        "dur": 150,
-       "bytes": 7011484
+       "bytes": 8462785
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Turn Instant Book on and build protections around it",
-     "teaches": "How to get Airbnb promoting you while still screening risky guests.",
-     "rule": "You absolutely have to have Instant Book on. Protect yourself with: automated follow-up messaging after booking that asks a question (cancel without penalty within 24 hours if they don't respond within ~12 hours and you feel uncomfortable), require ID/identity verification, set guest requirements, and a two-night minimum.",
+     "title": "Make your listing stupid obvious",
+     "teaches": "How to make your listing stand out in search by clearly showing all amenities so guests instantly know what they get.",
+     "rule": "Make everything on your Airbnb stupid obvious so when someone searches 20 listings, they know exactly what they're getting.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 1478.4,
+      "endSec": 1519.1,
+      "at": "0:24:38",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=1478",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-1478-YJij2QnBsTpcsHXI3vTOGUgB3qCg4u.mp4",
+       "dur": 150,
+       "bytes": 4748758
+      }
      },
      "alsoIn": []
     },
     {
-     "title": "Set your baseline pricing from your target revenue",
-     "teaches": "A simple math framework to set your initial nightly rate before using dynamic pricing tools.",
-     "rule": "Decide how much money you want to make, then calculate the ADR needed to hit that number (e.g., $100k target) to establish your baseline min and max rates.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Hot tub is the number one filter — use filterable amenities",
-     "teaches": "Guests filter by hot tub more than anything else. Filterable amenities push you to the top of search even with weak photos.",
-     "rule": "Prioritise filterable amenities like hot tub because it's the number one filter guests use. In Ann Arbor, 785 homes dropped to 79 when filtering for hot tub — only 10% of listings have one, so adding one puts you in the top 10%.",
+     "title": "Hot tubs boost search ranking in low-supply markets",
+     "teaches": "How to use a high-demand amenity to climb Airbnb search rankings even when your photos are weak.",
+     "rule": "Check what share of listings in your market have a hot tub. If only ~10% do, adding one can push you into the top results even with a bad hero photo.",
      "speaker": "Kassidy",
      "source": {
       "label": "05 EV Call 9 - Nov 5 2025 - Listing Optimization",
       "guest": null,
       "driveId": "1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E/view"
+      "startSec": 2291.3,
+      "endSec": 2332.3,
+      "at": "0:38:11",
+      "watch": "https://drive.google.com/file/d/1xI3nQLC2thLMvWxRCpyKTSlwfe3Dov9E/view?t=2291",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/05-ev-call-9-nov-5-2025-listing-optimization-2291-OT5WAVe5BlR2mWlgY9erFW9RKQIePz.mp4",
+       "dur": 150,
+       "bytes": 5570431
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Set an eight-week lead time and a go-live deadline",
+     "teaches": "Why you need a hard launch date and how far ahead to plan it.",
+     "rule": "Set a deadline for yourself with an eight-week lead time, and aim to go live by June 15th at the latest so you capture the July 4th booking — going live July 3rd means you only get last-minute or cancelled-guest bookings.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "06 EV Call 34 - Apr 22 2026 - The Permit Game",
+      "guest": null,
+      "driveId": "1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-",
+      "startSec": 4382.6,
+      "endSec": 4423.9,
+      "at": "1:13:02",
+      "watch": "https://drive.google.com/file/d/1yjyGjJcaAXgZ3v39sn_xE4QnxbkSFcL-/view?t=4382",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-34-apr-22-2026-the-permit-game-4382-uJbBU7dcO1OzZwUHlupQz84V0fi6CC.mp4",
+       "dur": 150,
+       "bytes": 7313568
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Child-parent listings to hit the search algorithm",
+     "teaches": "How to create multiple Airbnb listings from a single purchase to widen your search reach.",
+     "rule": "Create a child-parent listing relationship: one listing for the entire property, one for the main house, one for the guest house. One purchase = three Airbnb listings, letting you accommodate 2, 7, or 11 people and hit the search algorithm more favorably.",
+     "speaker": "Zoey Berghoff",
+     "source": {
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 872.5,
+      "endSec": 919.8,
+      "at": "0:14:32",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=872",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-872-2ogvhcUMWMMMEvuNtZ5b35JlJBfjcb.mp4",
+       "dur": 150,
+       "bytes": 2939776
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Direct booking can pay you more while guests pay less",
+     "teaches": "The economics of direct bookings versus OTA channels.",
+     "rule": "Direct bookings can save guests 5-10% depending on how your rates are set up, while you get paid out the same or more than through the OTA.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
+      "guest": null,
+      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
+      "startSec": 2166.3,
+      "endSec": 2207.3,
+      "at": "0:36:06",
+      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view?t=2166",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/05-office-hours-15-dec-18-2025-launch-and-feed-the-beast-2166-dJueOvywMKSAd5oGkiUj29SxaOf1tN.mp4",
+       "dur": 150,
+       "bytes": 7413251
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Screen guests by star rating",
+     "teaches": "A guest-vetting rule to reduce problem bookings.",
+     "rule": "Look at a guest's profile and prefer guests with a 4.5 star rating or above.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "06 EV Call 42 - Jul 1 2026 - Every Issue Becomes an SOP (Erin)",
+      "guest": null,
+      "driveId": "1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z",
+      "startSec": 3290.0,
+      "endSec": 3332.3,
+      "at": "0:54:50",
+      "watch": "https://drive.google.com/file/d/1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z/view?t=3290",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-42-jul-1-2026-every-issue-becomes-an-sop-erin-3290-mfMRBehEN3UrrArDkLUFq8mlnK5ouY.mp4",
+       "dur": 150,
+       "bytes": 8490905
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use Airbnb direct booking links with Hospitable",
+     "teaches": "Members learn how to use Airbnb's direct booking links and the cost tradeoff with Hospitable.",
+     "rule": "Airbnb now has direct booking links; with Hospitable you pay 6% for background check and license upload. Keeping people on Airbnb is fine because they're familiar with it.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "07 EV Call - Sep 15 2026 - 30-Day Year-End Playbook",
+      "guest": null,
+      "driveId": "1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH",
+      "startSec": 4394.4,
+      "endSec": 4442.8,
+      "at": "1:13:14",
+      "watch": "https://drive.google.com/file/d/1PAroPnxzSPijECg5ZGAMyaZE8bAgEGOH/view?t=4394",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-sep-15-2026-30-day-year-end-playbook-4394-gEImuyXVYU7BRZx2jojGKazaa0QYF5.mp4",
+       "dur": 150,
+       "bytes": 7907376
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use your unique selling points to fill all booking channels",
+     "teaches": "Your unique selling points should be used consistently across all marketing channels and feeder markets to attract the right guests.",
+     "rule": "Leverage your unique selling points across every channel and feeder market to fill your calendar.",
+     "speaker": "Katie Cline",
+     "source": {
+      "label": "01 EV Call 43 - Jul 8 2026 - Positioning Workshop (guest Katie Cline)",
+      "guest": "Katie Cline",
+      "driveId": "1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI",
+      "startSec": 1905.2,
+      "endSec": 1949.5,
+      "at": "0:31:45",
+      "watch": "https://drive.google.com/file/d/1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI/view?t=1905",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-43-jul-8-2026-positioning-workshop-guest-katie-cl-1905-T1F2250wleLAnTU3XlwSLCDuoJCxdL.mp4",
+       "dur": 150,
+       "bytes": 4012257
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Keep instant book on to capture more bookings",
+     "teaches": "Instant book removes friction and captures guests who want to book immediately, increasing conversion.",
+     "rule": "Turn instant book on; it's booking behavior and you can get multiple bookings.",
+     "speaker": "Katie Cline",
+     "source": {
+      "label": "01 EV Call 43 - Jul 8 2026 - Positioning Workshop (guest Katie Cline)",
+      "guest": "Katie Cline",
+      "driveId": "1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI",
+      "startSec": 4179.7,
+      "endSec": 4221.1,
+      "at": "1:09:39",
+      "watch": "https://drive.google.com/file/d/1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI/view?t=4179",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-43-jul-8-2026-positioning-workshop-guest-katie-cl-4179-v7yFK7ZLlvgxx2hpVuNy6t88PGgIIG.mp4",
+       "dur": 150,
+       "bytes": 3258838
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "The best return on an Airbnb is a photo shoot",
+     "teaches": "Where to put your first marketing dollars to lift desirability and nightly rate.",
+     "rule": "The best return you will ever do into your Airbnb is getting a good photo shoot. Photos are what sell a listing — you're trying to get someone to give you money, so you have to sell them.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 3251.2,
+      "endSec": 3293.7,
+      "at": "0:54:11",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=3251",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-3251-PzLFaAXIAi6LTw1nY9M47ADVfHyarb.mp4",
+       "dur": 150,
+       "bytes": 7335002
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "The first five photos decide the click — order them deliberately",
+     "teaches": "How to sequence listing photos so the best exterior features land in the first five.",
+     "rule": "The first five photos matter most; show off everything outside that makes you better before touching the inside, and put the pool/outdoor space near the top, not the bottom.",
+     "speaker": "John Bianchi",
+     "source": {
+      "label": "01 Office Hours 13 - Dec 2 2025 - John Bianchi Airbnb Data (guest)",
+      "guest": "John Bianchi",
+      "driveId": "1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU",
+      "startSec": 5944.3,
+      "endSec": 5986.6,
+      "at": "1:39:04",
+      "watch": "https://drive.google.com/file/d/1GeMcuAFDXLH0neg5fKInGtBp-9XrsjvU/view?t=5944",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-office-hours-13-dec-2-2025-john-bianchi-airbnb-data-guest-5944-PKIS5x5ZS3S7IZ9LLBjRE48J7yD7Q1.mp4",
+       "dur": 150,
+       "bytes": 12383932
+      }
      },
      "alsoIn": []
     }
@@ -1265,245 +1469,51 @@ const airbnb = {
    "count": 12,
    "lessons": [
     {
-     "title": "Manage your first property yourself for 3-6 months",
-     "teaches": "Why self-managing your first STR teaches you the operations, software, and seasonal issues that set you up to scale later.",
-     "rule": "Manage your first property yourself for 3-6 months (or a full year to see all seasons) before outsourcing, unless you absolutely cannot.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use a VA instead of a 20% property manager",
-     "teaches": "How to save on management fees by hiring a VA to run your tech stack and coordinate maintenance instead of paying a full-service manager.",
-     "rule": "Hire a VA to manage your tech stack and call out maintenance people; this is more efficient than paying 20% of revenue to a property manager.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Hire a revenue manager for 4% to boost revenue",
-     "teaches": "Why a specialized revenue manager can pay for themselves by increasing your revenue through active demand-based pricing.",
-     "rule": "Consider hiring a revenue manager who charges around 4% of revenue; if they increase your revenue by 10%, it pays for itself.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Don't heat a freshly replastered pool for about 20 days",
-     "teaches": "A pool replaster timeline rule that affects when you can actually rent the property.",
-     "rule": "After a pool is replastered it must cure about four weeks, and you cannot heat the pool or an in-ground spa for about 20 days after plastering.",
-     "speaker": "Chris",
-     "source": {
-      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
-      "guest": null,
-      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Hire an offshore VA for guest messaging instead of a 20% PM",
-     "teaches": "The cost case for hiring an offshore virtual assistant to handle guest messaging and maintenance coordination versus a traditional property manager.",
-     "rule": "An offshore VA runs about $1,500/month for ~40 hours/week, versus a property management company taking 20% off the top — a huge cost difference.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Interview 20 VAs and use scenario questions",
-     "teaches": "How to screen guest-messaging hires so you don't end up with someone who refunds guests indiscriminately.",
-     "rule": "Interview roughly 20 candidates and ask scenario questions (e.g. 'the hot tub isn't working — walk me through your steps, what would you tell the guest, would you offer a refund?') to test problem-solving and objectivity.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use two VAs to cover 24/7 messaging",
-     "teaches": "Why one person can't cover guest messaging around the clock and how to split it.",
-     "rule": "Expecting 24-hour, 7-day coverage from one person is too much — use two people who swap shifts so coverage is always maintained.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Offshore VA tiers start at 10 hours a week",
-     "teaches": "You don't need to commit to full-time help to get messaging support.",
-     "rule": "Offshore companies offer tiered support — many clients use them for just 10 hours a week for calendar, scheduling or extra support, so you don't have to jump straight to full-time.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Budget roughly $1,500/month for a VA across a portfolio",
-     "teaches": "A concrete cost benchmark for outsourcing guest messaging and maintenance coordination across multiple properties.",
-     "rule": "Pay the VA around $1,500 per month for a bucket of hours across all properties, regardless of message volume. Fill extra hours with useful tasks like making Canva signs for sauna/hot tub instructions.",
+     "title": "Maintain a high review score above 4.9",
+     "teaches": "The importance of consistently high guest ratings for long-term success.",
+     "rule": "Aim to keep your Airbnb review score above 4.9, even with amenities like pools and hot tubs, as it is difficult but valuable over many years.",
      "speaker": "Erin",
      "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
+      "label": "04 EV Call 30 - Apr 1 2026 - Design for Vibe and ROI (Erin)",
       "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Collect W9s before any work starts",
-     "teaches": "Members learn the sequencing rule for contractor paperwork so they can actually issue 1099s at year end.",
-     "rule": "Get the W9 before the contractor does any work — once they're paid they often won't hand over their SSN or EIN, and without that info you can't file a 1099.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Give guests 24 hours notice on late checkout requests",
-     "teaches": "Members learn the cutoff for promising a late checkout without wrecking the cleaner's day.",
-     "rule": "Tell guests you likely can't accommodate a late checkout with less than 24 hours notice; even inside 48-72 hours, check with cleaners before promising it.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 36 - May 5 2026 - Run It Like a Micro Hotel (Erin)",
-      "guest": null,
-      "driveId": "1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Dogga3Fu3VbJocf85RDIPnAWLt5p12ia/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Win the first 10 minutes",
-     "teaches": "How to intentionally design the guest arrival experience so the first 10 minutes create a positive confirmation bias for the rest of the stay.",
-     "rule": "The first 10 minutes determine whether you get a good review; everything after is confirmation bias. Design the arrival so it is as close to perfect as possible.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "06 EV Call 39 - Jun 10 2026 - The First 10 Minutes (guest Patryk Swietek)",
-      "guest": "Patryk Swietek",
-      "driveId": "1Teqbc-6H9Slc26Nd9363b7m2r65rNR07",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1Teqbc-6H9Slc26Nd9363b7m2r65rNR07/view"
-     },
-     "alsoIn": []
-    }
-   ]
-  },
-  {
-   "n": "7",
-   "title": "Equity, ADUs and tax",
-   "count": 12,
-   "lessons": [
-    {
-     "title": "The lazy 1031: stay under the capital gains threshold",
-     "teaches": "Members learn how to avoid federal capital gains tax by keeping reportable income below the threshold in a year they sell appreciated assets.",
-     "rule": "If you get your reported AGI below roughly $92K (married), you pay no federal capital gains tax — so sell assets early in the year and buy STRs to push income down.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "07 EV Call 14 - Dec 8 2025 - Tax Leverage Hierarchy",
-      "guest": null,
-      "driveId": "1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1RIMlg5F1WoEb4RFnC07CGnKs4jiiZsTb/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use the 7-day rule for STR tax treatment",
-     "teaches": "To qualify as a short-term rental for tax purposes, the average guest stay must be 7 days or less.",
-     "rule": "The average nightly stay must be 7 days or less to qualify as a short-term rental for tax purposes. This is easy to maintain as long as you're not using it as a midterm rental.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "00 EV Call 1 - Sep 10 2025 - Velocity of Money",
-      "guest": null,
-      "driveId": "1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi",
-      "startSec": 3770.6,
-      "endSec": 3816.0,
-      "at": "1:02:50",
-      "watch": "https://drive.google.com/file/d/1RDm95JmkZSabfJNbthOTdpIbVIcFFfRi/view?t=3770",
+      "driveId": "17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5",
+      "startSec": 1087.7,
+      "endSec": 1135.1,
+      "at": "0:18:07",
+      "watch": "https://drive.google.com/file/d/17j8TEagXtQeq8LHuY5qjthEEj0LQlVa5/view?t=1087",
       "clip": {
-       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/00-ev-call-1-sep-10-2025-velocity-of-money-3770-6qzbuTbjFsi3VodRtXwff8DvGWNQK5.mp4",
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/04-ev-call-30-apr-1-2026-design-for-vibe-and-roi-erin-1087-2kdSrgbA5RhSABitxTX8cRNda2wjUb.mp4",
        "dur": 150,
-       "bytes": 12131584
+       "bytes": 4225896
       }
      },
      "alsoIn": []
     },
     {
-     "title": "Estimate tax savings at 20-30% of purchase price",
-     "teaches": "A quick conservative rule for projecting first-year tax write-offs.",
-     "rule": "Tax savings from a short-term rental are roughly 20-30% of the purchase price, depending on your income. On a $1M property that's $200K-$300K of write-off against W2 income.",
+     "title": "Cap your guest count at 7 or 8 to avoid the party demographic",
+     "teaches": "A simple rule to protect your property from excessive wear and tear and problematic guests.",
+     "rule": "Never host more than 8 guests; 7 is a preferred maximum. Larger groups cause more damage and are harder on the property.",
+     "speaker": "Zoey Berghoff",
+     "source": {
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 4728.2,
+      "endSec": 4769.4,
+      "at": "1:18:48",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=4728",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-4728-kNMi2CvMUDPpIKpq8UBXiGlubxYh9S.mp4",
+       "dur": 150,
+       "bytes": 10351116
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Personal use of your STR is a cost of core memories",
+     "teaches": "The member learns to account for personal use when evaluating an STR's annual revenue.",
+     "rule": "If you use your STR during peak season, you lose revenue. Example: losing about $20k in summer, but that's the cost of creating core memories.",
      "speaker": "Kassidy",
      "source": {
       "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
@@ -1517,146 +1527,440 @@ const airbnb = {
      "alsoIn": []
     },
     {
-     "title": "1031 exchange to avoid depreciation recapture tax",
-     "teaches": "Members learn that selling without a 1031 exchange triggers depreciation recapture taxed as ordinary income, which can exceed the cash received from the sale.",
-     "rule": "If you sell a short-term rental without a 1031 exchange, all depreciation taken is recaptured and taxed at your ordinary income rate. Example: $400,000 depreciation at 32% = $120,000 tax, which can be more than the $100,000 cash you receive from the sale.",
+     "title": "Keep cash flow in the property account as your reserve",
+     "teaches": "How to handle cash flow and build an emergency fund for your STR.",
+     "rule": "Keep all cash flow in the property account and only use it to pay bills, mortgage, and housekeepers. If you lack cash reserves, have space on credit cards, stocks, or other sources as backup; put large unexpected expenses like a $20k AC on a 0% interest credit card rather than paying cash.",
      "speaker": "Kassidy",
      "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "1031 from residential to commercial is cleaner",
-     "teaches": "Members learn why 1031 exchanging into a commercial property like a hotel is easier than residential-to-residential because you control the closing timeline.",
-     "rule": "With commercial property, you have a PSA and a known closing date (often 90 days), so you can list and sell your property within the 45-day identification window. Residential-to-residential 1031s are harder because buyers won't wait for your sale.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use a 1031 to trade up and build equity",
-     "teaches": "Members learn how repeated 1031 exchanges can turn small equity into large equity over time.",
-     "rule": "Trade up from residential to commercial properties using 1031 exchanges to defer taxes and boost value. Example: a $65,000 HELOC on a primary residence was used to buy land, which was sold and 1031 exchanged into a property now worth $800,000 in equity.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Use the lazy 1031 to wipe out depreciation recapture",
-     "teaches": "If you sell a property and fail or skip a formal 1031, you can still offset the depreciation recapture by buying another property in the same calendar year.",
-     "rule": "The lazy 1031: sell a property, then buy enough property to offset all your income including the depreciation recapture, all within the same calendar year (Jan 1 to Dec 31). No 45-day identification window applies.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "A 1031 is more efficient than the lazy 1031",
-     "teaches": "Why the formal 1031 beats the lazy 1031 even though the lazy 1031 is easier.",
-     "rule": "With a 1031 the recapture just disappears and you get a whole new set of depreciation and cost segregation on the new property. With the lazy 1031 you must spend some of the new property's depreciation just to cover the recapture from the property you sold, so it is less efficient.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "1031 into your future dream home",
-     "teaches": "A strategy to move investment property equity into a personal residence tax-deferred.",
-     "rule": "1031 investment property into a home you want to live in, rent it out for at least two years operating it as a real investment (advertise it, make money on it), then move in. Longer than two years is better.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
-      "guest": "Brian Pate",
-      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "Cost segregation can wipe out W-2 taxes",
-     "teaches": "How a cost segregation study on an STR offsets active income.",
-     "rule": "On a $1.5M property, a cost segregation study can generate over $500k of first-year depreciation deduction — enough to pay $0 in taxes for about five years on a $200k salary.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 23 - Feb 18 2026 - Velocity Scorecard",
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
       "guest": null,
-      "driveId": "1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH",
+      "driveId": null,
       "startSec": null,
       "endSec": null,
       "at": null,
-      "watch": "https://drive.google.com/file/d/1U-SND3NfJk5jQ6tmXEMgYdA60f_B3gqH/view"
+      "watch": null
      },
      "alsoIn": []
     },
     {
-     "title": "Use cost segregation to wipe out W2 taxes on an Airbnb",
-     "teaches": "How a cost segregation study on a short-term rental lets a W2 earner offset active income, and roughly how much you can write off.",
-     "rule": "A cost segregation study breaks the building value into components (windows, doors, roof, landscaping, pool) on 5- or 7-year schedules that you can accelerate. Estimate you can write off 20-40% of the purchase price in year one. Example: a $1M property with 20% land value gives $800K of building value to depreciate.",
+     "title": "Assume guests have good intentions when managing issues",
+     "teaches": "Approach guest problems with the assumption that guests mean well, which reduces stress and leads to better resolutions.",
+     "rule": "Assume everyone has good intentions; 99% of guests are there to have a great time.",
+     "speaker": "Katie Cline",
+     "source": {
+      "label": "01 EV Call 43 - Jul 8 2026 - Positioning Workshop (guest Katie Cline)",
+      "guest": "Katie Cline",
+      "driveId": "1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI",
+      "startSec": 4221.4,
+      "endSec": 4242.7,
+      "at": "1:10:21",
+      "watch": "https://drive.google.com/file/d/1S_jYIkDX0F2XAEVqcDTp0McJPms-06cI/view?t=4221",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/01-ev-call-43-jul-8-2026-positioning-workshop-guest-katie-cl-4221-1Ki3F146CkFxzDFEgf8mv4AW2w2aHQ.mp4",
+       "dur": 150,
+       "bytes": 3257848
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Three ways to handle food and beverage at your property",
+     "teaches": "How to decide whether to partner, lease, or outsource the food component of a hospitality property.",
+     "rule": "Option 1: partner with a chef/restaurateur who puts money in and collaborates on design (true partner, integrated). Option 2: lease the space to them at discounted rent plus a rev share (lower risk for them, you get rent plus upside). Option 3: outsource by partnering with existing restaurants for grab-and-go or high-end prepared packaged food — you outsource the labor.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 2175.4,
+      "endSec": 2220.3,
+      "at": "0:36:15",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=2175",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-2175-QqWXxsgaFbWmSMbxvFXhrCpDtRNXLz.mp4",
+       "dur": 150,
+       "bytes": 8242928
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Mid-term rentals can replace income with less work",
+     "teaches": "How to use mid-term rentals to reduce workload while keeping income and depreciation benefits.",
+     "rule": "If you hit 700 hours in real estate in a year you can qualify for REP status; then you can switch a property to mid- or long-term and make close to the same amount with way less work, while still taking depreciation on a mid-term.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "05 Office Hours 15 - Dec 18 2025 - Launch and Feed the Beast",
+      "guest": null,
+      "driveId": "161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x",
+      "startSec": 6231.9,
+      "endSec": 6280.9,
+      "at": "1:43:51",
+      "watch": "https://drive.google.com/file/d/161BoBgCA_rpJLdyTAobhDOS9mNfF9X3x/view?t=6231",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/05-office-hours-15-dec-18-2025-launch-and-feed-the-beast-6231-dhDoRsom3n5DVISWiUvRGhgSCb1nOc.mp4",
+       "dur": 150,
+       "bytes": 6358469
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Delegate maintenance with a price cap",
+     "teaches": "How to hand off repair coordination to your team without getting pulled back in.",
+     "rule": "Give your VA/maintenance coordinator a price point (e.g. under $600) and let them handle the whole repair — sourcing, hauling, and guest follow-up — without you.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "06 EV Call 42 - Jul 1 2026 - Every Issue Becomes an SOP (Erin)",
+      "guest": null,
+      "driveId": "1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z",
+      "startSec": 1071.3,
+      "endSec": 1112.1,
+      "at": "0:17:51",
+      "watch": "https://drive.google.com/file/d/1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z/view?t=1071",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-42-jul-1-2026-every-issue-becomes-an-sop-erin-1071-JMWCSkOTiZeeCfG9aIoD4dHZcGOLV5.mp4",
+       "dur": 150,
+       "bytes": 9965429
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Refund the nightly rate, not the whole stay",
+     "teaches": "How to compensate an unhappy guest without giving away the full booking.",
+     "rule": "For a complaint, refund only the nightly rate (e.g. ~30%, about $300), not the entire stay.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "06 EV Call 42 - Jul 1 2026 - Every Issue Becomes an SOP (Erin)",
+      "guest": null,
+      "driveId": "1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z",
+      "startSec": 1475.1,
+      "endSec": 1517.0,
+      "at": "0:24:35",
+      "watch": "https://drive.google.com/file/d/1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z/view?t=1475",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-42-jul-1-2026-every-issue-becomes-an-sop-erin-1475-Qgo0UULs42MqyeIfyxWdeIaMePeH0E.mp4",
+       "dur": 150,
+       "bytes": 9337764
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use a local gift card to smooth over complaints",
+     "teaches": "A cheap gesture that often lands better than a cash refund with upset guests.",
+     "rule": "Offer a $100 gift card to a favourite local spot (burger place, ice cream shop) — sometimes it matters more to the guest than a refund.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "06 EV Call 42 - Jul 1 2026 - Every Issue Becomes an SOP (Erin)",
+      "guest": null,
+      "driveId": "1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z",
+      "startSec": 1521.8,
+      "endSec": 1563.2,
+      "at": "0:25:21",
+      "watch": "https://drive.google.com/file/d/1eoqmnboAMwYocMwEq4qIbb8E9aKxQT2z/view?t=1521",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/06-ev-call-42-jul-1-2026-every-issue-becomes-an-sop-erin-1521-eMjpv7X7wQYUQv4iCY0YEr1eTBMQT1.mp4",
+       "dur": 150,
+       "bytes": 9230718
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Small STRs can be cash cows with high occupancy",
+     "teaches": "How a small two-bedroom cabin can generate high revenue and occupancy.",
+     "rule": "A 1,000 sq ft two-bedroom, two-bath cabin can surpass $140,000 in revenue in year one and achieve 90-100% occupancy.",
+     "speaker": "Zoey Berghoff",
+     "source": {
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 2269.5,
+      "endSec": 2313.0,
+      "at": "0:37:49",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=2269",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-2269-YLwNJa87gIqeXSY2aNtOYMY2nAd2Uz.mp4",
+       "dur": 150,
+       "bytes": 3154913
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Manage an STR next to your own construction site",
+     "teaches": "Options for what to do with an existing unit while you build the next structure.",
+     "rule": "If you're building right next door to a rentable unit, either run it as a midterm or 6-month long-term rental, cross it off and live in it yourself (being a present owner saves money and lets you run errands for the contractor), or keep it as an STR and disclose the construction.",
+     "speaker": "Zoey Berghoff",
+     "source": {
+      "label": "07 EV Call 20 - Jan 28 2026 - Land Hacking (guest Zoey Berghoff)",
+      "guest": "Zoey Berghoff",
+      "driveId": "1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH",
+      "startSec": 4134.2,
+      "endSec": 4179.2,
+      "at": "1:08:54",
+      "watch": "https://drive.google.com/file/d/1fZzyuBAF3fHfQqF4PS13KWj8ttMWnBeH/view?t=4134",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/07-ev-call-20-jan-28-2026-land-hacking-guest-zoey-berghoff-4134-d3NZgSeZGdKbsPO2PrTAVNeVV2E2SV.mp4",
+       "dur": 150,
+       "bytes": 10261268
+      }
+     },
+     "alsoIn": []
+    }
+   ]
+  },
+  {
+   "n": "7",
+   "title": "Equity, ADUs and tax",
+   "count": 12,
+   "lessons": [
+    {
+     "title": "Estimate tax savings as 20-30% of purchase price",
+     "teaches": "A quick conservative rule of thumb for how much tax write-off an STR purchase generates, so you can size the deal against your active income.",
+     "rule": "Tax savings from a property are roughly 20-30% of the purchase price. On a $1M property, expect a $200K-$300K write-off, conservatively. Base it on your W2/active income to know how much you need to offset.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "00 EV call 47 - Aug 12 2026 - Velocity Money Four Levers",
+      "guest": null,
+      "driveId": null,
+      "startSec": null,
+      "endSec": null,
+      "at": null,
+      "watch": null
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Use a 1031 exchange to defer taxes and depreciation recapture",
+     "teaches": "Members learn that selling an Airbnb without a 1031 exchange triggers depreciation recapture taxed as ordinary income, and how a 1031 avoids it.",
+     "rule": "When you sell, all depreciation taken is recaptured as ordinary income. Example: $400k depreciation on a $500k property could create a $120k tax bill at 32% even if you only net $100k cash. A 1031 exchange defers both capital gains and depreciation recapture.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3057.6,
+      "endSec": 3106.6,
+      "at": "0:50:57",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3057",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3057-nxDl0PP5vn2CrIM57P7IFbyYR0xisR.mp4",
+       "dur": 150,
+       "bytes": 8610664
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Meet the 45-day and 180-day 1031 deadlines",
+     "teaches": "Members learn the strict timelines for a 1031 exchange and why residential-to-residential exchanges are harder than commercial.",
+     "rule": "After closing the sale, you have 45 days to identify a replacement property and 180 days total to close. Residential sellers are often unwilling to wait, making commercial properties (like hotels) easier because they typically take 90 days to close and you control the timeline via the PSA.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3234.6,
+      "endSec": 3282.3,
+      "at": "0:53:54",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3234",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3234-BWdjRKGu5Ih8EWswVsWfSMDGvYUGIF.mp4",
+       "dur": 150,
+       "bytes": 10092018
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Trade up from residential to commercial with a 1031",
+     "teaches": "Members learn the strategy of using a 1031 exchange to move from a residential Airbnb into a larger commercial property to boost value.",
+     "rule": "Sell a residential rental and 1031 into a commercial property (e.g., hotel) where you can force appreciation and increase equity. This is how you 'trade up' in real estate.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3331.8,
+      "endSec": 3375.1,
+      "at": "0:55:31",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3331",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3331-3hwOMaFPpwUCNgDTStDBF526IEGC77.mp4",
+       "dur": 150,
+       "bytes": 9961415
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "The Lazy 1031: Offset Depreciation Recapture Without the 45-Day Rule",
+     "teaches": "How to avoid paying tax on depreciation recapture by buying another property in the same calendar year, even if you missed the formal 1031 exchange deadline.",
+     "rule": "If you sell a property and have depreciation recapture (e.g., $400k), you can buy another investment property and put it in service before December 31st of the same year to offset that recapture. This is called the 'lazy 1031' and does not require the 45-day identification or 180-day closing rules of a formal 1031 exchange.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3400.1,
+      "endSec": 3446.6,
+      "at": "0:56:40",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3400",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3400-jGZusN3KNT9xAFTzICaa9MbFFm14UC.mp4",
+       "dur": 150,
+       "bytes": 10071801
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Lazy 1031 vs. Formal 1031: Efficiency and Tax Impact",
+     "teaches": "Why a formal 1031 exchange is more tax-efficient than the lazy 1031, and how to calculate the difference.",
+     "rule": "A formal 1031 exchange defers all capital gains and depreciation recapture, and the new property's depreciation can offset other income. With a lazy 1031, the new property's depreciation must first offset the depreciation recapture from the sold property, leaving less to offset other income. Example: $400k recapture + $500k other income = $900k total income. With 1031, the $400k disappears and $50",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3583.3,
+      "endSec": 3629.5,
+      "at": "0:59:43",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3583",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3583-5DJ1O5mOVMELfIAoMzMrgiNu3orEMU.mp4",
+       "dur": 150,
+       "bytes": 11785055
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Using 1031 to Acquire Land for Future Development",
+     "teaches": "How to use a 1031 exchange to buy land, even though land is not depreciable, and potentially convert it to a primary residence later.",
+     "rule": "You can 1031 exchange from a short-term rental or hotel into land, but you will not get depreciation on the land. This can be useful if you plan to develop the land (e.g., build a resort) or eventually build a primary residence on it after holding it as an investment property.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 4035.0,
+      "endSec": 4082.7,
+      "at": "1:07:15",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=4035",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-4035-rvzd6bgWVf731gDkNxHj4mtPXhuRp8.mp4",
+       "dur": 150,
+       "bytes": 9684598
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Lazy 1031: Same Calendar Year, No 45-Day Rule",
+     "teaches": "The timing rules for a lazy 1031 versus a formal 1031 exchange.",
+     "rule": "For a lazy 1031, you must buy the replacement property and put it in service between January 1 and December 31 of the same calendar year as the sale. There is no 45-day identification period or 180-day closing deadline like in a formal 1031 exchange.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3583.3,
+      "endSec": 3629.5,
+      "at": "0:59:43",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3583",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3583-5DJ1O5mOVMELfIAoMzMrgiNu3orEMU.mp4",
+       "dur": 150,
+       "bytes": 11785055
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Lazy 1031: Buy Enough Property to Offset All Income",
+     "teaches": "How to size the replacement property in a lazy 1031 to fully offset depreciation recapture and other income.",
+     "rule": "Add up all your income including depreciation recapture, then buy enough property (or properties) to offset that total. The replacement property may need to be twice as expensive or have enough depreciation to cover the recapture and other income. You can buy multiple properties in a lazy 1031.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3867.1,
+      "endSec": 3917.4,
+      "at": "1:04:27",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3867",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3867-jqcna5oA6gzCKqYFp1weKnOCG9m9uu.mp4",
+       "dur": 150,
+       "bytes": 10491268
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "1031 Exchange: Real Estate to Real Estate Only",
+     "teaches": "The types of properties that can be exchanged in a 1031 and the requirement for a real estate component.",
+     "rule": "A 1031 exchange must be real estate to real estate. It can be any type of investment property (long-term rental, short-term rental, storage unit, land) as long as it has a real estate component. You cannot exchange real estate for a non-real-estate business like a car wash.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 3920.1,
+      "endSec": 3967.0,
+      "at": "1:05:20",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=3920",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-3920-ohLEqsu4dTHALa88KKYJxDS0LSVeCa.mp4",
+       "dur": 150,
+       "bytes": 9655510
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "1031 exchange into a dream home",
+     "teaches": "How to use a 1031 exchange to move equity from investment properties into a future primary residence without paying capital gains tax.",
+     "rule": "Buy a property via 1031 exchange, rent it out for at least 2 years, then move in. The 2-year rental period is a good rule of thumb; longer is better. You must operate it as a genuine investment property (advertise, rent, make money) to show original intent.",
+     "speaker": "Kassidy",
+     "source": {
+      "label": "02 EV Call 22 - Feb 11 2026 - IRR and ROE (guest Brian Pate)",
+      "guest": "Brian Pate",
+      "driveId": "1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS",
+      "startSec": 4072.0,
+      "endSec": 4119.7,
+      "at": "1:07:52",
+      "watch": "https://drive.google.com/file/d/1YoCEgjgLoBkRQaH2Ps1n2kuOYRUF0UQS/view?t=4072",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-22-feb-11-2026-irr-and-roe-guest-brian-pate-4072-tJSUmPYfyzcedatUoEuHOHQwf20LRD.mp4",
+       "dur": 150,
+       "bytes": 9762705
+      }
+     },
+     "alsoIn": []
+    },
+    {
+     "title": "Airbnb tax benefits beat cash flow for W-2 earners",
+     "teaches": "Members learn why STRs are prioritized for people with W-2 jobs: the tax benefit is worth more than the cash flow right now.",
+     "rule": "For W-2 earners, the tax benefits of an Airbnb are worth more than the cash flow right now — but the cash flow compounds.",
      "speaker": "Kassidy",
      "source": {
       "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
       "guest": null,
       "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
-     },
-     "alsoIn": []
-    },
-    {
-     "title": "The 100-hour material participation rule for short-term rentals",
-     "teaches": "The time-tracking requirement that lets a W2 earner take Airbnb depreciation losses against active income without being a real estate professional.",
-     "rule": "You must put in at least 100 hours in the first year and more hours than any single other individual (including a property manager). Track your hours and mileage in a spreadsheet — QuickBooks and mileage apps work. Documentation matters if the IRS audits.",
-     "speaker": "Kassidy",
-     "source": {
-      "label": "02 EV Call 24 - Feb 24 2026 - Four Ways Real Estate Pays You",
-      "guest": null,
-      "driveId": "1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL",
-      "startSec": null,
-      "endSec": null,
-      "at": null,
-      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view"
+      "startSec": 1156.1,
+      "endSec": 1201.6,
+      "at": "0:19:16",
+      "watch": "https://drive.google.com/file/d/1tJgfuWoFkP_b32dF5DzSRtnGdqxyz5HL/view?t=1156",
+      "clip": {
+       "url": "https://sgja14fsapeo12cq.public.blob.vercel-storage.com/clips/02-ev-call-24-feb-24-2026-four-ways-real-estate-pays-you-1156-muEgLt73LfmDBvT44M1MAkQREGDgxW.mp4",
+       "dur": 150,
+       "bytes": 14839387
+      }
      },
      "alsoIn": []
     }
