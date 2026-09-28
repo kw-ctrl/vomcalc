@@ -37,6 +37,15 @@ export const resources = [
     ],
   },
   {
+    group: 'Hermes — your own AI chief of staff',
+    note: 'Run the same kind of agent Kassidy runs. Start with the setup guide, then follow it in order.',
+    items: [
+      { title: 'Hermes Setup Guide — Run Your Own AI Chief of Staff', kind: 'doc', url: drive('11m-U2SSsxzR2OQjVDyeJqLsxTyTeCfiOGyDXSNKGaRo'), note: 'Install, connect your accounts, the exact prompts to copy and paste, and the ground rules to set on day one.' },
+      { title: 'Hermes Agent — official docs', kind: 'link', url: 'https://hermes-agent.nousresearch.com/docs' },
+      { title: 'Install Hermes (one line)', kind: 'link', url: 'https://hermes-agent.nousresearch.com/docs/getting-started/installation' },
+    ],
+  },
+  {
     group: 'Call library',
     note: 'Every recorded call and transcript. The courses link straight into these at the right minute.',
     items: [
