@@ -2,7 +2,7 @@
  * App entry point — input gathering, orchestration, event listeners
  */
 
-import { SMART_DEFAULTS } from './constants.js';
+import { SMART_DEFAULTS, LOAN_PRESETS, DEFAULT_LOAN_TYPE, trancheFromPreset } from './constants.js';
 import { calculateMortgage, formatCurrency } from './utils.js';
 const fmtCurrency = formatCurrency; // alias for new UI helpers
 const parseCurrency = v => parseFloat(String(v).replace(/[^0-9.-]/g, '')) || 0;
@@ -661,6 +661,10 @@ function applySmartDefaults() {
         // Hotel: run expense ratio calculation instead
         updateExpenseRatioOpex();
     }
+
+    // Financing: open on the setup this user last used for this property type,
+    // otherwise the type's default (STR = Conventional 30-yr P&I, not a bridge IO loan).
+    resetFinancing(type);
 }
 
 // Generic slider sync: reads slider value, writes to hidden input + display span
@@ -761,7 +765,78 @@ const TRANCHE_LABELS = ['Conventional','Bridge Loan','Seller Financing','SBA Loa
 // Each tranche: { label, ltv (% of purchase price), rate, interestOnly, termYears }
 // `amount` is always derived: ltv/100 * listedPrice
 // termYears = amortization term for P&I; balloon term for IO (when loan must be repaid)
-let _debtTranches = [{ label: 'Bridge Loan', ltv: 70, rate: 12.0, interestOnly: true, termYears: 3 }];
+//
+// The tranche is REMEMBERED in localStorage, so a live pass-through does not make the
+// user re-set loan type / rate / down payment on every deal. A fresh browser (or a
+// member's first visit) opens on the per-property-type default — Conventional for STR.
+const FINANCING_KEY = 'vomcalc_financing_v1';
+
+function _defaultTrancheFor(type) {
+    return trancheFromPreset(DEFAULT_LOAN_TYPE[type] || 'Conventional');
+}
+
+function _rememberFinancing() {
+    try {
+        const type = document.getElementById('propertyType')?.value || 'str';
+        let store = {};
+        try { store = JSON.parse(localStorage.getItem(FINANCING_KEY) || '{}') || {}; } catch { store = {}; }
+        const dp = getVal('downPayment', null);
+        store[type] = {
+            tranches: _debtTranches,
+            downPayment: typeof dp === 'number' && dp > 0 ? dp : null,
+        };
+        localStorage.setItem(FINANCING_KEY, JSON.stringify(store));
+    } catch { /* private mode — defaults still apply */ }
+}
+
+function _recallFinancing(type) {
+    try {
+        const store = JSON.parse(localStorage.getItem(FINANCING_KEY) || '{}') || {};
+        const saved = store[type];
+        if (saved && Array.isArray(saved.tranches) && saved.tranches.length) return saved;
+    } catch { /* ignore */ }
+    return null;
+}
+
+let _debtTranches = [_defaultTrancheFor('str')];
+
+/**
+ * Reset the financing structure to the remembered setup for this property type,
+ * falling back to the type's default (Conventional for STR).
+ * `force` ignores the remembered setup — used by the demo/listing loaders.
+ */
+function resetFinancing(type, { force = false } = {}) {
+    const remembered = force ? null : _recallFinancing(type);
+    if (remembered) {
+        _debtTranches = remembered.tranches.map(t => ({ ...t }));
+        // Restore the down payment too — it IS the loan-to-value, and re-setting it every
+        // pass-through was half the complaint.
+        if (typeof remembered.downPayment === 'number' && remembered.downPayment > 0) {
+            setSliderValue('downPayment', remembered.downPayment);
+        }
+    } else {
+        _debtTranches = [_defaultTrancheFor(type)];
+        if (type === 'str') {
+            // Keep the down-payment slider and the single conventional tranche in sync.
+            const pct = getVal('downPayment', 20) || 20;
+            if (_debtTranches.length === 1 && !_debtTranches[0].interestOnly) {
+                _debtTranches[0].ltv = Math.max(0, Math.round(100 - pct));
+            }
+        }
+    }
+    renderDebtTranches();
+}
+
+/** One click: make tranche `index` a given loan type, with coherent LTV/rate/term. */
+function setTranchePreset(index, label) {
+    if (_debtTranches[index] === undefined) return;
+    const keepLtv = _debtTranches[index].ltv;
+    const next = trancheFromPreset(label);
+    // Keep the user's leverage where it is; a preset changes the loan, not their down payment.
+    if (typeof keepLtv === 'number' && keepLtv > 0) next.ltv = keepLtv;
+    _debtTranches[index] = next;
+    renderDebtTranches({ remember: true });
+}
 
 function _listedPrice() { return getVal('listedPrice') || 0; }
 function _downPaymentPct() { return getVal('downPayment', 20) / 100; }
@@ -789,7 +864,7 @@ function trancheBalance(t, years) {
     return Math.max(0, amt * Math.pow(1+r, paid) - mp * (Math.pow(1+r, paid) - 1) / r);
 }
 
-function renderDebtTranches() {
+function renderDebtTranches({ remember = false } = {}) {
     const listedPrice = _listedPrice();
     const downPct = _downPaymentPct() * 100; // e.g. 20
     const container = document.getElementById('debtTranchesContainer');
@@ -809,7 +884,8 @@ function renderDebtTranches() {
         return `<div style="padding:10px 12px;background:rgba(0,0,0,0.3);border:1px solid #2a2a3a;border-radius:8px">
             <!-- Header: label select + IO toggle + remove -->
             <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-                <select onchange="updateTrancheField(${i},'label',this.value)"
+                <select onchange="setTranchePreset(${i},this.value)"
+                    title="Choosing a loan type sets its rate, amortisation and IO/P&I together"
                     style="background:#1a1a26;border:1px solid #2a2a3a;border-radius:5px;color:#a89fff;font-size:12px;font-weight:700;padding:4px 8px;cursor:pointer;flex:1;max-width:165px">
                     ${labelOpts}
                 </select>
@@ -883,26 +959,31 @@ function renderDebtTranches() {
     const addBtn = document.getElementById('addTrancheBtn');
     if (addBtn) addBtn.style.display = _debtTranches.length >= 3 ? 'none' : 'inline-block';
 
+    // Persist ONLY on a deliberate change (see the `remember` flag). Rendering happens
+    // during page load too, and writing the still-default tranches there would overwrite
+    // the setup this user actually chose.
+    if (remember) _rememberFinancing();
+
     recalc();
 }
 
 function updateTrancheField(index, field, value) {
     if (_debtTranches[index] !== undefined) {
         _debtTranches[index][field] = value;
-        renderDebtTranches();
+        renderDebtTranches({ remember: true });
     }
 }
 
 function addDebtTranche() {
     if (_debtTranches.length >= 3) return;
-    _debtTranches.push({ label: 'Bridge Loan', ltv: 10, rate: 12.0, interestOnly: true, termYears: 3 });
-    renderDebtTranches();
+    _debtTranches.push(trancheFromPreset('Bridge Loan', { ltv: 10 }));
+    renderDebtTranches({ remember: true });
 }
 
 function removeDebtTranche(index) {
     if (_debtTranches.length <= 1) return;
     _debtTranches.splice(index, 1);
-    renderDebtTranches();
+    renderDebtTranches({ remember: true });
 }
 
 // ─── CONSTRUCTION PHASES ───────────────────────────────────────────────────
@@ -1519,6 +1600,14 @@ function loadDemoData() {
     setCurrencyVal('arv', d.arv);
     setSliderValue('interestRate', d.interestRate);
 
+    // The scenario carries its own financing: STR = conventional P&I at the scenario rate,
+    // hotel = bridge/IO. Set the tranche from those numbers instead of the remembered setup.
+    _debtTranches = [trancheFromPreset(d.propertyType === 'hotel' ? 'Bridge Loan' : 'Conventional', {
+        ltv: Math.max(0, 100 - d.downPayment),
+        rate: d.interestRate,
+    })];
+    renderDebtTranches();
+
     // Furnishing (STR only)
     if (d.furnishingBudget) {
         document.getElementById('furnishingBudget').value = d.furnishingBudget;
@@ -1863,6 +1952,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Also re-estimate opex (mgmt fee + insurance driven by price/revenue)
                 const t = estimateOpex();
                 if (t > 0) setCurrencyVal('operatingExpenses', t);
+            }
+            // Down payment drives the loan: move the tranche LTV with it, and remember it.
+            // Without this the slider changed the cash figure but left the loan at its old
+            // LTV, so the debt service never moved.
+            if (slider.dataset.input === 'downPayment') {
+                updateDownPaymentHint();
+                _rememberFinancing();
             }
             // Live recalc on every slider change
             recalc();
@@ -2504,6 +2600,22 @@ async function loadDeal(id) {
         });
     }
 
+    // Restore the financing STRUCTURE. The hidden debtTranchesJSON field is derived by
+    // renderDebtTranches(), so without this the tranche reverts to the module default and
+    // the loaded deal is re-underwritten on the wrong loan (a saved Conventional deal came
+    // back on a 12% interest-only bridge loan).
+    const savedTranches = Array.isArray(inputs?.debtTranches) ? inputs.debtTranches : null;
+    if (savedTranches && savedTranches.length) {
+        _debtTranches = savedTranches.map(t => ({
+            label: t.label || 'Conventional',
+            ltv: typeof t.ltv === 'number' ? t.ltv : 80,
+            rate: typeof t.rate === 'number' ? t.rate : LOAN_PRESETS[t.label]?.rate ?? 7.5,
+            interestOnly: !!t.interestOnly,
+            termYears: t.termYears || 30,
+        }));
+        renderDebtTranches();
+    }
+
     _currentDealId = id;
     document.getElementById('saveDealBtn').textContent = '💾 Update Deal';
 
@@ -2989,6 +3101,9 @@ Object.assign(window, {
   addDebtTranche,
   removeDebtTranche,
   updateTrancheField,
+  setTranchePreset,
+  resetFinancing,
+  updateDownPaymentHint,
   // Construction phases
   addConstructionPhase,
   removeConstructionPhase,

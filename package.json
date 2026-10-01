@@ -6,7 +6,8 @@
   "scripts": {
     "test": "bash supabase/tests/run.sh",
     "test:logic": "node supabase/tests/access.test.mjs",
-    "test:members": "node tests/members.test.mjs && node tests/api.members.test.mjs"
+    "test:members": "node tests/members.test.mjs && node tests/api.members.test.mjs",
+    "test:financing": "node tests/financing_defaults.test.cjs"
   },
   "dependencies": {
     "pg": "^8.11.0"

@@ -37,6 +37,38 @@ export const TAX_BRACKETS = {
     ]
 };
 
+/**
+ * Loan presets — what a tranche becomes when you pick its type.
+ * A tranche is only "easier to use" if one click sets LTV + rate + amortisation
+ * together; picking the label alone is how a Conventional deal kept carrying a
+ * bridge loan's 12% interest-only payment.
+ *
+ * Conventional is the DEFAULT for STR: it is the loan an investor actually
+ * closes on a rental, and it is P&I on a 30-year amortisation, not IO on a
+ * 3-year balloon. Defaulting STR to a bridge tranche made every pass-through
+ * open on a 12% interest-only payment, so every deal read as cash-flow negative
+ * until the user re-set the financing by hand.
+ */
+export const LOAN_PRESETS = {
+    'Conventional':     { ltv: 80, rate: 7.5,  interestOnly: false, termYears: 30 },
+    'DSCR Loan':        { ltv: 75, rate: 7.75, interestOnly: false, termYears: 30 },
+    'Seller Financing': { ltv: 80, rate: 6.0,  interestOnly: true,  termYears: 5  },
+    'SBA Loan':         { ltv: 80, rate: 9.0,  interestOnly: false, termYears: 25 },
+    'Bridge Loan':      { ltv: 70, rate: 12.0, interestOnly: true,  termYears: 3  },
+    'Hard Money':       { ltv: 70, rate: 12.5, interestOnly: true,  termYears: 1  },
+    'Mezzanine':        { ltv: 85, rate: 14.0, interestOnly: true,  termYears: 3  },
+    'Other':            { ltv: 70, rate: 8.0,  interestOnly: false, termYears: 30 },
+};
+
+/** Which loan type a fresh deal opens on, per property type. */
+export const DEFAULT_LOAN_TYPE = { str: 'Conventional', hotel: 'Bridge Loan' };
+
+/** Build a tranche object from a preset name. */
+export function trancheFromPreset(label, overrides = {}) {
+    const p = LOAN_PRESETS[label] || LOAN_PRESETS['Other'];
+    return { label, ltv: p.ltv, rate: p.rate, interestOnly: p.interestOnly, termYears: p.termYears, ...overrides };
+}
+
 export const SMART_DEFAULTS = {
     hotel: {
         interestRate: 12,
